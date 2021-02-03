@@ -6,9 +6,9 @@ Gruppe prosjekt for DAT251 Gruppe 9 V2021
 | --- | --- |
 | Andrè  | @ImGoze |
 | Erlend | @ErlendBerntsen |
-| HC | |
+| Hans-Christian | |
 | Kenneth | @spydx |
-| Oscar | |
+| Oscar | @OscarSommervold|
 | Rune | @runalmaas |
 
 ## Prosjektet
