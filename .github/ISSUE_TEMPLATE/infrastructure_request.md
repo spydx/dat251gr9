@@ -2,7 +2,7 @@
 name: Infrastructure request
 about: Tools / architecting / Code tasks
 title: "[tech] "
-labels: enhancement
+labels: enhancement, documentation, techstack
 assignees: ''
 
 ---
