@@ -1,7 +1,7 @@
 ---
 name: Infrastructure request
 about: Tools / architecting / Code tasks
-title: "[arch] "
+title: "[tech] "
 labels: enhancement
 assignees: ''
 
