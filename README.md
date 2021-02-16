@@ -25,7 +25,7 @@ Group project for DAT251 Group 9 Spring 2021
 | 1600 | | Daily Meeting | | Status Meeting
 | |   |     | | Daily meeting 16:30| |
 
-## Prosjektet
+## Project Details
 
 ## Tool / Languages
 
