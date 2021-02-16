@@ -1,8 +1,8 @@
-# DAT251 Gruppe 9 V2021
+# DAT251 Group 9 V2021
 
-Gruppe prosjekt for DAT251 Gruppe 9 V2021
+Group project for DAT251 Group 9 Spring 2021
 
-| Medlemmer | Kontakt (github) |
+| Members | Contact (github) |
 | --- | --- |
 | Andrè  | [@ImGoze](https://github.com/ImGoze) |
 | Erlend | [@ErlendBerntsen](https://github.com/ErlendBerntsen) |
@@ -11,13 +11,13 @@ Gruppe prosjekt for DAT251 Gruppe 9 V2021
 | Oscar | [@OscarSommervold](https://github.com/OscarSommervold) |
 | Rune | [@runalmaas](https://github.com/runalmaas) |
 
-## Timeplan
+## Time schedule
 
 **Topic**: DAT251 Gr9 Meetings (Daily/Status/Sprint Planning)
 **Time**: This is a recurring meeting Meet anytime
 **Room**: [Meeting room](https://uib.zoom.us/j/68675494000?pwd=b2hzWG5Zd0Vac0dDdUtwZmRNN21uQT09)
 
-| Tid | Mandag | Tirsdag | Onsdag | Torsdag | Fredag |
+| Time | Monday | Tuesday | Wednesday | Thursday | Friday |
 |---|---|---|---|---|---|
 | 1000 | DAT251| | Workday |  |  DAT251 |
 | 1200 | Sprint/Daily planning | Workday |  Workday |  
