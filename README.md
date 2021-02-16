@@ -30,7 +30,7 @@ Group project for DAT251 Group 9 Spring 2021
 ## Tool / Languages
 
 - **Frontend** : React with TypeScript
-- **Backend:** Spring Boot, Maven, Java 15, REST API,
+- **Backend:** Spring Boot, Maven, Java 15, REST API, Swagger
 - **DB:** MariaDB and H2 Database for testing
 - **Containers:** Docker
 - **CI/CD:** GitHub with GitHub Actions
