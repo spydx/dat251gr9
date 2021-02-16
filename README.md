@@ -49,12 +49,15 @@ gh issue list -m 1| tr "\t" ";" > doc/issues.csv
 ```
 
 Install it with the following on mac/linux
+
 ```sh
 brew install gh
 ````
 
 Windows:
+
 ```sh
 choco install gh
 ```
+
 [Other instuctions for GH](https://github.com/cli/cli#installation)
