@@ -1,0 +1,26 @@
+version : '3.7'
+
+services:
+   lop-api:
+      build: 
+         context: lop-backend
+         dockerfile: Dockerfile
+      healthcheck:
+         test: curl --fail -s http://localhost:8080/ || exit 1
+         timeout: 45s
+         interval: 10s
+         retries: 10
+      ports:
+         - 8080:8080
+      #restart: always
+      
+      networks:
+         - backend
+         - frontend
+
+volumes:
+   db-data:
+   
+networks:
+   backend:
+   frontend: 
