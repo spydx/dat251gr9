@@ -25,4 +25,4 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Run the Maven verify phase # also does testing
-        run: mvn --batch-mode --update-snapshots --file ./lop-back end/pom.xml verify
+        run: mvn --batch-mode --update-snapshots --file ./lop-backend/pom.xml verify
