@@ -27,13 +27,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # This should be changed to use Docker-compose maybe? 
       - name: Run tests
         run: |
           if [ -f docker-compose.test.yml ]; then
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build . --file Dockerfile
+            docker build lop-frontend/ --file lop-frontend/Dockerfile
+            docker build lop-backend/ --file lop-backend/Dockerfile
           fi
 
   # Push image to GitHub Packages.
