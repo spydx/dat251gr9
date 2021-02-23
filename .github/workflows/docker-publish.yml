@@ -51,10 +51,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Frontend
-        run: docker build . --file log-frontend/Dockerfile --tag $IMAGE_FRONT
+        run: docker build lop-frontend/ --file lop-frontend/Dockerfile --tag $IMAGE_FRONT
         
       - name: Build API
-        run: docker build . --file lop-backend/Dockerfile --tag $IMAGE_BACK
+        run: docker build lop-backend/ --file lop-backend/Dockerfile --tag $IMAGE_BACK
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
