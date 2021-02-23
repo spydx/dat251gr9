@@ -1,5 +1,7 @@
 # DAT251 Group 9 V2021
 
+[![Docker CI/CD to GitHub Container [test]](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
+
 Group project for DAT251 Group 9 Spring 2021
 
 | Members        | Contact (github)                                       |
