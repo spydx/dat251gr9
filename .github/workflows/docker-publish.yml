@@ -78,12 +78,12 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker tag $IMAGE_FRONT $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
           
       - name: Push image BACKEND
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_FRONT
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_BACK
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -100,5 +100,5 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker tag $IMAGE_BACK $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
