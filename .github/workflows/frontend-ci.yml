@@ -6,10 +6,10 @@ name: Frontend CI
 on:
   push:
 
-default:
+defaults:
   test:
     working-directory: ./lop-frontend
-    
+
 jobs:
   test:
     name: Frontend CI - Testing
