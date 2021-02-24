@@ -14,7 +14,6 @@ jobs:
   test:
     name: Frontend CI - Testing
     runs-on: ubuntu-latest
-    env:
       
     strategy:
       matrix:
