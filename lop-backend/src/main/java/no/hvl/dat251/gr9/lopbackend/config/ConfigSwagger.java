@@ -37,7 +37,7 @@ public class ConfigSwagger {
                 "LOP REST API",
                 "LOP API",
                 "API Production",
-                "Terms of service",
+                "Terms Of service",
                 new Contact("Lop Admin", "www.lop.no", "support@lop.no"),
                 "License of API", "API license URL", Collections.emptyList());
     }
