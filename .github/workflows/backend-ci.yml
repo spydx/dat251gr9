@@ -2,7 +2,7 @@
 # TODO: should this also contain front end CI
 # Based on https://docs.github.com/en/actions/guides/building-and-testing-java-with-maven
 
-name: Back end CI
+name: Backend CI
 
 on:
   - push
@@ -10,7 +10,7 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    name: Buld & Test back end
+    name: [BackendCI] Build & Test backend
     steps:
       - name: Checkout
         uses: actions/checkout@v2

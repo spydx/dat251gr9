@@ -23,12 +23,12 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
     runs-on: ubuntu-latest
-
+    name: [DockerCI/CD] Test Docker Build
     steps:
       - uses: actions/checkout@v2
 
       # This should be changed to use Docker-compose maybe? 
-      - name: Run tests
+      - name:  Run tests
         run: |
           if [ -f docker-compose.test.yml ]; then
             docker-compose --file docker-compose.test.yml build
@@ -43,7 +43,7 @@ jobs:
   push:
     # Ensure test job passes before pushing image.
     needs: test
-
+    name: [DockerCI/CD] Build and push containers
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
