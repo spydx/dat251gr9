@@ -23,7 +23,7 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
     runs-on: ubuntu-latest
-    name: [DockerCI/CD] Test Docker Build
+    name: Docker - Test Docker Build
     steps:
       - uses: actions/checkout@v2
 
@@ -43,7 +43,7 @@ jobs:
   push:
     # Ensure test job passes before pushing image.
     needs: test
-    name: [DockerCI/CD] Build and push containers
+    name: Docker - Build and push containers
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
