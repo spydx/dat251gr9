@@ -5,6 +5,8 @@ name: Frontend CI
 
 on:
   push:
+     branches:
+      - frontend
 
 defaults:
   run:
