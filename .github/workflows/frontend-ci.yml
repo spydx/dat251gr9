@@ -7,7 +7,7 @@ on:
   push:
 
 defaults:
-  test:
+  run:
     working-directory: ./lop-frontend
 
 jobs:
