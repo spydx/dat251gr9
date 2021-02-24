@@ -10,7 +10,7 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    name: [BackendCI] Build & Test backend
+    name: Backend CI - Build & Test backend
     steps:
       - name: Checkout
         uses: actions/checkout@v2
