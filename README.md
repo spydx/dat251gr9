@@ -1,6 +1,10 @@
 # DAT251 Group 9 V2021
 
+[![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
 [![Docker CI/CD to GitHub Container [test]](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
+
+
 
 Group project for DAT251 Group 9 Spring 2021
 
@@ -14,6 +18,7 @@ Group project for DAT251 Group 9 Spring 2021
 | Rune           | [@runalmaas](https://github.com/runalmaas)             |
 
 ## Links
+
 - [Zoom meeting room](https://uib.zoom.us/j/68675494000?pwd=b2hzWG5Zd0Vac0dDdUtwZmRNN21uQT09)
 - [Google drive](https://drive.google.com/drive/folders/1C0JDU_DwFlpF7I6hPTvxrF4koDebtebP)
   - [Timeliste](https://docs.google.com/spreadsheets/d/1pFGBxwwf67vKVIT5Swg6l6naNjio05JOcEfR-ku3wXU/edit#gid=0)
