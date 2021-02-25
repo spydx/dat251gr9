@@ -1,5 +1,11 @@
 # DAT251 Group 9 V2021
 
+[![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
+[![Docker CI/CD to GitHub Container [test]](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
+
+
+
 Group project for DAT251 Group 9 Spring 2021
 
 | Members        | Contact (github)                                       |
@@ -11,11 +17,14 @@ Group project for DAT251 Group 9 Spring 2021
 | Oscar          | [@OscarSommervold](https://github.com/OscarSommervold) |
 | Rune           | [@runalmaas](https://github.com/runalmaas)             |
 
-## Time schedule
+## Links
 
-**Topic**: DAT251 Gr9 Meetings (Daily/Status/Sprint Planning)<br>
-**Time**: This is a recurring meeting Meet anytime<br>
-**Room**: [Meeting room](https://uib.zoom.us/j/68675494000?pwd=b2hzWG5Zd0Vac0dDdUtwZmRNN21uQT09)
+- [Zoom meeting room](https://uib.zoom.us/j/68675494000?pwd=b2hzWG5Zd0Vac0dDdUtwZmRNN21uQT09)
+- [Google drive](https://drive.google.com/drive/folders/1C0JDU_DwFlpF7I6hPTvxrF4koDebtebP)
+  - [Timeliste](https://docs.google.com/spreadsheets/d/1pFGBxwwf67vKVIT5Swg6l6naNjio05JOcEfR-ku3wXU/edit#gid=0)
+  - [Burndown chart](https://docs.google.com/spreadsheets/d/1R1XAsYmkR_oMGGFmyeBw9pytjMRXtNEMjGVQEyaI4UM/edit#gid=1056924006)
+
+## Time schedule
 
 | Time | Monday                | Tuesday       | Wednesday | Thursday            | Friday |
 | ---- | --------------------- | ------------- | --------- | ------------------- | ------ |
@@ -37,6 +46,9 @@ Group project for DAT251 Group 9 Spring 2021
 - **Hosting:** Google Cloud with Kubernetes
 
 ## Architecture diagram
+
+## Metrics
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=193482369&amp;format=image"></img>
 
 ## Misc
 
