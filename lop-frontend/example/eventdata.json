@@ -7,6 +7,11 @@
          "name": "Tom Jensen",
          "email": "tom@jensen.no",
          "phone": "+4799999999"
+      },
+      {
+         "name": "Jensen Tom",
+         "email": "tom@jensen.no",
+         "phone": "+4799999999"
       }
    ],
    "races": [
