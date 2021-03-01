@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration.account;
 
+import no.hvl.dat251.gr9.lopbackend.entities.Account;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
-import no.hvl.dat251.gr9.lopbackend.repositories.AccountRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,10 +37,10 @@ class AccountRestControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountDAO accountDAO;
 
     @AfterEach
-    public void clearEntityManager() { accountRepository.deleteAll();}
+    public void clearEntityManager() { accountDAO.deleteAll();}
 
     @Test
     void givenAccount_whenGetAccount_thenStatus200() throws Exception {
@@ -60,10 +60,10 @@ class AccountRestControllerIntegrationTest {
     }
 
     private void createTestAccount(String email, String password) {
-        var acc = new AccountDAO();
+        var acc = new Account();
         acc.setPassword(password);
-        acc.setUsername(email);
-        accountRepository.saveAndFlush(acc);
+        acc.setEmail(email);
+        accountDAO.saveAndFlush(acc);
     }
 
 }
