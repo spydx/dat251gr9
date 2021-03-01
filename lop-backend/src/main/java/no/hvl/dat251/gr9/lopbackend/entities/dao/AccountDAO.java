@@ -1,22 +1,14 @@
-package no.hvl.dat251.gr9.lopbackend.entities.dao;
+package no.hvl.dat251.gr9.lopbackend.repositories;
 
-import lombok.Data;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.List;
 
-@Entity
-@Data
-public class AccountDAO {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    //email
-    private String username;
-    private String password;
-
+@Repository
+public interface AccountRepository extends JpaRepository<AccountDAO, Long> {
+    public AccountDAO findByUsername(String username);
+    public AccountDAO save(AccountDAO accounts);
+    public List<AccountDAO> findAll();
 }

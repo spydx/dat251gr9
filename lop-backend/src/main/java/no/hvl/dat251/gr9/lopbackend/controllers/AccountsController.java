@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
-import no.hvl.dat251.gr9.lopbackend.services.AccountService;
+import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import java.util.List;
 public class AccountsController {
 
     @Autowired
-    private AccountService accountService;
+    private AuthService authService;
 
     @GetMapping("/accounts")
-    public ResponseEntity<List<AccountDAO>> getAllAccounts() {
+    public ResponseEntity<List<Account>> getAllAccounts() {
 
-        var allAccounts = accountService.getAllAccounts();
+        var allAccounts = authService.getAllAccounts();
 
         if(allAccounts.isEmpty()) {
             HttpStatus status = HttpStatus.NO_CONTENT;

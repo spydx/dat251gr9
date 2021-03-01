@@ -1,4 +1,4 @@
-package no.hvl.dat251.gr9.lopbackend.entities.dao;
+package no.hvl.dat251.gr9.lopbackend.entities;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class ProfileDAO {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
