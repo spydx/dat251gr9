@@ -7,6 +7,9 @@ on:
   push:
      branches:
       - frontend
+  pull_request:
+    branches:
+      - frontend
 
 defaults:
   run:
