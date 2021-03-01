@@ -40,7 +40,7 @@ class AuthServiceIntegrationTest {
         acc.setEmail(email);
         acc.setPassword("passord");
 
-        Mockito.when(accountDAO.getByEmail(acc.getEmail()))
+        Mockito.when(accountDAO.findByEmail(acc.getEmail()))
                 .thenReturn(Optional.of(acc));
     }
 

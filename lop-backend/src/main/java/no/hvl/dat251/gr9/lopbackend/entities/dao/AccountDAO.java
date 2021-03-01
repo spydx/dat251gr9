@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface AccountDAO extends JpaRepository<Account, Long> {
     public Account save(Account accounts);
-    public List<Account> getAll();
-    Optional<Account> getByEmail(String email);
-    Optional<Account> getById(String id);
+    public List<Account> findAll();
+    Optional<Account> findByEmail(String email);
+    Optional<Account> findById(String id);
 }

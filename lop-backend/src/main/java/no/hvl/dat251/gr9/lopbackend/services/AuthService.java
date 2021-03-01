@@ -27,19 +27,19 @@ public class AuthService implements UserDetailsService {
     }
 
     public Optional<List<Account>> getAllAccounts() {
-        var res = accountDAO.getAll();
+        var res = accountDAO.findAll();
         return Optional.of(res);
     }
 
     public UserDetails loadUserByUsername(String username) {
-        var account = accountDAO.getByEmail(username)
+        var account = accountDAO.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
         return AccountPrincipals.create(account);
     }
 
     public Optional<UserDetails> loadUserById(String id) {
-        var account = accountDAO.getById(id)
+        var account = accountDAO.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
         return Optional.ofNullable(AccountPrincipals.create(account));
@@ -47,7 +47,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public Optional<Account> getAccountByEmail(String email) {
-        return accountDAO.getByEmail(email);
+        return accountDAO.findByEmail(email);
     }
 }
 
