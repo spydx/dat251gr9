@@ -54,14 +54,14 @@ class AccountDAOIntegrationTest {
 
         entityManager.persist(acc);
 
-        var found = accountDAO.getByEmail(username);
+        var found = accountDAO.findByEmail(username);
         assertThat(found.get().getEmail())
                 .isEqualTo(acc.getEmail());
     }
 
     @Test
     void findAllAccounts() {
-        var res = accountDAO.getAll();
+        var res = accountDAO.findAll();
         assertThat(res.size())
                 .isEqualTo(numberOfAccounts);
         assertThat(res.size())
