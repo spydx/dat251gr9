@@ -6,6 +6,8 @@ name: Backend CI
 
 on:
   push:
+    branchs: 
+    - backend
 
 jobs:
   main:
