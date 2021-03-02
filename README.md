@@ -2,7 +2,10 @@
 
 [![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=backend)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
 [![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=frontend)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
-[![Docker CI/CD to GitHub Container [test]](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
+
+[![Release Backend Test](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
+[![Release Frontend Test](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
+[![Release Docker CI/CD to GitHub Container ](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
 
 
 
