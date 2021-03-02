@@ -11,16 +11,16 @@ public class Roles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
-    private RolesEnum role;
+    private RoleEnum role;
 
     public Roles() {
     }
 
-    public Roles(RolesEnum r) {
+    public Roles(RoleEnum r) {
         this.role = r;
     }
 }

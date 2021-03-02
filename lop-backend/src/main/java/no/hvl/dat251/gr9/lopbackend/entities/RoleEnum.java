@@ -1,5 +1,5 @@
 package no.hvl.dat251.gr9.lopbackend.entities;
 
-public enum RolesEnum {
+public enum RoleEnum {
     ADMIN, USER
 }

@@ -54,8 +54,8 @@ class AccountRestControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
-                .andExpect(jsonPath("$[0].username",is("fossen.kenneth@gmail.com")))
-                .andExpect(jsonPath("$[1].username", is("nix007@uib.no"))
+                .andExpect(jsonPath("$[0].email",is("fossen.kenneth@gmail.com")))
+                .andExpect(jsonPath("$[1].email", is("nix007@uib.no"))
         );
     }
 
