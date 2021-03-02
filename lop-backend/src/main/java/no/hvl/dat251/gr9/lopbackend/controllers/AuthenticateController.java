@@ -1,6 +1,10 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
+import no.hvl.dat251.gr9.lopbackend.config.response.lopAPIResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
+import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
 @RestController
@@ -48,7 +54,7 @@ public class AuthenticateController {
         var exists = userService.getAccount(login.getEmail());
         if(exists.isPresent()) {
             var profileid = exists.get().getProfile().getId();
-            return ResponseEntity.ok(new JwtAutheticationResponse(token, profileid));
+            return ResponseEntity.ok(new JwtAuthenticationResponse(token, profileid));
         }
         logger.error("Loggin error failed for {}", login.getEmail());
         return ResponseEntity.ok("failed to find user profile");
@@ -59,7 +65,7 @@ public class AuthenticateController {
         var exist = userService.getAccount(newUser.getEmail());
 
         if(exist.isPresent()) {
-            return new ResponseEntity(new FeedAPIResponse(false, "Email Address already in use!"),
+            return new ResponseEntity(new lopAPIResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -69,7 +75,7 @@ public class AuthenticateController {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/api/users/{username}")
                     .buildAndExpand(res.get().getProfile().getId()).toUri();
-            return ResponseEntity.created(location).body(new FeedAPIResponse(true, "Registred"));
+            return ResponseEntity.created(location).body(new lopAPIResponse(true, "Registred"));
         }
         return new ResponseEntity<>(newUser, HttpStatus.NO_CONTENT);
     }

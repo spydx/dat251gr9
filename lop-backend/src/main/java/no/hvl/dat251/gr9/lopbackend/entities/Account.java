@@ -25,4 +25,14 @@ public class Account {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Roles> roles = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Profile profile;
+
+    public Account(String email){
+        this.email = email;
+    }
+
+    public Account(){
+
+    }
 }

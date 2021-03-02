@@ -3,9 +3,13 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
 import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.Profile;
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.ProfileDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,9 @@ public class UserService {
     private AccountDAO accountStorage;
 
     @Autowired
+    private ProfileDAO profileStorage;
+
+    @Autowired
     private RoleDAO roleStorage;
 
     @Autowired
@@ -44,19 +51,21 @@ public class UserService {
         );
         account.setRoles(Collections.singleton(role));
         account.setPassword(passwordEncoder.encode(newaccount.getPassword()));
-        var profile = new Profile(newaccount.getFirstname(), newaccount.getLastname());
+        var profile = new Profile();
+        profile.setFirstname(newaccount.getFirstname());
+        profile.setLastname(newaccount.getLastname());
 
         account.setProfile(profile);
         var acc = accountStorage.save(account);
-        var pro = acc.get().getProfile();
-        pro.setAccount(acc.get());
+        var pro = acc.getProfile();
+        pro.setAccount(acc);
         profileStorage.save(pro);
-        return acc;
 
+        return Optional.of(acc);
     }
 
     public Optional<Account> updateAccount(String profileid, PasswordDTO updated) {
-        var profile = profileStorage.get(profileid);
+        var profile = profileStorage.find(profileid);
         if(profile.isPresent()) {
             var account = profile.get().getAccount();
             if(account.getEmail().equals(updated.getEmail())) {

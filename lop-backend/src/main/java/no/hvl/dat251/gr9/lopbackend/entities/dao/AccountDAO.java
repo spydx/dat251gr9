@@ -13,4 +13,5 @@ public interface AccountDAO extends JpaRepository<Account, String> {
     public List<Account> findAll();
     Optional<Account> findByEmail(String email);
     Optional<Account> findById(String id);
+    public Account update(Account account);
 }
