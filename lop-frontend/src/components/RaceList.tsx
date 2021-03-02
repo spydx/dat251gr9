@@ -8,9 +8,8 @@ const RaceList = (props: RaceListInterface) => {
 
    return (
       <Container>
-         { props.races.map(() => (
-            <RaceEvent/>
-         ))}
+         <RaceEvent/>
+         <RaceEvent/>
       </Container>
    );
 }
