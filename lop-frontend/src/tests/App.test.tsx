@@ -1,6 +1,6 @@
 import React from 'react';
-import { getByTestId, render, screen } from '@testing-library/react';
-import App from './App';
+import { render } from '@testing-library/react';
+import App from '../App';
 import '@testing-library/jest-dom/extend-expect';
 
 // test('renders learn react link', () => {
@@ -9,8 +9,9 @@ import '@testing-library/jest-dom/extend-expect';
 //   expect(linkElement).not.toBeInTheDocument;
 // });
 
-test('Test', () => {
-  render(<App />)
-  const element = screen.getByTestId("text-content");
-  expect(element).toHaveTextContent("Dette er logo.png")
-})
+test('Render App page', () => {
+   const { getByText } = render(<App />);
+   const footer = getByText("DAT251 Gruppe9");
+   expect(footer).toBeInTheDocument();
+
+});
