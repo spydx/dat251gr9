@@ -1,0 +1,28 @@
+# This workflow simply performs CI for the back end on every branch.
+# TODO: should this also contain front end CI
+# Based on https://docs.github.com/en/actions/guides/building-and-testing-java-with-maven
+
+name: Backend CI
+
+on:
+  push:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    name: Backend CI - Build & Test backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Run the Maven verify phase # also does testing
+        run: mvn --batch-mode --update-snapshots --file ./lop-backend/pom.xml verify

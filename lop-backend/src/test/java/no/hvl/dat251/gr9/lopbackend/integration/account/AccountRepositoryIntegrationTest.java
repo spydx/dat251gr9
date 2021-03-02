@@ -31,21 +31,6 @@ class AccountRepositoryIntegrationTest {
 
     private int numberOfAccounts = 0;
 
-    @Test
-    void persistAccount() {
-        var acc = new AccountDAO();
-        var username = "test@gmail.com";
-        var password = "password";
-        acc.setUsername(username);
-        acc.setPassword(password);
-
-        entityManager.persist(acc);
-
-        var found = accountRepository.findByUsername(username);
-        assertThat(found.getUsername())
-                .isEqualTo(acc.getUsername());
-    }
-
     @BeforeEach
     private void setUp() {
         var emails = new String[]{
@@ -63,6 +48,21 @@ class AccountRepositoryIntegrationTest {
             entityManager.persist(acc);
         }
         numberOfAccounts = emails.length;
+    }
+
+    @Test
+    void persistAccount() {
+        var acc = new AccountDAO();
+        var username = "test@gmail.com";
+        var password = "password";
+        acc.setUsername(username);
+        acc.setPassword(password);
+
+        entityManager.persist(acc);
+
+        var found = accountRepository.findByUsername(username);
+        assertThat(found.getUsername())
+                .isEqualTo(acc.getUsername());
     }
 
     @Test
