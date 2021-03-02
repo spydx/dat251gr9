@@ -1,7 +1,7 @@
 # DAT251 Group 9 V2021
 
-[![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
-[![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
+[![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=backend)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=frontend)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
 [![Docker CI/CD to GitHub Container [test]](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
 
 
