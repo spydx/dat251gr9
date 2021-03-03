@@ -3,11 +3,6 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import RaceEvent from '../RaceEvent';
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).not.toBeInTheDocument;
-// });
 
 test('A Race event More info', () => {
    const { getByText } = render(<RaceEvent />);

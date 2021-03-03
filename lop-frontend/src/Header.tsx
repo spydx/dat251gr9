@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navbar, NavbarBrand, Nav} from 'react-bootstrap';
-declare module 'logo.png'
+declare module 'loplogo.png'
 
 
 function Header() {
@@ -8,7 +8,7 @@ function Header() {
     return (
         <Navbar expand="lg" sticky="top">
             <NavbarBrand>
-                <img src="logo.png" width="70px" height="70px" alt="" />
+                <img src="loplogo.png" width="70px" height="70px" alt="" />
             </NavbarBrand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
