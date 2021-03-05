@@ -11,9 +11,9 @@ import java.util.Optional;
 
 
 @Repository
-@Transactional
+//@Transactional
 public interface ProfileDAO extends JpaRepository<Profile, String> {
     public Profile save(Profile profile);
-    public Optional<Profile> find(String id);
+    public Optional<Profile> findById(String id);
     public List<Profile> findAll();
 }

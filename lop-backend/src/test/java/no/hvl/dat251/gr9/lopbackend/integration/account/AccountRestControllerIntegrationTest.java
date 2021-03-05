@@ -63,7 +63,7 @@ class AccountRestControllerIntegrationTest {
         var acc = new Account();
         acc.setPassword(password);
         acc.setEmail(email);
-        accountDAO.saveAndFlush(acc);
+        accountDAO.save(acc);
     }
 
 }

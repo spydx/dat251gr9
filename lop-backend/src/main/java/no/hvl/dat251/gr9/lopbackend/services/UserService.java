@@ -65,12 +65,12 @@ public class UserService {
     }
 
     public Optional<Account> updateAccount(String profileid, PasswordDTO updated) {
-        var profile = profileStorage.find(profileid);
+        var profile = profileStorage.findById(profileid);
         if(profile.isPresent()) {
             var account = profile.get().getAccount();
             if(account.getEmail().equals(updated.getEmail())) {
                 account.setPassword(passwordEncoder.encode(updated.getPassword()));
-                return accountStorage.update(account);
+                return Optional.of(accountStorage.save(account));
             }
             logger.error("Cant find profile for {}", updated );
         }
