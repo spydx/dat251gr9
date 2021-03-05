@@ -43,7 +43,7 @@ public class Account {
                 ", email'" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles='" + roles + '\'' +
-                ", profile'" + profile + '\'' +
+                ", profile'" + profile.getId() + '\'' +
                 '}';
     }
 }

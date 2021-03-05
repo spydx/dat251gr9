@@ -62,18 +62,14 @@ public class AuthenticateController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody AccountDTO newUser) {
-        logger.info("createuser runs");
         var exist = userService.getAccount(newUser.getEmail());
-        logger.info("Exist: " + exist);
 
         if(exist.isPresent()) {
             logger.info("Hopper i exist-ifsetning");
             return new ResponseEntity(new lopAPIResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
-        logger.info("Før userService res");
         var res = userService.add(newUser);
-        logger.info("Res: " + res);
 
         if(res.isPresent()) {
 

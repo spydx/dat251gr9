@@ -53,9 +53,8 @@ public class SetupService {
             );
 
             var create = userService.add(newadmin);
-            logger.info("Create newAdmin: " + create);
             if(create.isPresent())
-                logger.info("Create admin account {}", create.get());
+                logger.info("Created admin account {}", create.get());
             else
                 logger.error("Failed to create admin account");
 
