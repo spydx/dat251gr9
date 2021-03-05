@@ -61,7 +61,56 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http)
             throws Exception {
-        http.authorizeRequests().antMatchers("/**").permitAll();
+        http
+                .csrf()
+                .disable()
+                .cors()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.json",
+                        "/**/*.js"
+                )
+                .permitAll()
+                // Swagger
+                .antMatchers(
+                        "/v2/api-docs",
+                        "/configuration/**",
+                        "/swagger*/**",
+                        "/webjars/**")
+                .permitAll()
+                .antMatchers(
+                        "/api/auth/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/api/devices/connect",
+                        "/api/devices//authenticate")
+                .permitAll()
+                // All GET for public information
+                .antMatchers(HttpMethod.GET,
+                        "/api/polls/**",
+                        "/api/users/**",
+                        "/api/result/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/api/polls/**/vote")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
+        ;
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

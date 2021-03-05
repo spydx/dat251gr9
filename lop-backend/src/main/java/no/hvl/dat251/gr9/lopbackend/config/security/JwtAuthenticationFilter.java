@@ -34,11 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String token = getJwtFromRequest(request);
+            logger.info("Token: " + token);
             if(StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
                 String accountid = tokenProvider.getUserIdFromJwt(token);
 
                 var userDetails = authService.loadUserById(accountid);
-                if(userDetails.isEmpty()) {
+                if (userDetails.isEmpty()) {
                     logger.error("Something whent wrong, cant find a user or device");
                     throw new UsernameNotFoundException("Erroorrrrrr....");
                 }
@@ -60,6 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
+        logger.info("bearer token: " + bearerToken);
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }

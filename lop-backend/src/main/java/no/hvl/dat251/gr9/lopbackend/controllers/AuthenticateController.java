@@ -56,24 +56,29 @@ public class AuthenticateController {
             var profileid = exists.get().getProfile().getId();
             return ResponseEntity.ok(new JwtAuthenticationResponse(token, profileid));
         }
-        logger.error("Loggin error failed for {}", login.getEmail());
+        logger.error("Log-in error failed for {}", login.getEmail());
         return ResponseEntity.ok("failed to find user profile");
     }
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody AccountDTO newUser) {
+        logger.info("createuser runs");
         var exist = userService.getAccount(newUser.getEmail());
+        logger.info("Exist: " + exist);
 
         if(exist.isPresent()) {
+            logger.info("Hopper i exist-ifsetning");
             return new ResponseEntity(new lopAPIResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
-
+        logger.info("Før userService res");
         var res = userService.add(newUser);
+        logger.info("Res: " + res);
+
         if(res.isPresent()) {
 
             URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/api/users/{username}")
+                    .fromCurrentContextPath().path("/api/users/{email}")
                     .buildAndExpand(res.get().getProfile().getId()).toUri();
             return ResponseEntity.created(location).body(new lopAPIResponse(true, "Registred"));
         }

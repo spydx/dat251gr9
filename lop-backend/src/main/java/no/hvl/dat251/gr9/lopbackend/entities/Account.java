@@ -35,4 +35,15 @@ public class Account {
     public Account(){
 
     }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id='" + id + '\'' +
+                ", email'" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                ", profile'" + profile + '\'' +
+                '}';
+    }
 }

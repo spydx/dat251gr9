@@ -23,9 +23,6 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Value("anon@lop.no")
-    private String anonymousUser;
-
     @Autowired
     private AccountDAO accountStorage;
 
