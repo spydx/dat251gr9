@@ -82,7 +82,7 @@ choco install gh
 Run the following command in terminal: 
 
 ```
-docker run -p 3306:3306 -d --name lopdp -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
+docker run -p 3306:3306 -d --name lopdb -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
 ```
 
 To verify that you have a running instance of mariadb you can type:
