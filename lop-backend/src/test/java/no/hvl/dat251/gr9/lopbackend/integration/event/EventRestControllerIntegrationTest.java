@@ -1,12 +1,12 @@
-package no.hvl.dat251.gr9.lopbackend.integration.account;
+package no.hvl.dat251.gr9.lopbackend.integration.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+
+import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +17,18 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -41,10 +37,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
-
-class AccountRestControllerIntegrationTest {
+class EventRestControllerIntegrationTest {
     String AUTHORIZATION = "Authorization";
     String BEARER = "Bearer ";
+
     @Value("${app.email}")
     private String email;
 
@@ -55,41 +51,24 @@ class AccountRestControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private AccountDAO accountDAO;
-
-
-    @AfterEach
-    public void clearEntityManager() { accountDAO.deleteAll();}
+    private CompetitionService competitionService;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Test
-    void whenLoginWithAdmin_thenReturnToken() throws Exception {
-
-        var apiEndpoint = "/api/auth/login";
-        var cred = new LoginDTO();
-        cred.setEmail(email);
-        cred.setPassword(password);
-        ObjectMapper objectMapper = new ObjectMapper();
-        var jsoncred = objectMapper.writeValueAsString(cred);
+    void guestUser_whenGetEvents_thenStatus200() throws Exception {
+        createEvent();
+        var apiEndpoint = "/api/events/";
         mvc.perform(
-                post(apiEndpoint).contentType(MediaType.APPLICATION_JSON)
-                        .content(jsoncred))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.token", not("")))
-                .andExpect(jsonPath("$.tokenType", is("Bearer")))
-                .andExpect(jsonPath("$.profile", not("")));
-
+                get(apiEndpoint).contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
     }
 
     @Test
-    void givenAccount_whenGetAccount_thenStatus200() throws Exception {
-
-        createTestAccount("fossen.kenneth@gmail.com","password");
-        createTestAccount("nix007@uib.no", "123456");
-        var apiEndpoint = "/api/accounts/";
+    void givenAccount_whenGetEvent_thenStatus200() throws Exception {
+        createEvent();
+        var apiEndpoint = "/api/events/";
         var cred = performLogin();
 
         mvc.perform(
@@ -99,11 +78,9 @@ class AccountRestControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
-                .andExpect(jsonPath("$[0].email", is(email)))
-                .andExpect(jsonPath("$[1].email",is("fossen.kenneth@gmail.com")))
-                .andExpect(jsonPath("$[2].email", is("nix007@uib.no"))
-        );
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[0].name", is("Testløp")));
+
     }
 
     private JwtAuthenticationResponse performLogin() throws Exception  {
@@ -122,10 +99,9 @@ class AccountRestControllerIntegrationTest {
                 .andReturn();
         return objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
     }
-    private void createTestAccount(String email, String password) {
-        var acc = new Account();
-        acc.setPassword(password);
-        acc.setEmail(email);
-        accountDAO.save(acc);
+
+    private void createEvent() {
+        var newcomp = new CompetitionDTO("Testløp", new Date(), "ammagaaad", null);
+        competitionService.add(newcomp);
     }
 }
