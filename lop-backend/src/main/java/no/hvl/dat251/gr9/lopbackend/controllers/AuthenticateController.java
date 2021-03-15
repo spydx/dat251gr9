@@ -65,7 +65,6 @@ public class AuthenticateController {
         var exist = userService.getAccount(newUser.getEmail());
 
         if(exist.isPresent()) {
-            logger.info("Hopper i exist-ifsetning");
             return new ResponseEntity(new lopAPIResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }

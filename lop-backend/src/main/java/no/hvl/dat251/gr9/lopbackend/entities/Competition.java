@@ -25,4 +25,14 @@ public class Competition {
 
     @OneToMany
     private List<Race> races;
+
+    public Competition(String name, Date eventStart, String generalInfo) {
+        this.name = name;
+        this.eventStart = eventStart;
+        this.generalInfo = generalInfo;
+    }
+
+    public Competition() {
+
+    }
 }

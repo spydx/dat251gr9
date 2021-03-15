@@ -96,12 +96,11 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
                         "/api/auth/**")
                 .permitAll()
                 .antMatchers(HttpMethod.POST,
-                        "/api/devices/connect",
-                        "/api/devices//authenticate")
+                        "/api/events/**")
                 .permitAll()
                 // All GET for public information
                 .antMatchers(HttpMethod.GET,
-                        "/api/polls/**",
+                        "/api/events/**",
                         "/api/users/**",
                         "/api/result/**")
                 .permitAll()
