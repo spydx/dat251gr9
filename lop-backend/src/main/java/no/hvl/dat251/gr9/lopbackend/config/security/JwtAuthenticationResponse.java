@@ -5,6 +5,8 @@ public class JwtAuthenticationResponse {
     private String tokenType = "Bearer";
     private String profile;
 
+    public JwtAuthenticationResponse() {}
+
     public JwtAuthenticationResponse(String token, String profile) {
         this.token = token;
         this.profile = profile;

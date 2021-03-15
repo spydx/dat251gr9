@@ -3,18 +3,23 @@ package no.hvl.dat251.gr9.lopbackend.integration.account;
 
 import no.hvl.dat251.gr9.lopbackend.entities.Account;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@ActiveProfiles("test")
+@Import(IntegrationTestContextConfiguration.class)
 class AccountDAOIntegrationTest {
 
     @Autowired
@@ -41,7 +46,8 @@ class AccountDAOIntegrationTest {
             acc.setPassword(pwd);
             entityManager.persist(acc);
         }
-        numberOfAccounts = emails.length;
+        // +1 is due to injecting admin through SetupService
+        numberOfAccounts = emails.length+1;
     }
 
     @Test
@@ -59,9 +65,21 @@ class AccountDAOIntegrationTest {
                 .isEqualTo(acc.getEmail());
     }
 
+    /*
+    admin@lop.no
+    email1@gmail.no
+    emial2@hotmail.com
+    email3@uib.no
+    eamil4@hvl.no
+    We are injecting one user through
+     */
     @Test
     void findAllAccounts() {
         var res = accountDAO.findAll();
+        System.out.println("Found accounts");
+        for(var a : res ) {
+            System.out.println(a.getEmail());
+        }
         assertThat(res.size())
                 .isEqualTo(numberOfAccounts);
         assertThat(res.size())
