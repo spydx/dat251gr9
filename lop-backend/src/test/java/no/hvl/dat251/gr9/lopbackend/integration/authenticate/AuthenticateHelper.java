@@ -35,7 +35,8 @@ public class AuthenticateHelper {
         var jsoncred = objectMapper.writeValueAsString(cred);
         var res = mvc.perform(
                 post(apiLoginEndpoint).contentType(MediaType.APPLICATION_JSON)
-                        .content(jsoncred))
+                        .content(jsoncred)
+                        .header("Cache-Control", "no-cache"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

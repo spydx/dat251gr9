@@ -1,4 +1,4 @@
-package no.hvl.dat251.gr9.lopbackend.integration.account;
+package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
 import no.hvl.dat251.gr9.lopbackend.entities.Account;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;

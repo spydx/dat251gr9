@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
+@EnableAutoConfiguration
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class AuthenticateRestControllerIntegrationTest {
@@ -90,6 +90,7 @@ class AuthenticateRestControllerIntegrationTest {
         var jsonbrokenuser = OBJECT_MAPPER.writeValueAsString(brokenuser);
         mvc.perform(
                 post(apiEndpoint)
+                        .header("Cache-Control", "no-cache")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonbrokenuser))
                 .andDo(print())
