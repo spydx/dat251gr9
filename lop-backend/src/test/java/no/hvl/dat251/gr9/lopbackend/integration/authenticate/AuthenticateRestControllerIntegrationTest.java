@@ -2,6 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
@@ -78,19 +79,33 @@ class AuthenticateRestControllerIntegrationTest {
     @Test
     void givenNonExistingUser_whenLogin_thenStatus401() throws Exception {
         var apiEndpoint = "/api/auth/login";
-        var brokenuser = new LoginDTO();
-        brokenuser.setEmail("idonthave@email.com");
-        brokenuser.setPassword("whatIsPassword");
-        var jsonbrokenuser = OBJECT_MAPPER.writeValueAsString(brokenuser);
+        var brokenUser = new LoginDTO();
+        brokenUser.setEmail("idonthave@email.com");
+        brokenUser.setPassword("whatIsPassword");
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(brokenUser);
         mvc.perform(
                 post(apiEndpoint)
                         .header("Cache-Control", "no-cache")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonbrokenuser))
+                        .content(jsonBrokenUser))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
-    //TODO: Test for Register Account
+    @Test
+    void givenNonExistingUser_whenRegister_thenStatus201OK() throws Exception {
+        AccountDTO newAccount = new AccountDTO("test", "test", "test@test.no", "testtest123");
+
+        var apiEndpoint = "/api/auth/register";
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);
+
+        mvc.perform(
+                post(apiEndpoint)
+                    .header("Cache-Control", "no-cache")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonBrokenUser))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
 
 }
