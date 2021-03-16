@@ -2,17 +2,14 @@ package no.hvl.dat251.gr9.lopbackend.integration.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-
 import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

@@ -1,6 +1,5 @@
 package no.hvl.dat251.gr9.lopbackend.integration;
 
-import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.services.SetupService;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
 import org.springframework.context.annotation.Bean;

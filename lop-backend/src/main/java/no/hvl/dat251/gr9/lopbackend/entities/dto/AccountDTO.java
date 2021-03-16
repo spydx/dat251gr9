@@ -2,10 +2,6 @@ package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 
 import lombok.Data;
-import no.hvl.dat251.gr9.lopbackend.entities.Roles;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 public class AccountDTO {

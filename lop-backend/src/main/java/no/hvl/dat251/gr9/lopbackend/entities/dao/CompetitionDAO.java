@@ -1,6 +1,5 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dao;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
 import no.hvl.dat251.gr9.lopbackend.entities.Competition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

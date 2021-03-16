@@ -1,6 +1,5 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
-import io.swagger.models.Response;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
 import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
 import org.slf4j.Logger;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("api/events")

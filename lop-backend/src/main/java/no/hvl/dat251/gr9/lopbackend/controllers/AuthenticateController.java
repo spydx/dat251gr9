@@ -1,8 +1,8 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
 import no.hvl.dat251.gr9.lopbackend.config.response.lopAPIResponse;
-import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
+import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
