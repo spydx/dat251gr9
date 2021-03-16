@@ -108,4 +108,20 @@ class AuthenticateRestControllerIntegrationTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    void givenExistingUser_whenRegister_thenStatus400BadRequest() throws Exception {
+        AccountDTO newAccount = new AccountDTO("test", "test", email, "testtest123");
+
+        var apiEndpoint = "/api/auth/register";
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);
+
+        mvc.perform(
+                post(apiEndpoint)
+                        .header("Cache-Control", "no-cache")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBrokenUser))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
 }
