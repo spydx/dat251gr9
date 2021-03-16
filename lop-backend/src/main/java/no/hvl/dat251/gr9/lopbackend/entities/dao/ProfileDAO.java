@@ -1,24 +1,19 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dao;
 
-import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import no.hvl.dat251.gr9.lopbackend.entities.Profile;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Entity
-@Data
-public class ProfileDAO {
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private Date birthdate;
-    private String address;
-    private String city;
 
+@Repository
+//@Transactional
+public interface ProfileDAO extends JpaRepository<Profile, String> {
+    public Profile save(Profile profile);
+    public Optional<Profile> findById(String id);
+    public List<Profile> findAll();
 }

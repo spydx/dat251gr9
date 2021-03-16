@@ -1,0 +1,7 @@
+### GET request with a header
+GET http://localhost:8080/api/events/
+Accept: application/json
+
+### GET request with parameter
+GET http://localhost:8080/api/events/7c89a971-20d3-4258-890e-a7754fa7bf43
+Accept: application/json
