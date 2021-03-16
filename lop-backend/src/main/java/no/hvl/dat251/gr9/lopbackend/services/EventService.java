@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CompetitionService {
+public class EventService {
 
     @Autowired
     private CompetitionDAO competitionStorage;
 
-    private final Logger logger = LoggerFactory.getLogger(CompetitionService.class);
+    private final Logger logger = LoggerFactory.getLogger(EventService.class);
 
     public Optional<List<Competition>> getAllCompetitions() {
         return Optional.of(competitionStorage.findAll());

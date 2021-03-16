@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
 import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
-import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
+import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     @Autowired
-    private CompetitionService competitionService;
+    private EventService eventService;
 
     private final Logger logger = LoggerFactory.getLogger(AuthenticateController.class);
 
     @GetMapping(value = "/")
     public ResponseEntity<?> getAllCompetition() {
-        var res = competitionService.getAllCompetitions();
+        var res = eventService.getAllCompetitions();
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
@@ -30,7 +30,7 @@ public class EventController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCompetition(@PathVariable("id") final String id) {
-        var res = competitionService.getCompetition(id);
+        var res = eventService.getCompetition(id);
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
@@ -40,7 +40,7 @@ public class EventController {
 
     @PostMapping(value = "/")
     public ResponseEntity<?> createCompetition(@RequestBody CompetitionDTO newComp) {
-        var res = competitionService.add(newComp);
+        var res = eventService.add(newComp);
 
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);

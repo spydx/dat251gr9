@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
-import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
+import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ class EventRestControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private CompetitionService competitionService;
+    private EventService eventService;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -100,6 +100,6 @@ class EventRestControllerIntegrationTest {
 
     private void createEvent() {
         var newcomp = new CompetitionDTO("Testløp", new Date(), "ammagaaad", null);
-        competitionService.add(newcomp);
+        eventService.add(newcomp);
     }
 }
