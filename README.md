@@ -81,14 +81,23 @@ choco install gh
 ### Pulling the mariadb image
 Run the following command in terminal: 
 
-```
+```shell
 docker run -p 3306:3306 -d --name lopdb -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
 ```
 
 To verify that you have a running instance of mariadb you can type:
 
-``` 
+```shell
 docker ps 
+```
+
+You can also use the commandline tool `docker-compose` to start the database. (It uses a slightly different image)
+
+```shell
+<start>
+dat251gr9/ $ docker-compose up -d lop-db
+<stop>
+dat251gr9/ $ docker-compose down
 ```
 
 ### Connect to the database in IntelliJ
@@ -98,6 +107,14 @@ From this press the "+"-sign -> Data Source -> MariaDB.
 
 ***If you on the bottom of the page get a warning-sign saying: "Missing drivers", press on the "Install drivers" button.***
 
-Then you just need to fill out the field with following: ```User: root```, and ```password: password```. 
+Then you just need to fill out the field with following: ```User: root```, and ```password: password```.
 
-We then can test the connection, if its all good press apply and ok and you are good to go! 
+We then can test the connection, if its all good press apply and ok and you are good to go!
+
+### Check the deployment with Heroku
+
+If you access to the Heroku engine, you can use the following command on the commandline to get the status of the running application.
+
+```shell
+> heroku logs --tail -a lop-backend
+```
