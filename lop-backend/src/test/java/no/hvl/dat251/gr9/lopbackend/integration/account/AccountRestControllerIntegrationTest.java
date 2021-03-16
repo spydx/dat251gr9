@@ -38,13 +38,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
+@EnableAutoConfiguration
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class AccountRestControllerIntegrationTest{
     String AUTHORIZATION = "Authorization";
     String BEARER = "Bearer ";
-
+    String apiEndpoint = "/api/accounts/";
     @Value("${app.email}")
     private String email;
 
@@ -63,10 +63,7 @@ class AccountRestControllerIntegrationTest{
     @AfterEach
     public void clearEntityManager() { accountDAO.deleteAll();}
 
-    @BeforeEach
-    public void loadMvcCred()  throws Exception {
-        cred = AuthenticateHelper.performLogin(mvc, email, password);
-    }
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Test
@@ -74,9 +71,7 @@ class AccountRestControllerIntegrationTest{
 
         createTestAccount("fossen.kenneth@gmail.com","password");
         createTestAccount("nix007@uib.no", "123456");
-        var apiEndpoint = "/api/accounts/";
-
-
+        cred = AuthenticateHelper.performLogin(mvc, email, password);
         mvc.perform(
                 get(apiEndpoint)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,6 +84,15 @@ class AccountRestControllerIntegrationTest{
                 .andExpect(jsonPath("$[1].email",is("fossen.kenneth@gmail.com")))
                 .andExpect(jsonPath("$[2].email", is("nix007@uib.no"))
         );
+    }
+
+    @Test
+    void givenAnonymous_whenGetAccount_thenStatusUnauthorized401() throws Exception {
+        mvc.perform(
+                get(apiEndpoint)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 
     private void createTestAccount(String email, String password) {

@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class AuthenticateRestControllerIntegrationTest {
@@ -50,23 +51,18 @@ class AuthenticateRestControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
-
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    @AfterEach
-    public void reset_mock() {
-
-    }
 
     @Test
     void givenCredentials_whenLogin_thenStatus200_andToken() throws Exception  {
+
         var apiLoginEndpoint = "/api/auth/login";
         var cred = new LoginDTO();
         cred.setEmail(email);
         cred.setPassword(password);
         ObjectMapper objectMapper = new ObjectMapper();
         var jsoncred = objectMapper.writeValueAsString(cred);
-        var res = mvc.perform(
+        mvc.perform(
                 post(apiLoginEndpoint).contentType(MediaType.APPLICATION_JSON)
                         .content(jsoncred)
                         .header("Cache-Control", "no-cache"))
@@ -76,9 +72,7 @@ class AuthenticateRestControllerIntegrationTest {
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.token", not("")))
                 .andExpect(jsonPath("$.tokenType", is(BEARER)))
-                .andExpect(jsonPath("$.profile", not("")))
-                .andReturn();
-        var jwt = objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
+                .andExpect(jsonPath("$.profile", not("")));
     }
 
     @Test
