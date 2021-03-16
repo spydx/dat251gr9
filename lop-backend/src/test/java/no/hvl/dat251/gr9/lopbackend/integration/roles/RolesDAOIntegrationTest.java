@@ -1,13 +1,10 @@
 package no.hvl.dat251.gr9.lopbackend.integration.roles;
 
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
-import no.hvl.dat251.gr9.lopbackend.entities.Roles;
+
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
 import no.hvl.dat251.gr9.lopbackend.services.SetupService;
-import org.aspectj.lang.annotation.Before;
-import org.h2.engine.Role;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +16,7 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
