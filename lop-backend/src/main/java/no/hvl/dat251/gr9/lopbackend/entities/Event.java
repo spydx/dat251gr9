@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Competition {
+public class Event {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -26,13 +26,13 @@ public class Competition {
     @OneToMany
     private List<Race> races;
 
-    public Competition(String name, Date eventStart, String generalInfo) {
+    public Event(String name, Date eventStart, String generalInfo) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;
     }
 
-    public Competition() {
+    public Event() {
 
     }
 }

@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class CompetitionDTO {
+public class EventDTO {
     private String name;
     private Date eventStart;
     private String generalInfo;
     private List<Race> races;
 
-    public CompetitionDTO(String name, Date eventStart, String generalInfo, List<Race> races) {
+    public EventDTO(String name, Date eventStart, String generalInfo, List<Race> races) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;

@@ -1,8 +1,8 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Competition;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.CompetitionDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.Event;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +15,32 @@ import java.util.Optional;
 public class EventService {
 
     @Autowired
-    private CompetitionDAO competitionStorage;
+    private EventDAO eventStorage;
 
     private final Logger logger = LoggerFactory.getLogger(EventService.class);
 
-    public Optional<List<Competition>> getAllCompetitions() {
-        return Optional.of(competitionStorage.findAll());
+    public Optional<List<Event>> getAllEvents() {
+        return Optional.of(eventStorage.findAll());
     }
 
-    public Optional<Competition> getCompetition(String id) { return competitionStorage.findById(id); }
+    public Optional<Event> getEvent(String id) { return eventStorage.findById(id); }
 
-    public Optional<Competition> add(CompetitionDTO newComp) {
-        var competition = new Competition(newComp.getName(), newComp.getEventStart(), newComp.getGeneralInfo());
-        var comp = competitionStorage.save(competition);
+    public Optional<Event> add(EventDTO newComp) {
+        var competition = new Event(newComp.getName(), newComp.getEventStart(), newComp.getGeneralInfo());
+        var comp = eventStorage.save(competition);
 
         return Optional.of(comp);
 
     }
 
-    public Optional<Competition> updateCompetition(String id, CompetitionDTO updated) {
-        var competition = competitionStorage.findById(id);
+    public Optional<Event> updateEvent(String id, EventDTO updated) {
+        var competition = eventStorage.findById(id);
         if(competition.isPresent()) {
             competition.get().setName(updated.getName());
             competition.get().setEventStart(updated.getEventStart());
             competition.get().setGeneralInfo(updated.getGeneralInfo());
 
-            return Optional.of(competitionStorage.save(competition.get()));
+            return Optional.of(eventStorage.save(competition.get()));
         }
         logger.error("Cant find competition for {}", updated);
 

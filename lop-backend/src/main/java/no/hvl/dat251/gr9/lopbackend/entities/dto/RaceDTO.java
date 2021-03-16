@@ -1,22 +1,11 @@
-package no.hvl.dat251.gr9.lopbackend.entities;
+package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
 @Data
-public class Race {
-
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid2")
-    private String id;
-
+public class RaceDTO {
     private Float distance;
     private Date starttime;
     private Float elevation;
@@ -28,9 +17,8 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
 
-
-    public Race(Float distance, Date starttime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
-                Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
+    public RaceDTO(Float distance, Date starttime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
+                   Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
         this.starttime = starttime;
         this.elevation = elevation;
@@ -41,9 +29,5 @@ public class Race {
         this.multiSport = multiSport;
         this.obstacleRun = obstacleRun;
         this.info = info;
-    }
-
-    public Race() {
-
     }
 }

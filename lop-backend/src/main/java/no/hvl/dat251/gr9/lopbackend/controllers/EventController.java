@@ -1,6 +1,6 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class EventController {
 
     @GetMapping(value = "/")
     public ResponseEntity<?> getAllCompetition() {
-        var res = eventService.getAllCompetitions();
+        var res = eventService.getAllEvents();
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
@@ -30,7 +30,7 @@ public class EventController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCompetition(@PathVariable("id") final String id) {
-        var res = eventService.getCompetition(id);
+        var res = eventService.getEvent(id);
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
@@ -39,7 +39,7 @@ public class EventController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createCompetition(@RequestBody CompetitionDTO newComp) {
+    public ResponseEntity<?> createCompetition(@RequestBody EventDTO newComp) {
         var res = eventService.add(newComp);
 
         if(res.isPresent()) {

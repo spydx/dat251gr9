@@ -2,7 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.integration.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import org.junit.jupiter.api.Test;
@@ -99,7 +99,7 @@ class EventRestControllerIntegrationTest {
     }
 
     private void createEvent() {
-        var newcomp = new CompetitionDTO("Testløp", new Date(), "ammagaaad", null);
+        var newcomp = new EventDTO("Testløp", new Date(), "ammagaaad", null);
         eventService.add(newcomp);
     }
 }
