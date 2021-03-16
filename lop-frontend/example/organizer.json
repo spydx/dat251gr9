@@ -1,0 +1,22 @@
+{
+   "orgid": "6466f804-c677-4a03-9ab9-06da5958e6be",
+   "name" : "Norna-Salhus",
+   "contactinfo": {
+      "name": "Tom Jensen"
+   },
+   "address": {
+      "street": "",
+      "postbox": "Postboks 111; Ulset",
+      "postnumber": 5873
+   },
+   "contacts": [
+      {
+         "name": "Tom Jensen",
+         "email": "tom@jensen.no",
+         "phone": "+4799999999"
+      }
+   ],
+   "races": [
+      "ce420a76-7573-4dc4-bf9c-b573cd0c8271"
+   ]
+}
