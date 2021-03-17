@@ -1,7 +1,9 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
+import no.hvl.dat251.gr9.lopbackend.services.RaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private RaceService raceService;
 
     private final Logger logger = LoggerFactory.getLogger(AuthenticateController.class);
 
@@ -46,6 +51,16 @@ public class EventController {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
         logger.error("Could not create competition", newComp);
-        return new ResponseEntity<>("Could not create new competition", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Could not create new competition", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/{id}/race")
+    public ResponseEntity<?> createRace(@RequestBody RaceDTO newRace, String eventId) {
+        var res = raceService.add(newRace, eventId);
+        if(res.isPresent()) {
+            return new ResponseEntity<>(res.get(), HttpStatus.OK);
+        }
+        logger.error("Could not create race in event with following id: ", eventId);
+        return new ResponseEntity<>("Could not create race in event with following id: " + eventId, HttpStatus.BAD_REQUEST);
     }
 }
