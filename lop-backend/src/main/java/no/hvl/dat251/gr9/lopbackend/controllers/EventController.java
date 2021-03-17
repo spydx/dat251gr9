@@ -24,7 +24,7 @@ public class EventController {
     private final Logger logger = LoggerFactory.getLogger(AuthenticateController.class);
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> getAllCompetition() {
+    public ResponseEntity<?> getAllEvents() {
         var res = eventService.getAllEvents();
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
@@ -34,7 +34,7 @@ public class EventController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getCompetition(@PathVariable("id") final String id) {
+    public ResponseEntity<?> getEvent(@PathVariable("id") final String id) {
         var res = eventService.getEvent(id);
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
@@ -44,14 +44,14 @@ public class EventController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createCompetition(@RequestBody EventDTO newComp) {
+    public ResponseEntity<?> createEvent(@RequestBody EventDTO newComp) {
         var res = eventService.add(newComp);
 
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
         logger.error("Could not create competition", newComp);
-        return new ResponseEntity<>("Could not create new competition", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Could not create new event", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/{id}/race")
