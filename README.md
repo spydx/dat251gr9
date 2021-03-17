@@ -1,13 +1,10 @@
 # DAT251 Group 9 V2021
 
-[![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=backend)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
-[![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=frontend)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
-
-[![Release Backend Test](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml)
-[![Release Frontend Test](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml)
-[![Release Docker CI/CD to GitHub Container ](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml)
-
-
+| Branch | Status |
+|-|-|
+| main | [![Release Backend Test](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml) [![Release Frontend Test](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml) [![Release Docker CI/CD to GitHub Container ](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/spydx/dat251gr9/actions/workflows/docker-publish.yml) |
+| backend | [![Backend CI](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml/badge.svg?branch=backend)](https://github.com/spydx/dat251gr9/actions/workflows/backend-ci.yml) |
+| frontend | [![Frontend CI](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml/badge.svg?branch=frontend)](https://github.com/spydx/dat251gr9/actions/workflows/frontend-ci.yml) |
 
 Group project for DAT251 Group 9 Spring 2021
 
@@ -50,8 +47,12 @@ Group project for DAT251 Group 9 Spring 2021
 
 ## Architecture diagram
 
+![](Assignments/Architect%20diagram.png)
+
 ## Metrics
-<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=193482369&amp;format=image"></img>
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=719019434&format=image"></img>
+
+
 
 ## Misc
 
@@ -76,3 +77,29 @@ choco install gh
 ```
 
 [Other instuctions for GH](https://github.com/cli/cli#installation)
+
+## Set-up local database with Docker
+
+### Pulling the mariadb image
+Run the following command in terminal: 
+
+```
+docker run -p 3306:3306 -d --name lopdb -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
+```
+
+To verify that you have a running instance of mariadb you can type:
+
+``` 
+docker ps 
+```
+
+### Connect to the database in IntelliJ
+On the right hand side in IntelliJ you should se a module called "Database". 
+
+From this press the "+"-sign -> Data Source -> MariaDB. 
+
+***If you on the bottom of the page get a warning-sign saying: "Missing drivers", press on the "Install drivers" button.***
+
+Then you just need to fill out the field with following: ```User: root```, and ```password: password```. 
+
+We then can test the connection, if its all good press apply and ok and you are good to go! 
