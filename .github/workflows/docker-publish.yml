@@ -34,8 +34,7 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build lop-frontend/ --file lop-frontend/Dockerfile
-            docker build lop-backend/ --file lop-backend/Dockerfile
+            
           fi
 
   # Push image to GitHub Packages.
