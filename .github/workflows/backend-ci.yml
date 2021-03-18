@@ -8,6 +8,8 @@ on:
   push:
     branchs: 
     - backend
+env:
+  IMAGE_BACK: lop-api
 
 jobs:
   main:
@@ -28,3 +30,40 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run the Maven verify phase # also does testing
         run: mvn --batch-mode --update-snapshots --file ./lop-backend/pom.xml verify
+  push:
+    # Ensure test job passes before pushing image.
+    needs: main
+    name: Docker - Build and push BACKEND-API
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build API
+        run: docker build lop-backend/ --file lop-backend/Dockerfile --tag $IMAGE_BACK
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          
+      - name: Push image BACKEND
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_BACK
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=development
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag $IMAGE_BACK $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
