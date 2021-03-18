@@ -7,7 +7,7 @@ name: Backend CI
 on:
   push:
     branchs: 
-    - backend
+      - backend
 env:
   IMAGE_BACK: lop-api-dev
 
