@@ -9,7 +9,7 @@ on:
     branchs: 
     - backend
 env:
-  IMAGE_BACK: lop-api
+  IMAGE_BACK: lop-api-dev
 
 jobs:
   main:
