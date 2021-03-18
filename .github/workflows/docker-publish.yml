@@ -33,8 +33,6 @@ jobs:
           if [ -f docker-compose.test.yml ]; then
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
-          else
-            
           fi
 
   # Push image to GitHub Packages.
