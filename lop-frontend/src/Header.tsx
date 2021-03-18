@@ -22,13 +22,3 @@ function Header() {
 }
 
 export default Header;
-
-/*<Container>
-            <Row>
-                <Image src="logo.png" ></Image>
-            </Row>
-            <div>
-                
-             <span data-testid="text-content" >Dette er logo.png</span>
-            </div>
-        </Container>*/
