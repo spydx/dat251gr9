@@ -47,7 +47,7 @@ public class RaceService {
         var event = eventStorage.findById(eventId);
         if(event.isPresent()) {
             var race = new Race(newRace.getDistance(),
-                    newRace.getStarttime(),
+                    newRace.getStartTime(),
                     newRace.getElevation(),
                     newRace.getHillRun(),
                     newRace.getChildren(),
@@ -62,7 +62,6 @@ public class RaceService {
             EventDTO newEvent = new EventDTO(ev.getName(), ev.getEventStart(), ev.getGeneralInfo(), ev.getRaces());
             newEvent.getRaces().add(r);
             eventService.updateEvent(eventId, newEvent);
-
             return Optional.of(r);
         }
         logger.error("Could not add the race to the event: ", eventId);

@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
@@ -122,11 +123,11 @@ class EventRestControllerIntegrationTest {
     }
 
     private void createEventAndRace() {
-        var newcomp = new EventDTO("Testløp", new Date(), "ammagaaad", null);
+        var newcomp = new EventDTO("Testløp", new GregorianCalendar(), "ammagaaad", null);
 
         var newRace = new RaceDTO(
                 1.0f,
-                new Date(),
+                new GregorianCalendar(),
                 1.0f,
                 true,
                 true,

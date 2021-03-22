@@ -6,7 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.ManyToOne;
+import java.util.GregorianCalendar;
 
 @Entity
 @Data
@@ -17,9 +18,9 @@ public class Race {
     @GenericGenerator(name="system-uuid", strategy = "uuid2")
     private String id;
 
-    private Float distance;
-    private Date starttime;
-    private Float elevation;
+    private Float distance; //in Km
+    private GregorianCalendar startTime; // in year, month, day, hours (0-23), minutes
+    private Float elevation; //in meters
     private Boolean hillRun;
     private Boolean children;
     private Boolean womenOnly;
@@ -28,11 +29,13 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
 
+    @ManyToOne
+    private Event event;
 
-    public Race(Float distance, Date starttime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
+    public Race(Float distance, GregorianCalendar startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                 Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
-        this.starttime = starttime;
+        this.startTime = startTime;
         this.elevation = elevation;
         this.hillRun = hillRun;
         this.children = children;

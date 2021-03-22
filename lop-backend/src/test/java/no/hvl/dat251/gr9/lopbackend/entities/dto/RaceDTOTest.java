@@ -4,6 +4,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.Race;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +14,7 @@ public class RaceDTOTest {
     void raceGetsetTest(){
 
         Float distance = 1.0f;
-        Date starttime = new Date();
+        GregorianCalendar startTime = new GregorianCalendar();
         Float elevation = 1.0f;
         Boolean hillRun = true;
         Boolean children = true;
@@ -26,7 +27,7 @@ public class RaceDTOTest {
         var race = new RaceDTO();
 
         race.setDistance(distance);
-        race.setStarttime(starttime);
+        race.setStartTime(startTime);
         race.setElevation(elevation);
         race.setHillRun(hillRun);
         race.setChildren(children);
@@ -38,7 +39,7 @@ public class RaceDTOTest {
 
 
         assertEquals(distance, race.getDistance());
-        assertEquals(starttime, race.getStarttime());
+        assertEquals(startTime, race.getStartTime());
         assertEquals(elevation, race.getElevation());
         assertEquals(hillRun, race.getHillRun());
         assertEquals(children, race.getChildren());
