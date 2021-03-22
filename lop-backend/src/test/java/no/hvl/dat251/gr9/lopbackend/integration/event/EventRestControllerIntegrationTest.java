@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
+import no.hvl.dat251.gr9.lopbackend.services.RaceService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,11 +52,14 @@ class EventRestControllerIntegrationTest {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private RaceService raceService;
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Test
     void guestUser_whenGetEvents_thenStatus200() throws Exception {
-        createEvent();
+        createEventAndRace();
         var apiEndpoint = "/api/events/";
         mvc.perform(
                 get(apiEndpoint).contentType(MediaType.APPLICATION_JSON))
@@ -65,7 +69,7 @@ class EventRestControllerIntegrationTest {
 
     @Test
     void givenAccount_whenGetEvent_thenStatus200() throws Exception {
-        createEvent();
+        createEventAndRace();
         var apiEndpoint = "/api/events/";
         var cred = performLogin();
 
@@ -78,6 +82,25 @@ class EventRestControllerIntegrationTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$[0].name", is("Testløp")));
+
+    }
+
+    @Test
+    void givenAccount_whenGetEvent_EventContainsRace() throws Exception {
+        createEventAndRace();
+        var apiEndpoint = "/api/events/";
+        var cred = performLogin();
+
+        mvc.perform(
+                get(apiEndpoint)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(AUTHORIZATION, BEARER + cred.getToken()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[0].name", is("Testløp")))
+                .andExpect((jsonPath("$[0].races", hasSize(greaterThan(0)))));
 
     }
 
@@ -98,8 +121,23 @@ class EventRestControllerIntegrationTest {
         return objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
     }
 
-    private void createEvent() {
+    private void createEventAndRace() {
         var newcomp = new EventDTO("Testløp", new Date(), "ammagaaad", null);
-        eventService.add(newcomp);
+
+        var newRace = new RaceDTO(
+                1.0f,
+                new Date(),
+                1.0f,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                ":)"
+        );
+
+        var event = eventService.add(newcomp);
+        raceService.add(newRace, event.get().getId());
     }
 }

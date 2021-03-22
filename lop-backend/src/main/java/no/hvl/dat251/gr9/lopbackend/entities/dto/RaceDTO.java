@@ -30,4 +30,6 @@ public class RaceDTO {
         this.obstacleRun = obstacleRun;
         this.info = info;
     }
+
+    public RaceDTO(){}
 }
