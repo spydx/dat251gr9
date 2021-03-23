@@ -84,7 +84,7 @@ class EventRestControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$[0].name", is("Testløp")));
+                .andExpect(jsonPath("$[0].name", is("Test Marathon")));
 
     }
 
@@ -102,7 +102,7 @@ class EventRestControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$[0].name", is("Testløp")))
+                .andExpect(jsonPath("$[0].name", is("Test Marathon")))
                 .andExpect((jsonPath("$[0].races", hasSize(greaterThan(0)))));
 
     }
