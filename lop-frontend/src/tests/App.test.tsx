@@ -3,13 +3,7 @@ import App from '../App';
 import '@testing-library/jest-dom/extend-expect';
 import {Provider } from 'react-redux';
 
-import { store } from '../app/store';
-
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).not.toBeInTheDocument;
-// });
+import { store } from '../store';
 
 test('Render App page', () => {
    const { getByText } = render(
