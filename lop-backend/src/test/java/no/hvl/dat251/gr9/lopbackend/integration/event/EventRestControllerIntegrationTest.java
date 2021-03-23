@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -128,7 +129,7 @@ class EventRestControllerIntegrationTest {
 
         var newRace = new RaceDTO(
                 1.0f,
-                LocalDate.now(),
+                LocalTime.now(),
                 1.0f,
                 true,
                 true,

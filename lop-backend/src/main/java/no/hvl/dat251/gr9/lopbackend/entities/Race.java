@@ -6,10 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalTime;
+
 
 @Entity
 @Data
@@ -21,7 +19,7 @@ public class Race {
     private String id;
 
     private Float distance; //in Km
-    private LocalDate startTime; // in year, month, day, hours (0-23), minutes
+    private LocalTime startTime; // in year, month, day, hours (0-23), minutes
     private Float elevation; //in meters
     private Boolean hillRun;
     private Boolean children;
@@ -31,7 +29,7 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
 
-    public Race(Float distance, LocalDate startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
+    public Race(Float distance, LocalTime startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                 Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
         this.startTime = startTime;

@@ -1,11 +1,8 @@
 package no.hvl.dat251.gr9.lopbackend.entities;
 
-import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +12,7 @@ public class RaceTest {
     void raceGetsetTest(){
 
         Float distance = 1.0f;
-        LocalDate startTime = LocalDate.now();
+        LocalTime startTime = LocalTime.now();
         Float elevation = 1.0f;
         Boolean hillRun = true;
         Boolean children = true;
