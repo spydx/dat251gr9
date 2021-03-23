@@ -11,12 +11,14 @@ import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -77,34 +79,40 @@ public class SetupService {
             logger.info("Account with email: {} already exist", exist.get().getEmail());
 
         }
-        List<Race> bcmRaces = new ArrayList<>();
-        GregorianCalendar bcmDate = new GregorianCalendar(2021,Calendar.APRIL,  24);
-        var bcmEvent = new EventDTO("Bergen City Marathon", bcmDate, "info", bcmRaces);
-        logger.info("Created event \"Bergen City Marathon\"");
-        var createBcmEvent = eventService.add(bcmEvent);
-        if(createBcmEvent.isPresent()){
-            logger.info("Created new event " + createBcmEvent.get());
 
-            GregorianCalendar bcmMarathonStart = new GregorianCalendar(2021, Calendar.APRIL, 24, 8, 0);
-            var bcmMarathonRace = new RaceDTO(42.195f, bcmMarathonStart, 500f, false,
+
+        var testEvent = new EventDTO("Test Marathon", LocalDate.now(), "info", new ArrayList<>());
+
+        var exists = eventStorage.findEventByName("Test Marathon");
+        if(exists.isPresent()){ // skipp if event exists
+            logger.info("Event " + testEvent.getName() + " already exists. Skipping initialisation!");
+            return;
+        }
+
+        var createTestEvent = eventService.add(testEvent);
+        if(createTestEvent.isPresent()){
+            logger.info("Created new event " + createTestEvent.get());
+
+            LocalDate testMarathonStart = LocalDate.of(2021, 4, 24);
+            var testMarathonRace = new RaceDTO(42.195f, testMarathonStart, 500f, false,
                     false,false, false, false, false, "info");
-            var createBcmMarathonRace= raceService.add(bcmMarathonRace, createBcmEvent.get().getId());
+            var creatTestMarathonRace= raceService.add(testMarathonRace, createTestEvent.get().getId());
 
-            if(createBcmMarathonRace.isPresent()){
-                logger.info("Created marathon race for BCM: " + createBcmMarathonRace.get());
+            if(creatTestMarathonRace.isPresent()){
+                logger.info("Created marathon race for BCM: " + creatTestMarathonRace.get());
             }else{
                 logger.error("Failed to create marathon race for BCM");
             }
 
-            GregorianCalendar bcmHalfMarathonStart = new GregorianCalendar(2021, Calendar.APRIL, 24, 10, 0);
-            var bcmHalfMarathonRace = new RaceDTO(21.0975f, bcmHalfMarathonStart, 250f, false,
+            LocalDate testHalfMarathonStart = LocalDate.of(2021, 4, 24);
+            var testHalfMarathonRace = new RaceDTO(21.0975f, testHalfMarathonStart, 250f, false,
                     false,false, false, false, false, "info");
-            var createBcmHalfMarathonRace= raceService.add(bcmHalfMarathonRace, createBcmEvent.get().getId());
+            var createTestHalfMarathonRace= raceService.add(testHalfMarathonRace, createTestEvent.get().getId());
 
-            if(createBcmHalfMarathonRace.isPresent()){
-                logger.info("Created half marathon race for BCM: " + createBcmHalfMarathonRace.get());
+            if(createTestHalfMarathonRace.isPresent()){
+                logger.info("Created half marathon race for BCM: " + createTestHalfMarathonRace.get());
             }else{
-                logger.error("Failed to create half marathon race for BCM");
+                logger.error("Failed to create half marathon race for Test event");
             }
 
         }else {

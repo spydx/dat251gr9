@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 @Entity
@@ -19,7 +21,7 @@ public class Race {
     private String id;
 
     private Float distance; //in Km
-    private GregorianCalendar startTime; // in year, month, day, hours (0-23), minutes
+    private LocalDate startTime; // in year, month, day, hours (0-23), minutes
     private Float elevation; //in meters
     private Boolean hillRun;
     private Boolean children;
@@ -29,10 +31,7 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
 
-    @ManyToOne
-    private Event event;
-
-    public Race(Float distance, GregorianCalendar startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
+    public Race(Float distance, LocalDate startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                 Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
         this.startTime = startTime;

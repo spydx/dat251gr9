@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface EventDAO extends JpaRepository<Event, String> {
     public Event save(Event competition);
     Optional<Event> findById(String id);
+    Optional<Event> findEventByName(String name);
     public List<Event> findAll();
 
 }

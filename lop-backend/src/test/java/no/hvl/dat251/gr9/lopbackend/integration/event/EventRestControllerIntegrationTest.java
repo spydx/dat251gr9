@@ -20,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -123,11 +124,11 @@ class EventRestControllerIntegrationTest {
     }
 
     private void createEventAndRace() {
-        var newcomp = new EventDTO("Testløp", new GregorianCalendar(), "ammagaaad", null);
+        var newcomp = new EventDTO("Testløp", LocalDate.now(), "ammagaaad", null);
 
         var newRace = new RaceDTO(
                 1.0f,
-                new GregorianCalendar(),
+                LocalDate.now(),
                 1.0f,
                 true,
                 true,

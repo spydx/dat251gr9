@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -20,13 +22,13 @@ public class Event {
     private String id;
 
     private String name;
-    private GregorianCalendar eventStart;
+    private LocalDate eventStart;
     private String generalInfo;
 
     @OneToMany
     private List<Race> races;
 
-    public Event(String name, GregorianCalendar eventStart, String generalInfo) {
+    public Event(String name, LocalDate eventStart, String generalInfo) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;

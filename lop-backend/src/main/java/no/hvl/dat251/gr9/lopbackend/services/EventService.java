@@ -47,16 +47,4 @@ public class EventService {
 
         return Optional.empty();
     }
-
-    public Optional<Event> addRaceToEvent(String id, Race race) {
-        var competition = eventStorage.findById(id);
-        if(competition.isPresent()) {
-            competition.get().getRaces().add(race);
-            return Optional.of(eventStorage.save(competition.get()));
-        }
-        logger.error("Cant find competition for {}", race);
-
-        return Optional.empty();
-    }
-
 }

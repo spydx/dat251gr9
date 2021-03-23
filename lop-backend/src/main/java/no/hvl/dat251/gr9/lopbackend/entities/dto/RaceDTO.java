@@ -2,13 +2,14 @@ package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 @Data
 public class RaceDTO {
     private Float distance;
-    private GregorianCalendar startTime;
+    private LocalDate startTime;
     private Float elevation;
     private Boolean hillRun;
     private Boolean children;
@@ -18,7 +19,7 @@ public class RaceDTO {
     private Boolean obstacleRun;
     private String info;
 
-    public RaceDTO(Float distance, GregorianCalendar startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
+    public RaceDTO(Float distance, LocalDate startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                    Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
         this.startTime = startTime;
