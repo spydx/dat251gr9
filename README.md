@@ -47,12 +47,46 @@ Group project for DAT251 Group 9 Spring 2021
 
 ## Architecture diagram
 
+![](Assignments/Architect%20diagram.png)
+
 ## Metrics
 <img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=719019434&format=image"></img>
 
 
 
 ## Misc
+
+## Instructions for development on Frontend
+
+1. Create an Access Token on your account
+[Personal access token](https://github.com/settings/tokens)
+Remember to add:
+`read:packages` and all repo actions.
+2. Configure Docker to use `docker.pkg.github.com`
+
+```shell
+> cat ~/TOKEN.txt | docker login https://docker.pkg.github.com -u GITUSERNAME --password-stdin
+Login Succeeded
+> rm ~/TOKEN.txt
+```
+
+To start development environment
+
+```shell
+> docker-compose pull && docker-compose up
+```
+[Documentation](https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages)
+
+## Instructions for development on Backend
+
+No need to create a personal token.
+But if you are to also do Frontend, then you have to do it.
+
+Bring up the database:
+
+```shell
+> docker-compose up -d lop-db
+```
 
 ### Creating issues list for Sprint log
 
