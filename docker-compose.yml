@@ -2,7 +2,7 @@ version : '3.7'
 
 services:
    lop-api:
-      image: docker.pkg.github.com/spydx/dat251gr9/lop-api-dev:development
+      image: docker.pkg.github.com/spydx/dat251gr9/lop-api-dev:backend
       #build: 
       #   context: lop-backend
       #   dockerfile: Dockerfile
