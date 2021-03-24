@@ -12,13 +12,14 @@ const CORS_ACAC = 'access-control-allow-credentials' // true
 
 export const fetchEventList = () => {
    console.log("Url: " + backendRoot+EVENTSPATH);
-   return fetch(backendRoot+EVENTSPATH, { headers: { 
+   return fetch(backendRoot+EVENTSPATH, { 
+      mode: "no-cors",
+      headers: { 
       Accept: APPLICATIONJSON,
       CONTENTTYPE: APPLICATIONJSON,
-      CORS_ACAO: '*'
    }}).then(
       (response) => {
-         return response.json() as Promise<EventListData>
+         return response.json() as Promise<Event[]>
       }
-   )
+   )   
 }

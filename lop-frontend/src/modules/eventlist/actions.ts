@@ -3,5 +3,8 @@ export const FETCH_LIST = "FETCH_LIST"
 export type EventListAction =
    | {
       type: typeof FETCH_LIST
-      payload: string
    }
+   
+export const fetchEventListFromApi = () => { 
+   return {type: FETCH_LIST}
+}
