@@ -1,18 +1,21 @@
 
 import { Container } from 'react-bootstrap';
 import { EventCard }  from './EventCard';
-import { rootReducer } from '../rootReducer';
+import { EventListProps } from "../types";
 
 
 
-export const EventList = () => {
-   const { eventList } = rootReducer()
-
-   return (
-      <Container>
-         { eventList.events.map((event, i) => (
-            <EventCard id={i} event={event} />
-         ))}
-      </Container>
-   );
+export const EventList = ({eventlist}: EventListProps) => {
+   if(eventlist.events === undefined) {
+      return <Container>Unable to fecth data from database</Container>
+   } else {
+      return (
+         <Container>
+            { eventlist.events.map((event, i) => (
+               <EventCard key={i} id={i} event={event} />
+            ))}
+         </Container>
+      );
+   
+   }
 }

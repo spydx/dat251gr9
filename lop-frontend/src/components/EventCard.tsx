@@ -1,7 +1,6 @@
 
 import {Container, Button, Card} from 'react-bootstrap';
 import {Badge, ListGroup, ListGroupItem} from 'react-bootstrap';
-import data from '../eventdata.json';
 import {EventCardProps} from "../types";
 
 export const EventCard = ({event}: EventCardProps) => {
@@ -19,11 +18,11 @@ export const EventCard = ({event}: EventCardProps) => {
                   {event.generalinfo}
                </Card.Body>
                <ListGroup className="text-right">
-                  <ListGroupItem>
-                     Distanse {event.races[0].distance} KM
-                  </ListGroupItem>
-                  <ListGroupItem>Distanse {data.races[1].distance} KM
-                  </ListGroupItem>
+                  { event.races.map((r, i) => (
+                     <ListGroupItem key={i}>
+                        Distanse {r.distance} KM
+                     </ListGroupItem>
+                  ))}
                </ListGroup>
                <Card.Footer style={{ alignContent: 'space-between', justifyContent: 'space-between'}}>
                   <Card.Link>More Info</Card.Link>

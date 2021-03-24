@@ -3,17 +3,16 @@ declare module "*.json" {
    export default value;
 }
 
-
 export type RootState = {
-   eventList: EventList
+   eventList?: EventList
 }
 
-export type EventList = {
+export type EventListData = {
    events: Event[]
 }
 export type EventListProps = {
    id: number
-   events: Events[]
+   eventlist: EventListData
 }
 
 export type EventCardProps = {

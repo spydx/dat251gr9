@@ -1,15 +1,15 @@
-import { applyMiddleware, 
+import { 
    configureStore, 
-   getDefaultMiddleware } from "@reduxjs/toolkit";
-import { rootReducer } from "./rootReducer";
+   getDefaultMiddleware,
+   combineReducers
+} from "@reduxjs/toolkit";
+import { reducer as eventList } from "./modules/eventlist/reducer";
 import {logger} from "redux-logger";
 
 
 const middleware = [...getDefaultMiddleware(), logger]
 
-export const store = configureStore({
-   reducer: {
-      rootReducer
-   },
-   middleware
+export const store = configureStore({ reducer: combineReducers({
+   eventList
+}), middleware
 })
