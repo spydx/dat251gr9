@@ -7,15 +7,18 @@ import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import no.hvl.dat251.gr9.lopbackend.services.RaceService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class EventRestControllerIntegrationTest {
@@ -59,6 +62,7 @@ class EventRestControllerIntegrationTest {
     private RaceService raceService;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
 
     @Test
     void guestUser_whenGetEvents_thenStatus200() throws Exception {
