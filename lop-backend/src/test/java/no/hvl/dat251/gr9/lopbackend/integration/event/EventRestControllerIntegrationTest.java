@@ -62,7 +62,7 @@ class EventRestControllerIntegrationTest {
 
     @Test
     void guestUser_whenGetEvents_thenStatus200() throws Exception {
-        createEventAndRace();
+
         var apiEndpoint = "/api/events/";
         mvc.perform(
                 get(apiEndpoint).contentType(MediaType.APPLICATION_JSON))
@@ -72,7 +72,7 @@ class EventRestControllerIntegrationTest {
 
     @Test
     void givenAccount_whenGetEvent_thenStatus200() throws Exception {
-        createEventAndRace();
+
         var apiEndpoint = "/api/events/";
         var cred = performLogin();
 
@@ -90,7 +90,7 @@ class EventRestControllerIntegrationTest {
 
     @Test
     void givenAccount_whenGetEvent_EventContainsRace() throws Exception {
-        createEventAndRace();
+
         var apiEndpoint = "/api/events/";
         var cred = performLogin();
 
@@ -124,23 +124,5 @@ class EventRestControllerIntegrationTest {
         return objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
     }
 
-    private void createEventAndRace() {
-        var newcomp = new EventDTO("Testløp", LocalDate.now(), "ammagaaad", null);
 
-        var newRace = new RaceDTO(
-                1.0f,
-                LocalTime.now(),
-                1.0f,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                ":)"
-        );
-
-        var event = eventService.add(newcomp);
-        raceService.add(newRace, event.get().getId());
-    }
 }
