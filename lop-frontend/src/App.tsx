@@ -17,10 +17,15 @@ export const App: React.FC = () =>  {
     dispatch(fetchEventListFromApi())
   }
   
+  const renderEventList = () => {
+    <EventList id={1} eventlist={eventlist} />
+  }
+  store.subscribe(renderEventList)
+
   return (
     <Container className="text-center">
       <Header/>
-        <EventList id={1} eventlist={eventlist} />
+        {renderEventList}
         <Button onClick={update}>Update</Button>
       <div className="text-muted">DAT251 Gruppe9</div>
     </Container>

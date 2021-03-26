@@ -19,15 +19,9 @@ export const reducer = async (
 ) => {
    switch (action.type) {
       case FETCH_LIST: {
-         const eventlist = fetchEventList()
-         try {
-            console.log("After fetching")
-            const newstate: RootState["eventList"] = eventlist
-            return newstate
-         } catch (error) {
-            console.log("Not possible to update state")
-            return state
-         }
+         const eventlist = await fetchEventList()         
+         const newstate: RootState["eventList"] = eventlist
+         return newstate
       }
       default:
          return state

@@ -6,9 +6,7 @@ import { EventListProps } from "../types";
 
 
 export const EventList = ({eventlist}: EventListProps) => {
-   if(eventlist.events === undefined) {
-      return <Container>Unable to fecth data from database</Container>
-   } else {
+
       return (
          <Container>
             { eventlist.events.map((event, i) => (
@@ -17,5 +15,5 @@ export const EventList = ({eventlist}: EventListProps) => {
          </Container>
       );
    
-   }
+   
 }

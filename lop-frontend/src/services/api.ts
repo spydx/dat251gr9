@@ -10,16 +10,16 @@ const HTTP_GET: string = "GET"
 const CORS_ACAO = 'access-control-allow-origin' // *
 const CORS_ACAC = 'access-control-allow-credentials' // true
 
-export const fetchEventList = () => {
+export const fetchEventList = async () => {
    console.log("Url: " + backendRoot+EVENTSPATH);
-   return fetch(backendRoot+EVENTSPATH, { 
-      mode: "no-cors",
-      headers: { 
-      Accept: APPLICATIONJSON,
-      CONTENTTYPE: APPLICATIONJSON,
-   }}).then(
+   return fetch(backendRoot+EVENTSPATH).then(
       (response) => {
-         return response.json() as Promise<Event[]>
+         try {
+            const eventlist = response.json() as Promise<Event[]>
+            return eventlist
+         } catch (error) {
+            console.log("Error contacting API")
+         }
       }
    )   
 }
