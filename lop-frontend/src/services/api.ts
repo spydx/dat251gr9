@@ -10,7 +10,7 @@ const CORS_ACAO = 'access-control-allow-origin' // *
 const CORS_ACAC = 'access-control-allow-credentials' // true
 */
 
-export const fetchEventList = async () => {
+export const fetchEventList = () => {
    console.log("Url: " + backendRoot+EVENTSPATH);
    return fetch(backendRoot+EVENTSPATH).then(
       (response) => {

@@ -9,14 +9,15 @@ type EventListProps = {
 }
 
 export const EventList = ({events}: EventListProps) => {
-      console.log("we are creating something")
+      console.log("walkjasdlfk")
+      console.log(events)
       return (
          <Container>
             { events.map((event, i) => (
                <EventCard key={i} id={i} event={event} />
             ))}
          </Container>
-      );
+         );    
    
    
 }
