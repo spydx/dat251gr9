@@ -111,20 +111,6 @@ choco install gh
 
 [Other instuctions for GH](https://github.com/cli/cli#installation)
 
-## Set-up local database with Docker
-
-### Pulling the mariadb image
-Run the following command in terminal: 
-
-```
-docker run -p 3306:3306 -d --name lopdb -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
-```
-
-To verify that you have a running instance of mariadb you can type:
-
-``` 
-docker ps 
-```
 
 ### Connect to the database in IntelliJ
 On the right hand side in IntelliJ you should se a module called "Database". 
