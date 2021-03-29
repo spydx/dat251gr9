@@ -5,7 +5,7 @@ import event2 from "../eventdata2.json";
 import { eventListSelector } from "../modules/eventlist/selectors";
 import { useSelector } from "react-redux";
 import { render } from '@testing-library/react';
-import { store } from "../store";
+import { store } from "../state/store";
 
 const list: EventListData = {events: [event1, event2]};
 

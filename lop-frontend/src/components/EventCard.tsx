@@ -1,7 +1,13 @@
 
 import {Container, Button, Card} from 'react-bootstrap';
 import {Badge, ListGroup, ListGroupItem} from 'react-bootstrap';
-import {EventCardProps} from "../types";
+import { Event } from "../types";
+
+
+type EventCardProps = {
+   id: number
+   event: Event
+}
 
 export const EventCard = ({event}: EventCardProps) => {
    return (

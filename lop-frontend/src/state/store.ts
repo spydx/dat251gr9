@@ -3,7 +3,7 @@ import {
    getDefaultMiddleware,
    combineReducers
 } from "@reduxjs/toolkit";
-import { reducer as eventList } from "./modules/eventlist/reducer";
+import { reducer as eventList } from "../modules/eventlist/reducer";
 import {logger} from "redux-logger";
 
 

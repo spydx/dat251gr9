@@ -4,7 +4,7 @@ import {Container, Button} from 'react-bootstrap';
 import { EventList } from './components/EventList';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventListSelector } from './modules/eventlist/selectors';
-import { store } from './store';
+import { store } from './state/store';
 import { fetchEventListFromApi } from './modules/eventlist/actions';
 
 export const App: React.FC = () =>  {
@@ -18,7 +18,7 @@ export const App: React.FC = () =>  {
   }
   
   const renderEventList = () => {
-    <EventList id={1} eventlist={eventlist} />
+    //<EventList id={1} eventlist={eventlist} />
   }
   store.subscribe(renderEventList)
 

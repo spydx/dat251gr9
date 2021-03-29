@@ -4,21 +4,9 @@ declare module "*.json" {
 }
 
 export type RootState = {
-   eventList?: EventList
+   eventList: Event[]
 }
 
-export type EventListData = {
-   events: Event[]
-}
-export type EventListProps = {
-   id: number
-   eventlist: EventListData
-}
-
-export type EventCardProps = {
-   id: number 
-   event: Event
-}
 
 export type Event = {
    id: string

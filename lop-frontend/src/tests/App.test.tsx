@@ -3,7 +3,7 @@ import App from '../App';
 import '@testing-library/jest-dom/extend-expect';
 import {Provider } from 'react-redux';
 
-import { store } from '../store';
+import { store } from '../state/store';
 
 test('Render App page', () => {
    const { getByText } = render(

@@ -1,15 +1,18 @@
 
 import { Container } from 'react-bootstrap';
 import { EventCard }  from './EventCard';
-import { EventListProps } from "../types";
+import { Event } from "../types";
 
+type EventListProps = {
+   id: number,
+   events: Event[]
+}
 
-
-export const EventList = ({eventlist}: EventListProps) => {
-
+export const EventList = ({events}: EventListProps) => {
+      console.log("we are creating something")
       return (
          <Container>
-            { eventlist.events.map((event, i) => (
+            { events.map((event, i) => (
                <EventCard key={i} id={i} event={event} />
             ))}
          </Container>
