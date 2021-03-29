@@ -1,5 +1,7 @@
+import { Event } from '../types'
+
 const backendRoot: string = process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api/"
-const EVENTSPATH:string = "events/"
+const EVENTSPATH: string = "events/"
 
 /*
 const APPLICATIONJSON : string = "application/json"
@@ -10,16 +12,12 @@ const CORS_ACAO = 'access-control-allow-origin' // *
 const CORS_ACAC = 'access-control-allow-credentials' // true
 */
 
-export const fetchEventList = () => {
-   console.log("Url: " + backendRoot+EVENTSPATH);
-   return fetch(backendRoot+EVENTSPATH).then(
-      (response) => {
-         try {
-            const eventlist = response.json() as Promise<Event[]>
-            return eventlist
-         } catch (error) {
-            console.log("Error contacting API")
-         }
-      }
-   )   
+export async function fetchEventList() {
+   console.log("Url: " + backendRoot + EVENTSPATH);
+   const response = await fetch(backendRoot + EVENTSPATH);
+   try {
+      return response.json() as Promise<Event[]>;
+   } catch (error) {
+      console.log("Error contacting API");
+   }
 }
