@@ -50,8 +50,9 @@ Group project for DAT251 Group 9 Spring 2021
 ![](Assignments/Architect%20diagram.png)
 
 ## Metrics
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=137943737&format=image"></img>
 <img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=719019434&format=image"></img>
-
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=193482369&format=image"></img>
 
 
 ## Misc
@@ -110,29 +111,6 @@ choco install gh
 
 [Other instuctions for GH](https://github.com/cli/cli#installation)
 
-## Set-up local database with Docker
-
-### Pulling the mariadb image
-Run the following command in terminal: 
-
-```shell
-docker run -p 3306:3306 -d --name lopdb -eMARIADB_ROOT_PASSWORD=password mariadb/server:10.5
-```
-
-To verify that you have a running instance of mariadb you can type:
-
-```shell
-docker ps 
-```
-
-You can also use the commandline tool `docker-compose` to start the database. (It uses a slightly different image)
-
-```shell
-<start>
-dat251gr9/ $ docker-compose up -d lop-db
-<stop>
-dat251gr9/ $ docker-compose down
-```
 
 ### Connect to the database in IntelliJ
 On the right hand side in IntelliJ you should se a module called "Database". 
