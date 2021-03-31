@@ -6,9 +6,9 @@ import lombok.Data;
 public class ContactsDTO {
     private String name;
     private String email;
-    private int phone;
+    private String phone;
 
-    public ContactsDTO(String name, String email, int phone) {
+    public ContactsDTO(String name, String email, String phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;

@@ -1,14 +1,12 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Event;
-import no.hvl.dat251.gr9.lopbackend.entities.Race;
-import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
-import no.hvl.dat251.gr9.lopbackend.entities.Roles;
+import no.hvl.dat251.gr9.lopbackend.entities.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RaceDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.ContactsDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import org.apache.tomcat.jni.Local;
@@ -50,7 +48,7 @@ public class SetupService {
     private RaceService raceService;
 
     @Autowired
-    private RaceDAO raceStorage;
+    private ContactsService contactsService;
 
     private final Logger logger = LoggerFactory.getLogger(SetupService.class);
 
@@ -81,35 +79,46 @@ public class SetupService {
 
         }
 
-
-        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>());
+        //----------------------------------------------------------------------------------
+        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), new ArrayList<>());
 
         var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 30), 500f, false,
                 false,false, false, false, false, "info");
         var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(16, 30), 250f, false,
                 false,false, false, false, false, "info");
 
+        var testContact = new ContactsDTO("Contact #1", "contact1@test.no", "12345678");
+        var testContact2 = new ContactsDTO("Contact #2", "contact2@test.no", "34235645");
+
         List<RaceDTO> races = new ArrayList<>();
+        List<ContactsDTO> contacts = new ArrayList<>();
         races.add(testMarathonRace);
         races.add(testHalfMarathonRace);
+        contacts.add(testContact);
+        contacts.add(testContact2);
 
-        createEvent(testEvent, races);
-
-        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>());
+        createEvent(testEvent, races, contacts);
+        //----------------------------------------------------------------------------------
+        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>());
 
         var testRace21 = new RaceDTO(1.0f, LocalTime.of(1, 50), 2.0f, false,
                 true, false, true, false, true, "This race is a test race for event "+ testEvent2.getName());
         var testRace22 = new RaceDTO(100.0f, LocalTime.of(2, 50), 2.0f, false,
                 true, false, true, false, true, "This race is also a test race for event "+ testEvent2.getName());
 
+        var testContact3 = new ContactsDTO("Contact #3", "contact3@test.no", "34212364");
+
         races.clear();
         races.add(testRace21);
         races.add(testRace22);
+        contacts.add(testContact3);
 
-        createEvent(testEvent2, races);
+        createEvent(testEvent2, races, contacts);
+        //----------------------------------------------------------------------------------
+
     }
 
-    public void createEvent(EventDTO event, List<RaceDTO> races){
+    public void createEvent(EventDTO event, List<RaceDTO> races, List<ContactsDTO> contacts){
         var exists = eventStorage.findEventByName(event.getName());
 
         if(exists.isPresent()){
@@ -124,8 +133,11 @@ public class SetupService {
             for(RaceDTO race: races){
                 createRace(race, newEvent.get().getId());
             }
+            for(ContactsDTO contact: contacts){
+                createContact(contact, newEvent.get().getId());
+            }
         }else{
-            logger.info("Failed to create event " + newEvent.get().getName());
+            logger.info("Failed to create event ");
         }
     }
 
@@ -135,6 +147,15 @@ public class SetupService {
             logger.info("Created race: " + newRace + " for event " + eventId);
         } else {
             logger.info("Failed to create race: " + newRace + " for event " + eventId);
+        }
+    }
+
+    public void createContact(ContactsDTO newContact, String eventId){
+        var createContact = contactsService.add(newContact, eventId);
+        if(createContact.isPresent()){
+            logger.info("Created contact: " + createContact.get() + " for event " + eventId);
+        } else {
+            logger.info("Failed to create contact: " + createContact + " for event " + eventId);
         }
     }
 }

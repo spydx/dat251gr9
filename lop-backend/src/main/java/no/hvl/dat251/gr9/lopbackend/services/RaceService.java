@@ -59,7 +59,13 @@ public class RaceService {
 
             var r = raceStorage.save(race);
             Event ev = event.get();
-            EventDTO newEvent = new EventDTO(ev.getName(), ev.getEventStart(), ev.getGeneralInfo(), ev.getRaces());
+            EventDTO newEvent = new EventDTO(
+                    ev.getName(),
+                    ev.getEventStart(),
+                    ev.getGeneralInfo(),
+                    ev.getRaces(),
+                    ev.getContacts()
+            );
             newEvent.getRaces().add(r);
             eventService.updateEvent(eventId, newEvent);
             return Optional.of(r);
