@@ -13,4 +13,6 @@ public class ContactsDTO {
         this.email = email;
         this.phone = phone;
     }
+
+    public ContactsDTO() {}
 }
