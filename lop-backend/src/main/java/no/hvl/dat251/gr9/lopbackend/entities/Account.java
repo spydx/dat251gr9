@@ -1,9 +1,11 @@
 package no.hvl.dat251.gr9.lopbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +18,12 @@ public class Account {
     @GenericGenerator(name="system-uuid", strategy = "uuid2")
     private String id;
 
-    //email
+
     @Column(unique = true)
+    @Email
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
