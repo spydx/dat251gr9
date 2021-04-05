@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.config.security.AccountPrincipals;
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ public class AuthService implements UserDetailsService {
     private AccountDAO accountDAO;
 
 
-    public Optional<Account> save(LoginDTO account) {
-        var acc = new Account();
+    public Optional<UserAccount> save(LoginDTO account) {
+        var acc = new UserAccount();
         acc.setEmail(account.getEmail());
         return Optional.of(accountDAO.save(acc));
     }
 
-    public Optional<List<Account>> getAllAccounts() {
+    public Optional<List<UserAccount>> getAllAccounts() {
         var res = accountDAO.findAll();
         return Optional.of(res);
     }
@@ -46,7 +46,7 @@ public class AuthService implements UserDetailsService {
 
     }
 
-    public Optional<Account> getAccountByEmail(String email) {
+    public Optional<UserAccount> getAccountByEmail(String email) {
         return accountDAO.findByEmail(email);
     }
 }

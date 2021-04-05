@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration.account;
 
 
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 @ActiveProfiles("test")
 @Import(IntegrationTestContextConfiguration.class)
-class AccountDAOIntegrationTest {
+class UserAccountDAOIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -40,7 +40,7 @@ class AccountDAOIntegrationTest {
         };
 
         for (var e : emails) {
-            var acc = new Account();
+            var acc = new UserAccount();
             acc.setEmail(e);
             var pwd = e.split("@")[0];
             acc.setPassword(pwd);
@@ -52,7 +52,7 @@ class AccountDAOIntegrationTest {
 
     @Test
     void persistAccount() {
-        var acc = new Account();
+        var acc = new UserAccount();
         var username = "test@gmail.com";
         var password = "password";
         acc.setEmail(username);

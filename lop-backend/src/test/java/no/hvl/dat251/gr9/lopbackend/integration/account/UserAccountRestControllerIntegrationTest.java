@@ -2,7 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.integration.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.authenticate.AuthenticateHelper;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableAutoConfiguration
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
-class AccountRestControllerIntegrationTest{
+class UserAccountRestControllerIntegrationTest {
     String AUTHORIZATION = "Authorization";
     String BEARER = "Bearer ";
     String apiEndpoint = "/api/accounts/";
@@ -88,7 +88,7 @@ class AccountRestControllerIntegrationTest{
     }
 
     private void createTestAccount(String email, String password) {
-        var acc = new Account();
+        var acc = new UserAccount();
         acc.setPassword(password);
         acc.setEmail(email);
         accountDAO.save(acc);

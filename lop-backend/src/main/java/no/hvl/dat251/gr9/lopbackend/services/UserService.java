@@ -2,7 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 
 import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.UserProfile;
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
@@ -36,12 +36,12 @@ public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public Optional<Account> getAccount(String email) {
+    public Optional<UserAccount> getAccount(String email) {
         return accountStorage.findByEmail(email);
     }
 
-    public Optional<Account> add(AccountDTO newaccount) {
-        var account = new Account(newaccount.getEmail());
+    public Optional<UserAccount> add(AccountDTO newaccount) {
+        var account = new UserAccount(newaccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
                 () -> new InternalServerError("User Role not set")
         );
@@ -60,7 +60,7 @@ public class UserService {
         return Optional.of(acc);
     }
 
-    public Optional<Account> updateAccount(String profileid, PasswordDTO updated) {
+    public Optional<UserAccount> updateAccount(String profileid, PasswordDTO updated) {
         var profile = profileStorage.findById(profileid);
         if(profile.isPresent()) {
             var account = profile.get().getAccount();
