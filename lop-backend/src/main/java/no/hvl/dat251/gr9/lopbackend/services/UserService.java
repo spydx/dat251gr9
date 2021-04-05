@@ -3,11 +3,11 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
 import no.hvl.dat251.gr9.lopbackend.entities.Account;
-import no.hvl.dat251.gr9.lopbackend.entities.Profile;
+import no.hvl.dat251.gr9.lopbackend.entities.UserProfile;
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.ProfileDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserProfileDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class UserService {
     private AccountDAO accountStorage;
 
     @Autowired
-    private ProfileDAO profileStorage;
+    private UserProfileDAO profileStorage;
 
     @Autowired
     private RoleDAO roleStorage;
@@ -47,7 +47,7 @@ public class UserService {
         );
         account.setRoles(Collections.singleton(role));
         account.setPassword(passwordEncoder.encode(newaccount.getPassword()));
-        var profile = new Profile();
+        var profile = new UserProfile();
         profile.setFirstname(newaccount.getFirstname());
         profile.setLastname(newaccount.getLastname());
 

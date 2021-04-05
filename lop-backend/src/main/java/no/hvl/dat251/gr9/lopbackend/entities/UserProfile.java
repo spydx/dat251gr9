@@ -10,11 +10,11 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Profile implements Serializable {
+public class UserProfile implements Serializable {
 
     @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid",
-            strategy = "uuid2")
+    @GenericGenerator(name="system-uuid", strategy = "uuid2")
+    @JsonIgnore
     private String id;
 
     private String firstname;

@@ -30,7 +30,7 @@ public class Account {
     private Set<Roles> roles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Profile profile;
+    private UserProfile profile;
 
     public Account(String email){
         this.email = email;
@@ -45,7 +45,6 @@ public class Account {
         return "Profile{" +
                 "id='" + id + '\'' +
                 ", email'" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", roles='" + roles + '\'' +
                 ", profile'" + profile.getId() + '\'' +
                 '}';
