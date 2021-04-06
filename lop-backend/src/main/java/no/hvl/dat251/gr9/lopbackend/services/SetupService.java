@@ -167,9 +167,9 @@ public class SetupService {
     public void createLocation(LocationDTO newLocation, String eventId){
         var createLocation = locationService.add(newLocation, eventId);
         if(createLocation.isPresent()){
-            logger.info("Created location: " + createLocation.get());
+            logger.info("Created location: " + createLocation.get() + " for event " + eventId);
         } else {
-            logger.info("Failed to create location: " + createLocation);
+            logger.info("Failed to create location: " + createLocation + " for event " + eventId);
         }
     }
 }
