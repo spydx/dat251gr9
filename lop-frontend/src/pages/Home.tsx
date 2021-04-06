@@ -1,51 +1,47 @@
-import React from "react";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
 import MasterPage from "../MasterPage";
-import { fetchEventList } from "../services/api";
-import { Event } from "../types";
+import { fetcher, EVENTSPATH } from "../services/api";
+import useSWR from 'swr';
 
-type PageState = {
-  events: Event[] | undefined;
-};
 
-// we currently use the event list as the home page
-export class Home extends React.Component<{}, PageState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = { events: undefined };
-  }
+export const Home = () => {
 
-  componentDidMount() {
-    this.refreshEventList();
-  }
+  const { data, error } = useSWR(EVENTSPATH, fetcher);
 
-  refreshEventList() {
-    // clear the previous state, sets a loading indicator
-    this.setState({ events: undefined });
-    fetchEventList().then((events) => {
-      if (events !== undefined) {
-        this.setState({ events });
-      } else {
-        console.log("Home::update(): events == undefined");
-      }
-    });
-  }
+  
+  if (error) return (
+    <MasterPage>
+      <Container className="text-center">
+          <Container>
+            Unexpected error
+          </Container>
+      </Container>
+    </MasterPage>
+  )
 
-  render() {
-    const eventList = this.state.events ? <EventList id={1} events={this.state.events} /> : <LoadingSpinner />;
-
-    return (
-      <MasterPage>
-        <Container className="text-center">
-          <h2>Home</h2>
-          <Button onClick={() => this.refreshEventList()}>Update</Button>
-          {eventList}
+  if (!data) return (
+    <MasterPage>
+      <Container className="text-center">
+        <Container> 
+          <LoadingSpinner /> 
+          Loading 
         </Container>
-      </MasterPage>
-    );
-  }
+      </Container>
+    </MasterPage>
+  )
+
+
+  return (
+    <MasterPage>
+      <Container className="text-center">
+        <h2>Home</h2>
+        <EventList id={1} events={data} />
+      </Container>
+    </MasterPage>
+  );
+  
 }
 
-export default Home;
+

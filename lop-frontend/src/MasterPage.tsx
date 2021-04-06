@@ -5,11 +5,13 @@ import { Container } from "react-bootstrap";
 
 // at the time of writing we assume that every page will have header and footer
 const MasterPage = (props: any) => (
-  <Fragment>
-    <NavBar />
-    <Container>{props.children}</Container>
-    <Footer />
-  </Fragment>
+  <Container>
+    <Fragment>
+        <NavBar />
+        <Container>{props.children}</Container>
+        <Footer />
+    </Fragment>
+  </Container>
 );
 
 export default MasterPage;
