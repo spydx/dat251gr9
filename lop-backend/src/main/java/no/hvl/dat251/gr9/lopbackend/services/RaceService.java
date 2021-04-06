@@ -64,7 +64,8 @@ public class RaceService {
                     ev.getEventStart(),
                     ev.getGeneralInfo(),
                     ev.getRaces(),
-                    ev.getContacts()
+                    ev.getContacts(),
+                    ev.getLocation()
             );
             newEvent.getRaces().add(r);
             eventService.updateEvent(eventId, newEvent);

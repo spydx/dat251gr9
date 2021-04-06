@@ -5,10 +5,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RaceDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.ContactsDTO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.*;
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +47,9 @@ public class SetupService {
     @Autowired
     private ContactsService contactsService;
 
+    @Autowired
+    private LocationService locationService;
+
     private final Logger logger = LoggerFactory.getLogger(SetupService.class);
 
     public void init() {
@@ -80,7 +80,7 @@ public class SetupService {
         }
 
         //----------------------------------------------------------------------------------
-        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), new ArrayList<>());
+        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), new ArrayList<>(), new Location());
 
         var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 30), 500f, false,
                 false,false, false, false, false, "info");
@@ -90,6 +90,8 @@ public class SetupService {
         var testContact = new ContactsDTO("Contact #1", "contact1@test.no", "12345678");
         var testContact2 = new ContactsDTO("Contact #2", "contact2@test.no", "34235645");
 
+        var testLocation = new LocationDTO("Vestland", "Bergen", "Bergen",60.396803, 5.323383);
+
         List<RaceDTO> races = new ArrayList<>();
         List<ContactsDTO> contacts = new ArrayList<>();
         races.add(testMarathonRace);
@@ -97,9 +99,9 @@ public class SetupService {
         contacts.add(testContact);
         contacts.add(testContact2);
 
-        createEvent(testEvent, races, contacts);
+        createEvent(testEvent, races, contacts, testLocation);
         //----------------------------------------------------------------------------------
-        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>());
+        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>(), new Location());
 
         var testRace21 = new RaceDTO(1.0f, LocalTime.of(1, 50), 2.0f, false,
                 true, false, true, false, true, "This race is a test race for event "+ testEvent2.getName());
@@ -108,17 +110,18 @@ public class SetupService {
 
         var testContact3 = new ContactsDTO("Contact #3", "contact3@test.no", "34212364");
 
+        var testLocation2 = new LocationDTO("Test county #2", "Test municipality #2", "Test place #2", 12.34, 56.789);
         races.clear();
         races.add(testRace21);
         races.add(testRace22);
         contacts.add(testContact3);
 
-        createEvent(testEvent2, races, contacts);
+        createEvent(testEvent2, races, contacts, testLocation2);
         //----------------------------------------------------------------------------------
 
     }
 
-    public void createEvent(EventDTO event, List<RaceDTO> races, List<ContactsDTO> contacts){
+    public void createEvent(EventDTO event, List<RaceDTO> races, List<ContactsDTO> contacts, LocationDTO location){
         var exists = eventStorage.findEventByName(event.getName());
 
         if(exists.isPresent()){
@@ -136,6 +139,8 @@ public class SetupService {
             for(ContactsDTO contact: contacts){
                 createContact(contact, newEvent.get().getId());
             }
+
+            createLocation(location, newEvent.get().getId());
         }else{
             logger.info("Failed to create event ");
         }
@@ -156,6 +161,15 @@ public class SetupService {
             logger.info("Created contact: " + createContact.get() + " for event " + eventId);
         } else {
             logger.info("Failed to create contact: " + createContact + " for event " + eventId);
+        }
+    }
+
+    public void createLocation(LocationDTO newLocation, String eventId){
+        var createLocation = locationService.add(newLocation, eventId);
+        if(createLocation.isPresent()){
+            logger.info("Created location: " + createLocation.get());
+        } else {
+            logger.info("Failed to create location: " + createLocation);
         }
     }
 }

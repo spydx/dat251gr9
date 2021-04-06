@@ -26,6 +26,9 @@ public class Event {
     @ManyToMany
     private List<Contacts> contacts;
 
+    @ManyToOne
+    private Location location;
+
 
     public Event(String name, LocalDate eventStart, String generalInfo) {
         this.name = name;

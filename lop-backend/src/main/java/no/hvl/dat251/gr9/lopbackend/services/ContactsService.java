@@ -51,7 +51,8 @@ public class ContactsService {
                     ev.getEventStart(),
                     ev.getGeneralInfo(),
                     ev.getRaces(),
-                    ev.getContacts()
+                    ev.getContacts(),
+                    ev.getLocation()
             );
             updatedEvent.getContacts().add(c);
             eventService.updateEvent(eventId, updatedEvent);
