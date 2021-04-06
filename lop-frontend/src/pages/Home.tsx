@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
-import Header from "../Header";
 import MasterPage from "../MasterPage";
 import { fetchEventList } from "../services/api";
 import { Event } from "../types";

@@ -1,12 +1,7 @@
-import React from "react";
-import { Container } from "react-bootstrap";
 import {
   Switch,
   Route,
-  Link
 } from "react-router-dom";
-import Header from "./Header";
-import MasterPage from "./MasterPage";
 import { About } from "./pages/About";
 import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";

@@ -1,7 +1,6 @@
-import { RootState, Event } from "../../types";
+import { RootState } from "../../types";
 import {EventListAction, FETCH_LIST} from "./actions";
-import { fetchEventList } from "../../services/api";
-import { useDispatch } from "react-redux";
+//import { fetchEventList } from "../../services/api";
 
 
 export const reducer = async (
@@ -10,7 +9,7 @@ export const reducer = async (
 ) => {
    switch (action.type) {
       case FETCH_LIST: {
-         const eventlist = await fetchEventList()         
+         //const eventlist = await fetchEventList()         
          //const newstate: RootState["eventList"] = eventlist
          return state
       }
