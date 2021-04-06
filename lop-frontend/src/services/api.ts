@@ -1,6 +1,8 @@
-export const backendRoot: string = process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api/"
+export const backendRoot: string =
+  process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api/";
 
-export const EVENTSPATH: string = "events/"
+export const EVENTSPATH: string = "events/";
+export const LOGIN_PATH = "auth/login";
 
 /*
 const APPLICATIONJSON : string = "application/json"
@@ -11,9 +13,19 @@ const CORS_ACAO = 'access-control-allow-origin' // *
 const CORS_ACAC = 'access-control-allow-credentials' // true
 */
 
-export const authFetcher = (url:string, token:string) => fetch(`${backendRoot}${url}`, {
-      headers: {"Autorization": "Bearer " + token}
-   }).then( resp => resp.json());
+export const authFetcher = (url: string, token: string) =>
+  fetch(`${backendRoot}${url}`, {
+    headers: { Autorization: "Bearer " + token },
+  }).then((resp) => resp.json());
 
-export const fetcher =  (url:string) => fetch(`${backendRoot}${url}`)
-      .then( resp => resp.json());
+export const fetcher = (url: string) =>
+  fetch(`${backendRoot}${url}`).then((resp) => resp.json());
+
+export const poster = (url: string, data: any) =>
+  fetch(`${backendRoot}${url}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    return response.json();
+  });
