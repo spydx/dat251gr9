@@ -1,28 +1,52 @@
-import React, { useState } from "react";
-import { Button, Row } from "react-bootstrap";
-import { SignInForm } from "../components/SignInForm";
+import { Button, Form, Row } from "react-bootstrap";
 import MasterPage from "../MasterPage";
-import { backendRoot, LOGIN_PATH, poster } from "../services/api";
+import { ApiPath as ApiEndpoint, doPost } from "../services/api";
 
+/** sends the login request and saves the token */
+async function performLogin(email: string, password: string) {
+  const { token } = await doPost(ApiEndpoint.Login, {
+    email: email,
+    password: password,
+  });
+  localStorage.setItem("token", token);
+}
+
+// TODO: form validation / errors
 export function SignIn() {
-  const storedJwt = localStorage.getItem("token");
-  const [jwt, setJwt] = useState(storedJwt || null);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const getJwt = async () => {
-    const { token } = await poster(LOGIN_PATH, {
-      email: "admin@lop.no",
-      password: "admin",
-    });
-    localStorage.setItem("token", token);
-    setJwt(token);
+    const formData = event.currentTarget;
+    await performLogin(
+      formData["formEmail"].value,
+      formData["formPassword"].value
+    );
+    alert("signed in with token " + localStorage.getItem("token"));
   };
 
   return (
     <MasterPage>
       <h2>Sign In</h2>
       <Row className="justify-content-md-center">
-        {`${jwt}\n`}
-        <Button onClick={() => getJwt()}>Click Me!</Button>
+        <Form noValidate={false} className="signInForm" onSubmit={handleSubmit}>
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control required type="email" placeholder="Enter email" />
+          </Form.Group>
+
+          <Form.Group controlId="formPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control required type="password" placeholder="Password" />
+          </Form.Group>
+
+          {/* Enhancement: add a "remember me" checkbox 
+          <Form.Group controlId="formCheckbox">
+            <Form.Check type="checkbox" label="Remember me" />
+          </Form.Group> */}
+          <Button variant="primary" type="submit">
+            Sign In
+          </Button>
+        </Form>
       </Row>
     </MasterPage>
   );

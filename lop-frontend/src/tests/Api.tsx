@@ -1,4 +1,4 @@
-import { EVENTSPATH, fetcher } from "../services/api";
+import * as api from "../services/api";
 // This test will fail on GitActions.. 
 /*
 test('Accessing api then get some data', async () => {

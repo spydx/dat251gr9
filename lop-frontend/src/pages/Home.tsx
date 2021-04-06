@@ -2,13 +2,13 @@ import { Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
 import MasterPage from "../MasterPage";
-import { fetcher, EVENTSPATH } from "../services/api";
+import { doGet, ApiPath } from "../services/api";
 import useSWR from 'swr';
 
 
 export const Home = () => {
 
-  const { data, error } = useSWR(EVENTSPATH, fetcher);
+  const { data, error } = useSWR(ApiPath.Events, doGet);
 
   
   if (error) return (
