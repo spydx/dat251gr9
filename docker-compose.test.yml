@@ -1,6 +1,28 @@
 version : '3.7'
 
 services:
+   cypress:
+      image: "cypress/included:6.8.0"
+      depends_on:
+         - lop-frontend
+      environment:
+         - CYPRESS_baseUrl=http://lop-frontend/
+      working_dir: /e2e
+      volumes:
+         - ./e2e:/e2e/
+
+   lop-frontend:
+      build:
+         context: lop-frontend
+         dockerfile: Dockerfile
+         args:
+            REACT_APP_BACKEND_ENDPOINT: http://react-auth-backend:8080/api
+      ports:
+         - 80:80
+      depends_on:
+         - lop-api
+
+
    lop-api:
       image: docker.pkg.github.com/spydx/dat251gr9/lop-api-dev:backend
       #build: 
@@ -17,10 +39,7 @@ services:
          SPRING_DATASOURCE_URL: jdbc:mariadb://lop-db:3306/lopdb?createDatabaseIfNotExist=true
       depends_on:
          - lop-db
-      #restart: always
-      networks:
-         - backend
-         - frontend
+
    lop-db:
       image: mariadb:latest
       environment:
@@ -30,14 +49,6 @@ services:
          - db-data:/var/lib/mysql
       ports:
          - 3306:3306
-      networks:
-         - backend
-
-
 
 volumes:
    db-data:
-   
-networks:
-   backend:
-   frontend: 

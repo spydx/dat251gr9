@@ -89,6 +89,34 @@ Bring up the database:
 > docker-compose up -d lop-db
 ```
 
+### Integration Testing
+
+Integration testing is done with [Cypress](https://cypress.io)
+Examples of how to write tests are in this [integtraion_examples](/e2e/integration_examples/) folder
+
+The tests are done automatically with the [Integration Workflow](.github/workflows/integration-test.yml)
+
+The automatic operations are the following, can also be run automatic.
+
+```sh
+$ docker-compose -f docker-compose.test.yml build 
+$ docker-compose -f docker-compose.test.yml up --exit-code-from cypress
+```
+
+If this exits with any other code that 0, the integration test(s) are failing.
+When done manually, there is a videos/screenshots created in the [folder](/e2e/)
+
+Manually you can do the same integration tests, this is useful when writing tests.
+
+```sh
+$ docker-compose -d up 
+$ yarn -cwd lop-frontend start
+$ cd e2e/
+$ yarn install
+$ export "CYPRESS_baseUrl=http://localhost:3000/"
+$ /e2e/.nodes_modules/.bin/cypress open
+```
+
 ### Creating issues list for Sprint log
 
 Done using [GitHub Cli](https://cli.github.com/)
@@ -110,7 +138,6 @@ choco install gh
 ```
 
 [Other instuctions for GH](https://github.com/cli/cli#installation)
-
 
 ### Connect to the database in IntelliJ
 On the right hand side in IntelliJ you should se a module called "Database". 

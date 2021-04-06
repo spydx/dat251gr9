@@ -1,16 +1,25 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import Header from '../Header';
+import React from "react";
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import Header from "../Header";
+import { MemoryRouter } from "react-router-dom";
 
-test('Navbar Login', () => {
-   const { getByText  } = render(<Header />);
-   const navbarlogin = getByText("Login");
-   expect(navbarlogin).toBeInTheDocument(); 
-})
+test("Navbar Sign In", () => {
+  const { getByText } = render(
+    <MemoryRouter>
+      <Header />
+    </MemoryRouter>
+  );
+  const navbarlogin = getByText("Sign In");
+  expect(navbarlogin).toBeInTheDocument();
+});
 
-test('Navbar Register', () => {
-   const {getByText } = render(<Header />);
-   const navbarreg = getByText("Register");
-   expect(navbarreg).toBeInTheDocument();
-})
+test("Navbar Sign Up", () => {
+  const { getByText } = render(
+    <MemoryRouter>
+      <Header />
+    </MemoryRouter>
+  );
+  const navbarreg = getByText("Sign Up");
+  expect(navbarreg).toBeInTheDocument();
+});

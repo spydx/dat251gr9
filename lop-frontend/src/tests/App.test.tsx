@@ -1,17 +1,20 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from '../App';
-import '@testing-library/jest-dom/extend-expect';
+import { render } from "@testing-library/react";
+import App from "../App";
+import "@testing-library/jest-dom/extend-expect";
+import { Provider } from "react-redux";
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).not.toBeInTheDocument;
-// });
+import { store } from "../state/store";
+import { MemoryRouter } from "react-router-dom";
 
-test('Render App page', () => {
-   const { getByText } = render(<App />);
-   const footer = getByText("DAT251 Gruppe9");
-   expect(footer).toBeInTheDocument();
-
+test("Render App page", () => {
+  const { getByText } = render(
+    <Provider store={store}>
+      {/* routing and testing: https://reactrouter.com/web/guides/testing */}
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </Provider>
+  );
+  const footer = getByText("DAT251 Gruppe9");
+  expect(footer).toBeInTheDocument();
 });
