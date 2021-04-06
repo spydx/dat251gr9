@@ -2,18 +2,17 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 
 import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
-import no.hvl.dat251.gr9.lopbackend.entities.Profile;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
+import no.hvl.dat251.gr9.lopbackend.entities.UserProfile;
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.ProfileDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserProfileDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +23,10 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private AccountDAO accountStorage;
+    private UserAccountDAO accountStorage;
 
     @Autowired
-    private ProfileDAO profileStorage;
+    private UserProfileDAO profileStorage;
 
     @Autowired
     private RoleDAO roleStorage;
@@ -37,20 +36,23 @@ public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public Optional<Account> getAccount(String email) {
+    public Optional<UserAccount> getAccount(String email) {
         return accountStorage.findByEmail(email);
     }
 
-    public Optional<Account> add(AccountDTO newaccount) {
-        var account = new Account(newaccount.getEmail());
+    public Optional<UserAccount> add(UserAccountDTO newaccount) {
+        var account = new UserAccount(newaccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
                 () -> new InternalServerError("User Role not set")
         );
         account.setRoles(Collections.singleton(role));
         account.setPassword(passwordEncoder.encode(newaccount.getPassword()));
-        var profile = new Profile();
+        var profile = new UserProfile();
         profile.setFirstname(newaccount.getFirstname());
         profile.setLastname(newaccount.getLastname());
+        profile.setBirthdate(newaccount.getBirthdate());
+        profile.setAddress(newaccount.getAddress());
+        profile.setCity(newaccount.getCity());
 
         account.setProfile(profile);
         var acc = accountStorage.save(account);
@@ -61,7 +63,7 @@ public class UserService {
         return Optional.of(acc);
     }
 
-    public Optional<Account> updateAccount(String profileid, PasswordDTO updated) {
+    public Optional<UserAccount> updateAccount(String profileid, PasswordDTO updated) {
         var profile = profileStorage.findById(profileid);
         if(profile.isPresent()) {
             var account = profile.get().getAccount();

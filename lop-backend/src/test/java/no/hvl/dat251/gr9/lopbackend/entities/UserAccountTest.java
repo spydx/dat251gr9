@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class AccountTest {
+class UserAccountTest {
 
     @Test
      void accountGetSetName() {
         String email = "fossen.kenneth@gmail.com";
-        var acc = new Account();
+        var acc = new UserAccount();
         acc.setEmail(email);
         assertEquals(email, acc.getEmail());
     }
@@ -19,7 +19,7 @@ class AccountTest {
     @Test
     void accountGetSetPassword() {
         String password = "nisse";
-        var acc = new Account();
+        var acc = new UserAccount();
         acc.setPassword(password);
         assertEquals(password, acc.getPassword());
     }

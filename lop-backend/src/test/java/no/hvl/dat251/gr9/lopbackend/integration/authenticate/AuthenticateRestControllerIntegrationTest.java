@@ -1,14 +1,10 @@
 package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
-import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,11 +17,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class AuthenticateRestControllerIntegrationTest {
@@ -50,23 +43,18 @@ class AuthenticateRestControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
-
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    @AfterEach
-    public void reset_mock() {
-
-    }
 
     @Test
     void givenCredentials_whenLogin_thenStatus200_andToken() throws Exception  {
+
         var apiLoginEndpoint = "/api/auth/login";
         var cred = new LoginDTO();
         cred.setEmail(email);
         cred.setPassword(password);
         ObjectMapper objectMapper = new ObjectMapper();
         var jsoncred = objectMapper.writeValueAsString(cred);
-        var res = mvc.perform(
+        mvc.perform(
                 post(apiLoginEndpoint).contentType(MediaType.APPLICATION_JSON)
                         .content(jsoncred)
                         .header("Cache-Control", "no-cache"))
@@ -76,27 +64,69 @@ class AuthenticateRestControllerIntegrationTest {
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.token", not("")))
                 .andExpect(jsonPath("$.tokenType", is(BEARER)))
-                .andExpect(jsonPath("$.profile", not("")))
-                .andReturn();
-        var jwt = objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
+                .andExpect(jsonPath("$.profile", not("")));
     }
 
     @Test
     void givenNonExistingUser_whenLogin_thenStatus401() throws Exception {
         var apiEndpoint = "/api/auth/login";
-        var brokenuser = new LoginDTO();
-        brokenuser.setEmail("idonthave@email.com");
-        brokenuser.setPassword("whatIsPassword");
-        var jsonbrokenuser = OBJECT_MAPPER.writeValueAsString(brokenuser);
+        var brokenUser = new LoginDTO();
+        brokenUser.setEmail("idonthave@email.com");
+        brokenUser.setPassword("whatIsPassword");
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(brokenUser);
         mvc.perform(
                 post(apiEndpoint)
                         .header("Cache-Control", "no-cache")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonbrokenuser))
+                        .content(jsonBrokenUser))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
-    //TODO: Test for Register Account
+    @Test
+    void givenNonExistingUser_whenRegister_thenStatus201OK() throws Exception {
+        UserAccountDTO newAccount = new UserAccountDTO(
+                "test",
+                "test",
+                null,
+                null,
+                null,
+                "test@test.no",
+                "testtest123");
+
+        var apiEndpoint = "/api/auth/register";
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);
+
+        mvc.perform(
+                post(apiEndpoint)
+                    .header("Cache-Control", "no-cache")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonBrokenUser))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void givenExistingUser_whenRegister_thenStatus400BadRequest() throws Exception {
+        UserAccountDTO newAccount = new UserAccountDTO(
+                "test",
+                "test",
+                 null,
+                 null,
+                 null,
+                 email,
+                "testtest123");
+
+        var apiEndpoint = "/api/auth/register";
+        var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);
+
+        mvc.perform(
+                post(apiEndpoint)
+                        .header("Cache-Control", "no-cache")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBrokenUser))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
 }

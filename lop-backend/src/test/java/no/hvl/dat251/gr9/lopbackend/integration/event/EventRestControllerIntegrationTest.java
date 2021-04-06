@@ -2,11 +2,12 @@ package no.hvl.dat251.gr9.lopbackend.integration.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
-
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CompetitionDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
-import no.hvl.dat251.gr9.lopbackend.services.CompetitionService;
-
+import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
+import no.hvl.dat251.gr9.lopbackend.services.EventService;
+import no.hvl.dat251.gr9.lopbackend.services.RaceService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
@@ -34,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 class EventRestControllerIntegrationTest {
@@ -51,13 +56,17 @@ class EventRestControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private CompetitionService competitionService;
+    private EventService eventService;
+
+    @Autowired
+    private RaceService raceService;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+
     @Test
     void guestUser_whenGetEvents_thenStatus200() throws Exception {
-        createEvent();
+
         var apiEndpoint = "/api/events/";
         mvc.perform(
                 get(apiEndpoint).contentType(MediaType.APPLICATION_JSON))
@@ -67,7 +76,7 @@ class EventRestControllerIntegrationTest {
 
     @Test
     void givenAccount_whenGetEvent_thenStatus200() throws Exception {
-        createEvent();
+
         var apiEndpoint = "/api/events/";
         var cred = performLogin();
 
@@ -79,7 +88,26 @@ class EventRestControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$[0].name", is("Testløp")));
+                .andExpect(jsonPath("$[0].name", is("Test Marathon")));
+
+    }
+
+    @Test
+    void givenAccount_whenGetEvent_EventContainsRace() throws Exception {
+
+        var apiEndpoint = "/api/events/";
+        var cred = performLogin();
+
+        mvc.perform(
+                get(apiEndpoint)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(AUTHORIZATION, BEARER + cred.getToken()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[0].name", is("Test Marathon")))
+                .andExpect((jsonPath("$[0].races", hasSize(greaterThan(0)))));
 
     }
 
@@ -100,8 +128,5 @@ class EventRestControllerIntegrationTest {
         return objectMapper.readValue(res.getResponse().getContentAsString(), JwtAuthenticationResponse.class);
     }
 
-    private void createEvent() {
-        var newcomp = new CompetitionDTO("Testløp", new Date(), "ammagaaad", null);
-        competitionService.add(newcomp);
-    }
+
 }

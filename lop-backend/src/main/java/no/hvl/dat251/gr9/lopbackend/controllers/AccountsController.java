@@ -1,6 +1,6 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class AccountsController {
     private AuthService authService;
 
     @GetMapping("/accounts")
-    public ResponseEntity<List<Account>> getAllAccounts() {
+    public ResponseEntity<List<UserAccount>> getAllAccounts() {
 
         var allAccounts = authService.getAllAccounts();
 

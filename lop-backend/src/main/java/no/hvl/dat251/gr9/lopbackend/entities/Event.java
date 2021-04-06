@@ -3,16 +3,15 @@ package no.hvl.dat251.gr9.lopbackend.entities;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity
 @Data
-public class Competition {
+public class Event {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -20,19 +19,26 @@ public class Competition {
     private String id;
 
     private String name;
-    private Date eventStart;
+    private LocalDate eventStart;
     private String generalInfo;
 
     @OneToMany
     private List<Race> races;
 
-    public Competition(String name, Date eventStart, String generalInfo) {
+    @ManyToMany
+    private List<Contacts> contacts;
+
+    @OneToOne
+    private OrganizerProfile organizer;
+
+
+    public Event(String name, LocalDate eventStart, String generalInfo) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;
     }
 
-    public Competition() {
+    public Event() {
 
     }
 }

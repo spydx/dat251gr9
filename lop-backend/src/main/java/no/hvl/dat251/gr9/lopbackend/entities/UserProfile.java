@@ -6,30 +6,30 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Data
-public class Profile implements Serializable {
+public class UserProfile implements Serializable{
 
     @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid",
-            strategy = "uuid2")
+    @GenericGenerator(name="system-uuid", strategy = "uuid2")
     private String id;
 
     private String firstname;
     private String lastname;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String address;
     private String city;
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
-    private Account account;
+    private UserAccount account;
 
     @Override
     public String toString() {
-        return "Profile{" +
+        return "UserProfile{" +
                 "id='" + id + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
