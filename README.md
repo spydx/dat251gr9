@@ -50,8 +50,9 @@ Group project for DAT251 Group 9 Spring 2021
 ![](Assignments/Architect%20diagram.png)
 
 ## Metrics
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=137943737&format=image"></img>
 <img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=719019434&format=image"></img>
-
+<img width="721" height="446" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkeRE-bTprpYWGNDVnZWy4-Hp98FDCnACCFmUqvs0HEgxSgyPQgvqFy3QLuiTIbJ-igvkPUugNtlFF/pubchart?oid=193482369&format=image"></img>
 
 
 ## Misc
@@ -145,6 +146,14 @@ From this press the "+"-sign -> Data Source -> MariaDB.
 
 ***If you on the bottom of the page get a warning-sign saying: "Missing drivers", press on the "Install drivers" button.***
 
-Then you just need to fill out the field with following: ```User: root```, and ```password: password```. 
+Then you just need to fill out the field with following: ```User: root```, and ```password: password```.
 
-We then can test the connection, if its all good press apply and ok and you are good to go! 
+We then can test the connection, if its all good press apply and ok and you are good to go!
+
+### Check the deployment with Heroku
+
+If you access to the Heroku engine, you can use the following command on the commandline to get the status of the running application.
+
+```shell
+> heroku logs --tail -a lop-backend
+```

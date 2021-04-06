@@ -1,0 +1,50 @@
+## needs some work, will fail.
+#
+# pom.xml
+#<properties>
+#  <sonar.projectKey>spydx_dat251gr9</sonar.projectKey>
+#  <sonar.organization>spydx</sonar.organization>
+#  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+#</properties>
+
+# paths to the project
+
+name: SonarCloud Analysis Backend
+on:
+  push:
+    branches:
+      - backend
+
+defaults:
+  run:
+    working-directory: ./lop-backend
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar

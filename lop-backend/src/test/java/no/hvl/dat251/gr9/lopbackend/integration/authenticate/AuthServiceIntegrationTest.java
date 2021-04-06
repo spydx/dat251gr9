@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Account;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.services.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,16 +31,16 @@ class AuthServiceIntegrationTest {
     private AuthService authService;
 
     @MockBean
-    private AccountDAO accountDAO;
+    private UserAccountDAO userAccountDAO;
 
     @BeforeEach
     void setUp() {
         var email = "fossen.kenneth@gmail.com";
-        var acc = new Account();
+        var acc = new UserAccount();
         acc.setEmail(email);
         acc.setPassword("passord");
 
-        Mockito.when(accountDAO.findByEmail(acc.getEmail()))
+        Mockito.when(userAccountDAO.findByEmail(acc.getEmail()))
                 .thenReturn(Optional.of(acc));
     }
 
