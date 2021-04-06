@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserAccountDAO extends JpaRepository<UserAccount, String> {
-    public UserAccount save(UserAccount accounts);
+    public UserAccount save(UserAccount account);
     public List<UserAccount> findAll();
     Optional<UserAccount> findByEmail(String email);
     Optional<UserAccount> findById(String id);
