@@ -1,0 +1,26 @@
+name: Docker Integration Tests
+
+on:
+  push:
+    paths:
+    - docker-compose.yml
+    - docker-compose.test.yml  
+    - e2e/**
+    - lop-backend/**
+    - lop-frontend/**
+
+jobs:
+  # Run tests.
+  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run integration tests
+        run: |
+          if [ -f docker-compose.test.yml ]; then
+            docker-compose --file docker-compose.test.yml build
+            docker-compose --file docker-compose.test.yml up --exit-code-from cypress
+          fi
