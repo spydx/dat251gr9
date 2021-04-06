@@ -2,7 +2,7 @@
 FROM node:15.9.0-alpine3.10 as build
 
 ENV CI=true
-# Arguments
+# Arguments to define BACKEND Endpoint
 ARG REACT_APP_BACKEND_ENDPOINT
 ENV REACT_APP_BACKEND_ENDPOINT=${REACT_APP_BACKEND_ENDPOINT}
 
