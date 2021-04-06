@@ -1,10 +1,10 @@
 import { Button, Form, Row } from "react-bootstrap";
 import MasterPage from "../MasterPage";
-import { ApiPath as ApiEndpoint, doPost } from "../services/api";
+import { ApiPath, doPost } from "../services/api";
 
 /** sends the login request and saves the token */
 async function performLogin(email: string, password: string) {
-  const { token } = await doPost(ApiEndpoint.Login, {
+  const { token } = await doPost(ApiPath.Login, {
     email: email,
     password: password,
   });
@@ -12,7 +12,7 @@ async function performLogin(email: string, password: string) {
 }
 
 // TODO: form validation / errors
-export function SignIn() {
+export const SignIn: React.FunctionComponent = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -50,4 +50,4 @@ export function SignIn() {
       </Row>
     </MasterPage>
   );
-}
+};

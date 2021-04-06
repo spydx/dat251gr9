@@ -1,6 +1,8 @@
-export const backendRoot: string =
+export const BACKEND_ROOT: string =
   process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api";
 
+// TODO: find a type that can express dynamic paths. Should we go back to using
+// strings ?
 export enum ApiPath {
   Login = "/auth/login/",
   Events = "/events/",
@@ -15,20 +17,20 @@ const CORS_ACAO = 'access-control-allow-origin' // *
 const CORS_ACAC = 'access-control-allow-credentials' // true
 */
 
-export function authDoGet(endPoint: ApiPath): Promise<any> {
+export function authDoGet(path: ApiPath): Promise<any> {
   const token = localStorage.getItem("token");
-  return fetch(`${backendRoot}${endPoint}`, {
+  return fetch(`${BACKEND_ROOT}${path}`, {
     headers: { Autorization: "Bearer " + token },
   }).then((resp) => resp.json());
 }
 
-export function doGet(endPoint: ApiPath): Promise<any> {
-  return fetch(`${backendRoot}${endPoint}`).then((resp) => resp.json());
+export function doGet(path: ApiPath): Promise<any> {
+  return fetch(`${BACKEND_ROOT}${path}`).then((resp) => resp.json());
 }
 
 // TODO: error handling
-export function doPost(endPoint: ApiPath, requestBody: any): Promise<any> {
-  return fetch(`${backendRoot}${endPoint}`, {
+export function doPost(path: ApiPath, requestBody: any): Promise<any> {
+  return fetch(`${BACKEND_ROOT}${path}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(requestBody),
