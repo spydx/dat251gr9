@@ -1,5 +1,3 @@
-import { Event } from '../types'
-
 export const backendRoot: string = process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api/"
 
 export const EVENTSPATH: string = "events/"
