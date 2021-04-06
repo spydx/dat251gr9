@@ -90,6 +90,8 @@ public class SetupService {
         var testContact = new ContactsDTO("Contact #1", "contact1@test.no", "12345678");
         var testContact2 = new ContactsDTO("Contact #2", "contact2@test.no", "34235645");
 
+        
+
         List<RaceDTO> races = new ArrayList<>();
         List<ContactsDTO> contacts = new ArrayList<>();
         races.add(testMarathonRace);

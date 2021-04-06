@@ -16,6 +16,7 @@ public class UserAccount implements Account{
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid2")
+    @JsonIgnore
     private String id;
 
 
