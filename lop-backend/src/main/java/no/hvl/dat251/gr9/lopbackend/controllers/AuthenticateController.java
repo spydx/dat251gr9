@@ -3,7 +3,7 @@ package no.hvl.dat251.gr9.lopbackend.controllers;
 import no.hvl.dat251.gr9.lopbackend.config.response.lopAPIResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class AuthenticateController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody AccountDTO newUser) {
+    public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody UserAccountDTO newUser) {
         var exist = userService.getAccount(newUser.getEmail());
 
         if(exist.isPresent()) {

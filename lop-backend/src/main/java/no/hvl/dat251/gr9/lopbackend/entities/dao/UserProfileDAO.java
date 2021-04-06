@@ -10,7 +10,6 @@ import java.util.Optional;
 
 
 @Repository
-//@Transactional
 public interface UserProfileDAO extends JpaRepository<UserProfile, String> {
     public UserProfile save(UserProfile profile);
     public Optional<UserProfile> findById(String id);

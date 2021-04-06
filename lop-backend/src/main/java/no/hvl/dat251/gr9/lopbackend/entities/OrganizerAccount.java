@@ -16,6 +16,7 @@ public class OrganizerAccount implements Account{
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid2")
+    @JsonIgnore
     private String id;
 
     @Column(unique = true)

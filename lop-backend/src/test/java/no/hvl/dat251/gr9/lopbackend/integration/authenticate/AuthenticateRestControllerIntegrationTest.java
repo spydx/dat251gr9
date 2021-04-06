@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -85,7 +85,14 @@ class AuthenticateRestControllerIntegrationTest {
 
     @Test
     void givenNonExistingUser_whenRegister_thenStatus201OK() throws Exception {
-        AccountDTO newAccount = new AccountDTO("test", "test", "test@test.no", "testtest123");
+        UserAccountDTO newAccount = new UserAccountDTO(
+                "test",
+                "test",
+                null,
+                null,
+                null,
+                "test@test.no",
+                "testtest123");
 
         var apiEndpoint = "/api/auth/register";
         var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);
@@ -101,7 +108,14 @@ class AuthenticateRestControllerIntegrationTest {
 
     @Test
     void givenExistingUser_whenRegister_thenStatus400BadRequest() throws Exception {
-        AccountDTO newAccount = new AccountDTO("test", "test", email, "testtest123");
+        UserAccountDTO newAccount = new UserAccountDTO(
+                "test",
+                "test",
+                 null,
+                 null,
+                 null,
+                 email,
+                "testtest123");
 
         var apiEndpoint = "/api/auth/register";
         var jsonBrokenUser = OBJECT_MAPPER.writeValueAsString(newAccount);

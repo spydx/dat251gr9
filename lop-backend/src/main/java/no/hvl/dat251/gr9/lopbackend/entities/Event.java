@@ -26,6 +26,9 @@ public class Event {
     @ManyToMany
     private List<Contacts> contacts;
 
+    @OneToOne
+    private OrganizerProfile organizer;
+
     @ManyToOne
     private Location location;
 

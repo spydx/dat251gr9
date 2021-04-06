@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,18 +21,16 @@ public class OrganizerProfile implements Serializable{
 
     private String organizerName;
 
+    private String Address;
+
+    @JsonIgnore
+    @OneToMany
+    private List<Contacts> contact;
+
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     private OrganizerAccount account;
 
 
-    @Override
-    public String toString() {
-        return "OrganizerProfile{" +
-                "id='" + id + '\'' +
-                ", organizerName='" + organizerName + '\'' +
-                ", account=" + account +
-                '}';
-    }
 }

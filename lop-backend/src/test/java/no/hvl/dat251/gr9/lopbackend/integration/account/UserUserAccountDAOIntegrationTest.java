@@ -2,7 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.integration.account;
 
 
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,13 +20,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 @ActiveProfiles("test")
 @Import(IntegrationTestContextConfiguration.class)
-class UserAccountDAOIntegrationTest {
+class UserUserAccountDAOIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private AccountDAO accountDAO;
+    private UserAccountDAO userAccountDAO;
 
     private int numberOfAccounts = 0;
 
@@ -60,7 +60,7 @@ class UserAccountDAOIntegrationTest {
 
         entityManager.persist(acc);
 
-        var found = accountDAO.findByEmail(username);
+        var found = userAccountDAO.findByEmail(username);
         assertThat(found.get().getEmail())
                 .isEqualTo(acc.getEmail());
     }
@@ -75,7 +75,7 @@ class UserAccountDAOIntegrationTest {
      */
     @Test
     void findAllAccounts() {
-        var res = accountDAO.findAll();
+        var res = userAccountDAO.findAll();
         System.out.println("Found accounts");
         for(var a : res ) {
             System.out.println(a.getEmail());
