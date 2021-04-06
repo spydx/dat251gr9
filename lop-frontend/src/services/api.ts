@@ -19,15 +19,3 @@ export const authFetcher = (url:string, token:string) => fetch(`${backendRoot}${
 
 export const fetcher =  (url:string) => fetch(`${backendRoot}${url}`)
       .then( resp => resp.json());
-
-export async function fetchEventList() {
-   console.log("Url: " + backendRoot + EVENTSPATH);
-   const response = await fetch(backendRoot + EVENTSPATH,  {
-      mode: "no-cors"
-   });
-   try {
-      return response.json() as Promise<Event[]>;
-   } catch (error) {
-      console.log("Error contacting API");
-   }
-}
