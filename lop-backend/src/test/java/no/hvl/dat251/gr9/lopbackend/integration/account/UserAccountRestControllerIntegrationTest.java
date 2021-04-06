@@ -3,7 +3,7 @@ package no.hvl.dat251.gr9.lopbackend.integration.account;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.authenticate.AuthenticateHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -47,13 +47,13 @@ class UserAccountRestControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private AccountDAO accountDAO;
+    private UserAccountDAO userAccountDAO;
 
     private JwtAuthenticationResponse cred;
 
 
     @AfterEach
-    public void clearEntityManager() { accountDAO.deleteAll();}
+    public void clearEntityManager() { userAccountDAO.deleteAll();}
 
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -91,6 +91,6 @@ class UserAccountRestControllerIntegrationTest {
         var acc = new UserAccount();
         acc.setPassword(password);
         acc.setEmail(email);
-        accountDAO.save(acc);
+        userAccountDAO.save(acc);
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class UserProfile implements Serializable{
 
     private String firstname;
     private String lastname;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String address;
     private String city;
 

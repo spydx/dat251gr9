@@ -1,15 +1,13 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.entities.*;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.RaceDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.ContactsDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class SetupService {
     private UserService userService;
 
     @Autowired
-    private AccountDAO accountStorage;
+    private UserAccountDAO accountStorage;
 
     @Autowired
     private RoleDAO roleStorage;
@@ -61,9 +59,12 @@ public class SetupService {
 
         var exist = userService.getAccount(email);
         if(exist.isEmpty()) {
-            var newadmin = new AccountDTO(
+            var newadmin = new UserAccountDTO(
                     "Lop",
                     "Admin",
+                    null,
+                    null,
+                    null,
                     email,
                     password
             );

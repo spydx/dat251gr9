@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccountDAO extends JpaRepository<UserAccount, String> {
+public interface UserAccountDAO extends JpaRepository<UserAccount, String> {
     public UserAccount save(UserAccount accounts);
     public List<UserAccount> findAll();
     Optional<UserAccount> findByEmail(String email);

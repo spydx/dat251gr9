@@ -5,10 +5,10 @@ import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.UserProfile;
 import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.AccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserProfileDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.AccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private AccountDAO accountStorage;
+    private UserAccountDAO accountStorage;
 
     @Autowired
     private UserProfileDAO profileStorage;
@@ -40,7 +40,7 @@ public class UserService {
         return accountStorage.findByEmail(email);
     }
 
-    public Optional<UserAccount> add(AccountDTO newaccount) {
+    public Optional<UserAccount> add(UserAccountDTO newaccount) {
         var account = new UserAccount(newaccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
                 () -> new InternalServerError("User Role not set")
@@ -50,6 +50,9 @@ public class UserService {
         var profile = new UserProfile();
         profile.setFirstname(newaccount.getFirstname());
         profile.setLastname(newaccount.getLastname());
+        profile.setBirthdate(newaccount.getBirthdate());
+        profile.setAddress(newaccount.getAddress());
+        profile.setCity(newaccount.getCity());
 
         account.setProfile(profile);
         var acc = accountStorage.save(account);
