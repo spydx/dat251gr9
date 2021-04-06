@@ -6,8 +6,6 @@ import no.hvl.dat251.gr9.lopbackend.entities.Race;
 
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Data
