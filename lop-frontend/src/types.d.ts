@@ -11,7 +11,8 @@ export type RootState = {
 export type Event = {
    id: string
    name: string
-   eventday: string
+   organizer?: string
+   eventstart: string
    generalinfo: string
    contacts: Contact[]
    races: Race[]
@@ -22,15 +23,15 @@ export type Contact = {
    name: string
    email: string
    phone: string
-
 }
 
 export type Race = {
-   id: number
+   id: string
    distance: number
    startlocation: string
    starttime?: string
    info?: string
+   elevation?: number
    vertical?: boolean
    children?: boolean
    womenonly?: boolean

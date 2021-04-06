@@ -1,6 +1,7 @@
 import { Event } from '../types'
 
 export const backendRoot: string = process.env.REACT_APP_BACKEND_ENDPOINT || "http://localhost:8080/api/"
+
 const EVENTSPATH: string = "events/"
 
 /*
@@ -14,7 +15,9 @@ const CORS_ACAC = 'access-control-allow-credentials' // true
 
 export async function fetchEventList() {
    console.log("Url: " + backendRoot + EVENTSPATH);
-   const response = await fetch(backendRoot + EVENTSPATH);
+   const response = await fetch(backendRoot + EVENTSPATH,  {
+      mode: "no-cors"
+   });
    try {
       return response.json() as Promise<Event[]>;
    } catch (error) {

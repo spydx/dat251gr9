@@ -16,7 +16,7 @@ export const EventCard = ({event}: EventCardProps) => {
                <Card.Header>
                   <Card border="warning" style={{justifyContent: 'center'}}>
                      <Card.Img variant='top' src='https://static1.squarespace.com/static/5ab37f44b27e395be60ff059/t/5ab3d0736d2a734e690a9a03/1607938028019/?format=1500w'></Card.Img>
-                     <Card.Title className="text-center">{event.eventday}</Card.Title>
+                     <Card.Title className="text-center">{event.eventstart}</Card.Title>
                   </Card>
                   <Card.Title>{event.name}</Card.Title>
                </Card.Header>
