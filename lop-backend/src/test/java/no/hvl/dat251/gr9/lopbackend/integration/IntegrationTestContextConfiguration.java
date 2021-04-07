@@ -31,4 +31,7 @@ public class IntegrationTestContextConfiguration {
 
     @Bean
     public ContactsService contactsService() { return new ContactsService(); }
+
+    @Bean
+    public LocationService locationService() {return new LocationService();}
 }
