@@ -49,8 +49,13 @@ public class LocationService {
     public Optional<Location> add(LocationDTO newLocation, String eventId){
         var event = eventStorage.findById(eventId);
         if(event.isPresent()){
-            var location = new Location(newLocation.getCounty(), newLocation.getMunicipality(), newLocation.getPlace(),
-                    newLocation.getLatitude(), newLocation.getLatitude());
+            var location = new Location(
+                    newLocation.getCounty(),
+                    newLocation.getMunicipality(),
+                    newLocation.getPlace(),
+                    newLocation.getLatitude(),
+                    newLocation.getLatitude()
+            );
             var loc = locationStorage.save(location);
             Event ev = event.get();
             EventDTO updatedEvent = new EventDTO(
@@ -59,7 +64,8 @@ public class LocationService {
                     ev.getGeneralInfo(),
                     ev.getRaces(),
                     ev.getContacts(),
-                    ev.getLocation()
+                    ev.getLocation(),
+                    ev.getOrganizer()
             );
             updatedEvent.setLocation(loc);
             eventService.updateEvent(eventId, updatedEvent);

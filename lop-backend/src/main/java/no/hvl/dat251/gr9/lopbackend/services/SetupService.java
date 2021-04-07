@@ -29,6 +29,9 @@ public class SetupService {
     private UserService userService;
 
     @Autowired
+    private OrganizerService organizerService;
+
+    @Autowired
     private UserAccountDAO accountStorage;
 
     @Autowired
@@ -60,7 +63,7 @@ public class SetupService {
 
         var exist = userService.getAccount(email);
         if(exist.isEmpty()) {
-            var newadmin = new UserAccountDTO(
+            var newAdmin = new UserAccountDTO(
                     "Lop",
                     "Admin",
                     null,
@@ -70,7 +73,7 @@ public class SetupService {
                     password
             );
 
-            var create = userService.add(newadmin);
+            var create = userService.add(newAdmin);
             if(create.isPresent())
                 logger.info("Created admin account {}", create.get());
             else
@@ -81,49 +84,82 @@ public class SetupService {
 
         }
 
+        var organiserExist = organizerService.getAccount("organizer@test.no");
+        if(organiserExist.isEmpty()){
+
+            var testContact = new Contacts("Contact #1", "contact1@test.no", "12345678");
+            var testContact2 = new Contacts("Contact #2", "contact2@test.no", "34235645");
+            var testContact3 = new Contacts("Contact #3", "contact3@test.no", "34212364");
+
+            List<Contacts> contacts = new ArrayList<>();
+            contacts.add(testContact);
+            contacts.add(testContact2);
+            contacts.add(testContact3);
+
+            var newOrganizer = new OrganizerAccountDTO(
+                    "Organizer",
+                    "Some place on earth",
+                    contacts,
+                    "organizer@test.no",
+                    "test123"
+            );
+            var createOrganizer = organizerService.add(newOrganizer);
+
+            if(createOrganizer.isPresent()) {
+                logger.info("Created organizer account {}", createOrganizer.get());
+            }
+            else
+                logger.info("Failed to create organizer account");
+        } else {
+            logger.info("Organizer account with email: organizer@test.no already exist");
+        }
+
+
+        var organizer = organizerService.getAccount("organizer@test.no");
+        if(!organizer.isPresent()){
+            logger.info("init failed!");
+            return;
+        }
+
         //----------------------------------------------------------------------------------
-        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), new ArrayList<>(), new Location());
+        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), organizer.get().getProfile().getContact(), null, organizer.get().getProfile());
 
         var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 30), 500f, false,
                 false,false, false, false, false, "info");
         var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(16, 30), 250f, false,
                 false,false, false, false, false, "info");
 
-        var testContact = new ContactsDTO("Contact #1", "contact1@test.no", "12345678");
-        var testContact2 = new ContactsDTO("Contact #2", "contact2@test.no", "34235645");
+
 
         var testLocation = new LocationDTO("Vestland", "Bergen", "Bergen",60.396803, 5.323383);
 
         List<RaceDTO> races = new ArrayList<>();
-        List<ContactsDTO> contacts = new ArrayList<>();
         races.add(testMarathonRace);
         races.add(testHalfMarathonRace);
-        contacts.add(testContact);
-        contacts.add(testContact2);
 
-        createEvent(testEvent, races, contacts, testLocation);
+
+        createEvent(testEvent, races, testLocation);
         //----------------------------------------------------------------------------------
-        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>(), new Location());
+        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), organizer.get().getProfile().getContact(), null, organizer.get().getProfile());
 
         var testRace21 = new RaceDTO(1.0f, LocalTime.of(1, 50), 2.0f, false,
                 true, false, true, false, true, "This race is a test race for event "+ testEvent2.getName());
         var testRace22 = new RaceDTO(100.0f, LocalTime.of(2, 50), 2.0f, false,
                 true, false, true, false, true, "This race is also a test race for event "+ testEvent2.getName());
 
-        var testContact3 = new ContactsDTO("Contact #3", "contact3@test.no", "34212364");
 
         var testLocation2 = new LocationDTO("Test county #2", "Test municipality #2", "Test place #2", 12.34, 56.789);
         races.clear();
         races.add(testRace21);
         races.add(testRace22);
-        contacts.add(testContact3);
 
-        createEvent(testEvent2, races, contacts, testLocation2);
+
+        createEvent(testEvent2, races, testLocation2);
         //----------------------------------------------------------------------------------
 
     }
 
-    public void createEvent(EventDTO event, List<RaceDTO> races, List<ContactsDTO> contacts, LocationDTO location){
+    public void createEvent(EventDTO event, List<RaceDTO> races, LocationDTO location){
         var exists = eventStorage.findEventByName(event.getName());
 
         if(exists.isPresent()){
@@ -137,9 +173,6 @@ public class SetupService {
 
             for(RaceDTO race: races){
                 createRace(race, newEvent.get().getId());
-            }
-            for(ContactsDTO contact: contacts){
-                createContact(contact, newEvent.get().getId());
             }
 
             createLocation(location, newEvent.get().getId());
@@ -157,14 +190,6 @@ public class SetupService {
         }
     }
 
-    public void createContact(ContactsDTO newContact, String eventId){
-        var createContact = contactsService.add(newContact, eventId);
-        if(createContact.isPresent()){
-            logger.info("Created contact: " + createContact.get() + " for event " + eventId);
-        } else {
-            logger.info("Failed to create contact: " + createContact + " for event " + eventId);
-        }
-    }
 
     public void createLocation(LocationDTO newLocation, String eventId){
         var createLocation = locationService.add(newLocation, eventId);

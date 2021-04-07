@@ -1,9 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 import lombok.Data;
-import no.hvl.dat251.gr9.lopbackend.entities.Contacts;
-import no.hvl.dat251.gr9.lopbackend.entities.Location;
-import no.hvl.dat251.gr9.lopbackend.entities.Race;
+import no.hvl.dat251.gr9.lopbackend.entities.*;
 
 
 import java.time.LocalDate;
@@ -17,13 +15,15 @@ public class EventDTO {
     private List<Race> races;
     private List<Contacts> contacts;
     private Location location;
+    private OrganizerProfile organizer;
 
-    public EventDTO(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, Location location) {
+    public EventDTO(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, Location location, OrganizerProfile organizer) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;
         this.races = races;
         this.contacts = contacts;
         this.location = location;
+        this.organizer = organizer;
     }
 }

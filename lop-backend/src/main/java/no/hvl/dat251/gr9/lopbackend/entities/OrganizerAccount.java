@@ -37,4 +37,14 @@ public class OrganizerAccount implements Account{
     }
 
     public OrganizerAccount() {}
+
+    @Override
+    public String toString() {
+        return "OrganizerAccount{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", profile=" + profile +
+                '}';
+    }
 }

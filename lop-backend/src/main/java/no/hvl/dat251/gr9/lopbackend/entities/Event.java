@@ -33,10 +33,14 @@ public class Event {
     private Location location;
 
 
-    public Event(String name, LocalDate eventStart, String generalInfo) {
+    public Event(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, OrganizerProfile organizer, Location location) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;
+        this.races = races;
+        this.contacts = contacts;
+        this.organizer = organizer;
+        this.location = location;
     }
 
     public Event() {

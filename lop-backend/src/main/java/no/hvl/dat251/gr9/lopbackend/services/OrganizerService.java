@@ -2,9 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 
 import no.hvl.dat251.gr9.lopbackend.config.response.InternalServerError;
-import no.hvl.dat251.gr9.lopbackend.entities.OrganizerAccount;
-import no.hvl.dat251.gr9.lopbackend.entities.OrganizerProfile;
-import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
+import no.hvl.dat251.gr9.lopbackend.entities.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.OrganizerAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
@@ -57,8 +55,8 @@ public class OrganizerService {
         return Optional.of(acc);
     }
 
-    public Optional<OrganizerAccount> updateAccount(String profileid, PasswordDTO updated){
-        var profile = organizerProfileStorage.findById(profileid);
+    public Optional<OrganizerAccount> updatePassword(String profileId, PasswordDTO updated){
+        var profile = organizerProfileStorage.findById(profileId);
         if(profile.isPresent()){
             var account = profile.get().getAccount();
             if(account.getEmail().equals(updated.getEmail())){
@@ -67,6 +65,19 @@ public class OrganizerService {
             }
             logger.info("Cant find profile for {}", updated);
         }
+        return Optional.empty();
+    }
+
+    public Optional<OrganizerProfile> addContact(String profileId, Contacts contact){
+        var profile = organizerProfileStorage.findById(profileId);
+        if(profile.isPresent()){
+            var newContacts = profile.get().getContact();
+            newContacts.add(contact);
+            profile.get().setContact(newContacts);
+            return Optional.of(organizerProfileStorage.save(profile.get()));
+
+        }
+        logger.error("Cant find profile for id {}", profileId);
         return Optional.empty();
     }
 }

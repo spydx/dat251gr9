@@ -21,6 +21,7 @@ public class Location {
     private double latitude; //north-south
     private double longitude; //east-west
 
+
     public Location(String county, String municipality, String place, double latitude, double longitude){
         this.county = county;
         this.municipality = municipality;

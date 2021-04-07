@@ -28,7 +28,15 @@ public class EventService {
     public Optional<Event> getEvent(String id) { return eventStorage.findById(id); }
 
     public Optional<Event> add(EventDTO newComp) {
-        var competition = new Event(newComp.getName(), newComp.getEventStart(), newComp.getGeneralInfo());
+        var competition = new Event(
+                newComp.getName(),
+                newComp.getEventStart(),
+                newComp.getGeneralInfo(),
+                newComp.getRaces(),
+                newComp.getContacts(),
+                newComp.getOrganizer(),
+                newComp.getLocation()
+        );
         var comp = eventStorage.save(competition);
         return Optional.of(comp);
 
@@ -40,6 +48,10 @@ public class EventService {
             competition.get().setName(updated.getName());
             competition.get().setEventStart(updated.getEventStart());
             competition.get().setGeneralInfo(updated.getGeneralInfo());
+            competition.get().setContacts(updated.getContacts());
+            competition.get().setRaces(updated.getRaces());
+            competition.get().setLocation(updated.getLocation());
+            competition.get().setOrganizer(updated.getOrganizer());
 
             return Optional.of(eventStorage.save(competition.get()));
         }
