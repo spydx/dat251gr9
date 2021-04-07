@@ -14,7 +14,7 @@ public class LocationTest {
         var latitude = 61.451931;
         var longitude = 5.843860;
 
-        Location location = new Location();
+        var location = new Location();
         location.setCounty(county);
         location.setMunicipality(municipality);
         location.setPlace(place);

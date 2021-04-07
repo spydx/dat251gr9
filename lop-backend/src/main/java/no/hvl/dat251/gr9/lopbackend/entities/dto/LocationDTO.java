@@ -17,4 +17,8 @@ public class LocationDTO {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public LocationDTO(){
+
+    }
 }

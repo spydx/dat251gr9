@@ -14,7 +14,7 @@ public class LocationDTOTest {
         var latitude = 61.451931;
         var longitude = 5.843860;
 
-        Location location = new Location();
+        var location = new LocationDTO();
         location.setCounty(county);
         location.setMunicipality(municipality);
         location.setPlace(place);
