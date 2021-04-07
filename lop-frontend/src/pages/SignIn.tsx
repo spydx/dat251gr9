@@ -31,12 +31,12 @@ export const SignIn: React.FunctionComponent = () => {
         <Form noValidate={false} className="signInForm" onSubmit={handleSubmit}>
           <Form.Group controlId="formEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control required type="email" placeholder="Enter email" />
+            <Form.Control name="email" required type="email" placeholder="Enter email" />
           </Form.Group>
 
           <Form.Group controlId="formPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" placeholder="Password" />
+            <Form.Control name="password" required type="password" placeholder="Password" />
           </Form.Group>
 
           {/* Enhancement: add a "remember me" checkbox 
