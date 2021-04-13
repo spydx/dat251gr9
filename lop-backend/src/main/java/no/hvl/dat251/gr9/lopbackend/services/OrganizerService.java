@@ -34,6 +34,8 @@ public class OrganizerService {
 
     public Optional<OrganizerAccount> getAccount(String email) {return organizerAccountStorage.findByEmail(email);}
 
+    public Optional<OrganizerAccount> getAccountById(String id) { return organizerAccountStorage.findById(id);}
+
     public Optional<OrganizerAccount> add(OrganizerAccountDTO newAccount){
         var account = new OrganizerAccount(newAccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
