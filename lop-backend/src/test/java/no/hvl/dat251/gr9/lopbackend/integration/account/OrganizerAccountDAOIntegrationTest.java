@@ -1,8 +1,8 @@
 package no.hvl.dat251.gr9.lopbackend.integration.account;
 
-
+import no.hvl.dat251.gr9.lopbackend.entities.OrganizerAccount;
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.OrganizerAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,23 +15,24 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @ActiveProfiles("test")
 @Import(IntegrationTestContextConfiguration.class)
-class UserUserAccountDAOIntegrationTest {
+public class OrganizerAccountDAOIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserAccountDAO userAccountDAO;
+    private OrganizerAccountDAO organizerAccountDAO;
 
     private int numberOfAccounts = 0;
 
     @BeforeEach
-    private void setUp() {
+    private void setUp(){
         var emails = new String[]{
                 "email1@gmail.no",
                 "emial2@hotmail.com",
@@ -40,19 +41,19 @@ class UserUserAccountDAOIntegrationTest {
         };
 
         for (var e : emails) {
-            var acc = new UserAccount();
+            var acc = new OrganizerAccount();
             acc.setEmail(e);
             var pwd = e.split("@")[0];
             acc.setPassword(pwd);
             entityManager.persist(acc);
         }
-        // +1 is due to injecting admin through SetupService
+        // +1 is due to injecting organizer through SetupService
         numberOfAccounts = emails.length+1;
     }
 
     @Test
-    void persistAccount() {
-        var acc = new UserAccount();
+    void persistOrganizerAccount() {
+        var acc = new OrganizerAccount();
         var username = "test@gmail.com";
         var password = "password";
         acc.setEmail(username);
@@ -60,31 +61,15 @@ class UserUserAccountDAOIntegrationTest {
 
         entityManager.persist(acc);
 
-        var found = userAccountDAO.findByEmail(username);
-        assertThat(found.get().getEmail())
-                .isEqualTo(acc.getEmail());
+        var found = organizerAccountDAO.findByEmail(username);
+        assertEquals(acc.getEmail(), found.get().getEmail());
     }
 
-    /*
-    admin@lop.no
-    email1@gmail.no
-    emial2@hotmail.com
-    email3@uib.no
-    eamil4@hvl.no
-    We are injecting one user through setupservice
-     */
     @Test
-    void findAllAccounts() {
-        var res = userAccountDAO.findAll();
-        System.out.println("Found accounts");
-        for(var a : res ) {
-            System.out.println(a.getEmail());
-        }
-        assertThat(res.size())
-                .isEqualTo(numberOfAccounts);
-        assertThat(res.size())
-                .isNotZero();
+    void findAllOrganizerAccounts(){
+        var res = organizerAccountDAO.findAll();
+
+        assertEquals(numberOfAccounts, res.size());
+        assertThat(res.size()).isNotZero();
     }
-
-
 }
