@@ -32,7 +32,7 @@ public class OrganizerAccount implements Account{
     @OneToOne(cascade = CascadeType.ALL)
     private OrganizerProfile profile;
 
-    public OrganizerAccount(@Email String email) {
+    public OrganizerAccount(String email) {
         this.email = email;
     }
 

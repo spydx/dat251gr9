@@ -5,6 +5,7 @@ import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
+import no.hvl.dat251.gr9.lopbackend.services.OrganizerService;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class AuthenticateController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrganizerService organizerService;
+
     private final Logger logger = LoggerFactory.getLogger(AuthenticateController.class);
 
     @PostMapping(value = "/login")
@@ -51,10 +55,21 @@ public class AuthenticateController {
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         String token = tokenProvider.generateToken(auth);
-        var exists = userService.getAccount(login.getEmail());
-        if(exists.isPresent()) {
-            var profileid = exists.get().getProfile().getId();
+        var userexists = userService.getAccount(login.getEmail());
+        var organizerexists = organizerService.getAccount(login.getEmail());
+
+        if(userexists.isPresent() && organizerexists.isPresent()) {
+            logger.info("This should not be possible. Please contact IT-support.");
+
+        } else if(userexists.isPresent()) {
+            logger.info("Fant en bruker");
+            var profileid = userexists.get().getProfile().getId();
             return ResponseEntity.ok(new JwtAuthenticationResponse(token, profileid));
+
+        } else if(organizerexists.isPresent()) {
+            logger.info("Fant en organizer account");
+            var orgprofileid = organizerexists.get().getProfile().getId();
+            return ResponseEntity.ok(new JwtAuthenticationResponse(token, orgprofileid));
         }
         logger.error("Log-in error failed for {}", login.getEmail());
         return ResponseEntity.ok("failed to find user profile");

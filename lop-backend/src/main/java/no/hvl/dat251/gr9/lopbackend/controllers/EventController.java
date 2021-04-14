@@ -2,6 +2,7 @@ package no.hvl.dat251.gr9.lopbackend.controllers;
 
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import no.hvl.dat251.gr9.lopbackend.services.OrganizerService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("api/events")
@@ -55,17 +57,27 @@ public class EventController {
 
     @PostMapping(value = "/")
     public ResponseEntity<?> createEvent(@NotNull @RequestHeader("Authorization") final String token,
-                                         @RequestBody EventDTO newComp, String organizerid) {
+                                         @RequestBody EventDTO newEvent) {
         var accountid = jwtControl.parseHeader(token);
+        var organizer = organizerService.getAccountById(accountid.get());
+        if(accountid.isPresent() && organizer.isPresent()) {
+            EventDTO event = new EventDTO(
+                 newEvent.getName(),
+                 newEvent.getEventStart(),
+                 newEvent.getGeneralInfo(),
+                 new ArrayList<>(),
+                 organizer.get().getProfile().getContacts(),
+                 newEvent.getLocation(),
+                 organizer.get().getProfile()
+            );
 
-        if(accountid.isPresent() && organizerService.getAccountById(accountid.get()).isPresent()) {
-            var res = eventService.add(newComp);
+            var res = eventService.add(event);
 
             if(res.isPresent()) {
                 return new ResponseEntity<>(res.get(), HttpStatus.OK);
             }
         }
-        logger.error("Could not create competition", newComp);
+        logger.error("Could not create competition", newEvent);
         return new ResponseEntity<>("Could not create new event", HttpStatus.BAD_REQUEST);
     }
 
