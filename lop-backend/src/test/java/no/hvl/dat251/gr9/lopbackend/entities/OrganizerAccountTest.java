@@ -4,22 +4,21 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-class UserAccountTest {
+public class OrganizerAccountTest {
 
     @Test
-     void accountGetSetName() {
+    void organizerAccountGetSetName() {
         String email = "fossen.kenneth@gmail.com";
-        var acc = new UserAccount();
+        var acc = new OrganizerAccount();
         acc.setEmail(email);
         assertEquals(email, acc.getEmail());
     }
 
 
     @Test
-    void accountGetSetPassword() {
+    void organizerAccountGetSetPassword() {
         String password = "nisse";
-        var acc = new UserAccount();
+        var acc = new OrganizerAccount();
         acc.setPassword(password);
         assertEquals(password, acc.getPassword());
     }

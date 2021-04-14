@@ -21,4 +21,7 @@ public class OrganizerAccountDTO {
         this.email = email;
         this.password = password;
     }
+
+    public OrganizerAccountDTO() {
+    }
 }

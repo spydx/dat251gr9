@@ -46,7 +46,7 @@ public class OrganizerService {
         var profile = new OrganizerProfile();
         profile.setOrganizerName(newAccount.getOrganizerName());
         profile.setAddress(newAccount.getAddress());
-        profile.setContact(newAccount.getContacts());
+        profile.setContacts(newAccount.getContacts());
 
         account.setProfile(profile);
         var acc = organizerAccountStorage.save(account);
@@ -73,9 +73,9 @@ public class OrganizerService {
     public Optional<OrganizerProfile> addContact(String profileId, Contacts contact){
         var profile = organizerProfileStorage.findById(profileId);
         if(profile.isPresent()){
-            var newContacts = profile.get().getContact();
+            var newContacts = profile.get().getContacts();
             newContacts.add(contact);
-            profile.get().setContact(newContacts);
+            profile.get().setContacts(newContacts);
             return Optional.of(organizerProfileStorage.save(profile.get()));
 
         }

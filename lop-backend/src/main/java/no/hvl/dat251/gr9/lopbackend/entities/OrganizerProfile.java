@@ -3,7 +3,6 @@ package no.hvl.dat251.gr9.lopbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ public class OrganizerProfile implements Serializable{
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Contacts> contact;
+    private List<Contacts> contacts;
 
 
     @JsonIgnore
@@ -39,7 +38,7 @@ public class OrganizerProfile implements Serializable{
                 "id='" + id + '\'' +
                 ", organizerName='" + organizerName + '\'' +
                 ", Address='" + Address + '\'' +
-                ", contacts=" + contact +
+                ", contacts=" + contacts +
                 '}';
     }
 }
