@@ -1,20 +1,22 @@
-import { Navbar, NavbarBrand, Nav } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 declare module "loplogo.png";
 
-function Header() {
+function TopNav() {
   return (
-    <Navbar expand="lg" sticky="top">
-      <NavbarBrand>
+    <Navbar bg="light" expand="sm" sticky="top">
+      <Navbar.Brand>
         <img src="loplogo.png" width="70px" height="70px" alt="" />
-      </NavbarBrand>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/">
             Home
           </Nav.Link>
+        </Nav>
+        <Nav>
           <Nav.Link as={Link} to="/signIn">
             Sign In
           </Nav.Link>
@@ -27,4 +29,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default TopNav;

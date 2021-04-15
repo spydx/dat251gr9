@@ -1,13 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import Header from "../Header";
+import TopNav from "../TopNav";
 import { MemoryRouter } from "react-router-dom";
 
 test("Navbar Sign In", () => {
   const { getByText } = render(
     <MemoryRouter>
-      <Header />
+      <TopNav />
     </MemoryRouter>
   );
   const navbarlogin = getByText("Sign In");
@@ -17,7 +17,7 @@ test("Navbar Sign In", () => {
 test("Navbar Sign Up", () => {
   const { getByText } = render(
     <MemoryRouter>
-      <Header />
+      <TopNav />
     </MemoryRouter>
   );
   const navbarreg = getByText("Sign Up");

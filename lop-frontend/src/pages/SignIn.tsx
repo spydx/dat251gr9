@@ -27,7 +27,7 @@ export const SignIn: React.FunctionComponent = () => {
   return (
     <MasterPage>
       <h2>Sign In</h2>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-center">
         <Form noValidate={false} className="signInForm" onSubmit={handleSubmit}>
           <Form.Group controlId="formEmail">
             <Form.Label>Email address</Form.Label>

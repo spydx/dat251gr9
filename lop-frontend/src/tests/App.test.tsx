@@ -9,12 +9,12 @@ import { MemoryRouter } from "react-router-dom";
 test("Render App page", () => {
   const { getByText } = render(
     <Provider store={store}>
-      {/* routing and testing: https://reactrouter.com/web/guides/testing */}
+      {/* MemoryRouter: see https://reactrouter.com/web/guides/testing */}
       <MemoryRouter>
         <App />
       </MemoryRouter>
     </Provider>
   );
-  const footer = getByText("DAT251 Gruppe9");
+  const footer = getByText("DAT251 Gruppe 9");
   expect(footer).toBeInTheDocument();
 });
