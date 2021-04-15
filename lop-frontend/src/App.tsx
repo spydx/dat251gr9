@@ -1,14 +1,11 @@
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { About } from "./pages/About";
 import { EventPage } from "./pages/EventPage";
 import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 
-export default function App() {
+const App: React.FunctionComponent = () => {
   return (
     <Switch>
       <Route path="/about" component={About} />
@@ -18,4 +15,6 @@ export default function App() {
       <Route path="/" component={Home} />
     </Switch>
   );
-}
+};
+
+export default App;

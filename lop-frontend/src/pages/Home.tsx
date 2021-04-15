@@ -6,7 +6,7 @@ import { doGet, ApiPath } from "../services/api";
 import useSWR from 'swr';
 
 
-export const Home = () => {
+export const Home: React.FunctionComponent = () => {
 
   const { data, error } = useSWR(ApiPath.Events, doGet);
 

@@ -1,10 +1,10 @@
 import React from "react";
 import MasterPage from "../MasterPage";
 
-export function About() {
+export const About: React.FunctionComponent = () => {
   return (
     <MasterPage>
       <h2>About</h2>
     </MasterPage>
   );
-}
+};
