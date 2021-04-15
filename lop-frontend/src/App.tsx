@@ -1,7 +1,8 @@
 import { Switch, Route } from "react-router-dom";
 import { About } from "./pages/About";
 import { EventPage } from "./pages/EventPage";
-import { Home } from "./pages/Home";
+import { EventListPage } from "./pages/EventListPage";
+import { HomePage } from "./pages/HomePage";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 
@@ -12,7 +13,8 @@ const App: React.FunctionComponent = () => {
       <Route path="/signIn" component={SignIn} />
       <Route path="/signUp" component={SignUp} />
       <Route path="/event/:id" component={EventPage} />
-      <Route path="/" component={Home} />
+      <Route path="/events/" component={EventListPage} />
+      <Route path="/" component={HomePage} />
     </Switch>
   );
 };

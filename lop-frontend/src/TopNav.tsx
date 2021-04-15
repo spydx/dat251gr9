@@ -15,6 +15,9 @@ function TopNav() {
           <Nav.Link as={Link} to="/">
             Home
           </Nav.Link>
+          <Nav.Link as={Link} to="/events">
+            Events
+          </Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link as={Link} to="/signIn">
