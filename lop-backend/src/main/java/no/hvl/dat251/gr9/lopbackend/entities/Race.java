@@ -28,6 +28,7 @@ public class Race {
     private Boolean multiSport;
     private Boolean obstacleRun;
     private String info;
+    private int participants;
 
     public Race(Float distance, LocalTime startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                 Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
@@ -41,9 +42,11 @@ public class Race {
         this.multiSport = multiSport;
         this.obstacleRun = obstacleRun;
         this.info = info;
+        this.participants = 0;
     }
 
     public Race() {
 
     }
+
 }

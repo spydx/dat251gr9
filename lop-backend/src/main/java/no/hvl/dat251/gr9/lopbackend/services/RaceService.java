@@ -31,6 +31,22 @@ public class RaceService {
 
     public Optional<List<Race>> getAllRaces() { return Optional.of(raceStorage.findAll()); }
 
+    public Optional<List<Race>> getAllRacesSortedByParticipantsAscending(){
+        return Optional.of(raceStorage.findByOrderByParticipantsAsc());
+    }
+
+    public Optional<List<Race>> getAllRacesSortedByParticipantsDescending(){
+        return Optional.of(raceStorage.findByOrderByParticipantsDesc());
+    }
+
+    public Optional<List<Race>> getAllRacesSortedByDistanceAscending(){
+        return Optional.of(raceStorage.findByOrderByDistanceAsc());
+    }
+
+    public Optional<List<Race>> getAllRacesSortedByDistanceDescending(){
+        return Optional.of(raceStorage.findByOrderByDistanceDesc());
+    }
+
     public Optional<Race> getRace(String id) { return raceStorage.findById(id); }
 
     public Optional<List<Race>> getRacesFromEvent(String eventId) {
@@ -56,6 +72,8 @@ public class RaceService {
                     newRace.getMultiSport(),
                     newRace.getObstacleRun(),
                     newRace.getInfo());
+            race.setParticipants(newRace.getParticipants());
+
 
             var r = raceStorage.save(race);
             Event ev = event.get();

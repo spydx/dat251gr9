@@ -54,7 +54,7 @@ public class LocationService {
                     newLocation.getMunicipality(),
                     newLocation.getPlace(),
                     newLocation.getLatitude(),
-                    newLocation.getLatitude()
+                    newLocation.getLongitude()
             );
             var loc = locationStorage.save(location);
             Event ev = event.get();

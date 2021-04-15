@@ -1,9 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.entities.*;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.*;
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
@@ -47,10 +45,16 @@ public class SetupService {
     private RaceService raceService;
 
     @Autowired
+    private RaceDAO raceStorage;
+
+    @Autowired
     private ContactsService contactsService;
 
     @Autowired
     private LocationService locationService;
+
+    @Autowired
+    private LocationDAO locationStorage;
 
     private final Logger logger = LoggerFactory.getLogger(SetupService.class);
 
@@ -117,46 +121,64 @@ public class SetupService {
 
 
         //----------------------------------------------------------------------------------
-        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), contacts, null, organiserExist.get().getProfile());
+        /*
+        There seems to be something wrong with starttime/LocalTime for races
+        Adding contacts to events is causing errors (i've ignored contacts for now as a solution)
+        Updating event/race information will not currently update the information in the database.
+        This is because they are not created if they already exists. To fix this you can delete all the events/races
+        in the db and they will be updated the next time you run the application.
+        We should implement a better way to do this, e.g. checking if the information has been updated and then
+        updating the db.
+         */
 
-        var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 30), 500f, false,
+
+        //Currently a solution to update the database when you change the information for some test event/race/location
+        // is to delete all events/races/locations from it. This should be a problem once the database has data that is not test data
+
+        eventStorage.deleteAll();
+        raceStorage.deleteAll();
+        locationStorage.deleteAll();
+
+        var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(8, 0), 500f, false,
                 false,false, false, false, false, "info");
-        var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(16, 30), 250f, false,
+        var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(10, 0), 250f, false,
                 false,false, false, false, false, "info");
-
-
-
-        var testLocation = new LocationDTO("Vestland", "Bergen", "Bergen",60.396803, 5.323383);
-
+        testMarathonRace.setParticipants(100);
+        testHalfMarathonRace.setParticipants(50);
         List<RaceDTO> races = new ArrayList<>();
         races.add(testMarathonRace);
         races.add(testHalfMarathonRace);
 
+        var location = new LocationDTO("Vestland", "Bergen", "Bergen",60.396803, 5.323383);
+        var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24),
+                "info", new ArrayList<>(), new ArrayList<>(), null, organiserExist.get().getProfile());
 
-        createEvent(testEvent, races, testLocation);
+
+
+        createEvent(testEvent, races, location, contacts);
         //----------------------------------------------------------------------------------
-        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), contacts, null, organiserExist.get().getProfile());
-
-        var testRace21 = new RaceDTO(1.0f, LocalTime.of(1, 50), 2.0f, false,
-                true, false, true, false, true, "This race is a test race for event "+ testEvent2.getName());
-        var testRace22 = new RaceDTO(100.0f, LocalTime.of(2, 50), 2.0f, false,
-                true, false, true, false, true, "This race is also a test race for event "+ testEvent2.getName());
-
-
-        var testLocation2 = new LocationDTO("Test county #2", "Test municipality #2", "Test place #2", 12.34, 56.789);
+        var testRace21 = new RaceDTO(1.0f, LocalTime.of(21, 0), 2.0f, false,
+                true, false, true, false, true, "This race is a test race for test event 2");
+        var testRace22 = new RaceDTO(100.0f, LocalTime.of(12, 0), 2.0f, false,
+                true, false, true, false, true, "This race is also a test race for test event 2 ");
+        testRace21.setParticipants(1);
+        testRace22.setParticipants(2);
         races.clear();
         races.add(testRace21);
         races.add(testRace22);
 
+        var location2 = new LocationDTO("Test county #2", "Test municipality #2", "Test place #2", 12.34, 56.789);
+        var testEvent2 = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2),
+                "this is a test event", new ArrayList<>(), new ArrayList<>(), null, organiserExist.get().getProfile());
 
-        createEvent(testEvent2, races, testLocation2);
+
+        createEvent(testEvent2, races, location2, contacts);
         //----------------------------------------------------------------------------------
 
     }
 
-    public void createEvent(EventDTO event, List<RaceDTO> races, LocationDTO location){
+    public void createEvent(EventDTO event, List<RaceDTO> races, LocationDTO location, List<Contacts> contacts){
         var exists = eventStorage.findEventByName(event.getName());
-
         if(exists.isPresent()){
             logger.info("Event already exists: " + event.getName());
             return;
@@ -170,7 +192,15 @@ public class SetupService {
                 createRace(race, newEvent.get().getId());
             }
 
+            /*
+            for(Contacts contact : contacts){
+                createContact(contact, newEvent.get().getId());
+            }
+
+             */
+
             createLocation(location, newEvent.get().getId());
+
         }else{
             logger.info("Failed to create event ");
         }
@@ -179,9 +209,9 @@ public class SetupService {
     public void createRace(RaceDTO newRace, String eventId){
         var createRace = raceService.add(newRace, eventId);
         if(createRace.isPresent()){
-            logger.info("Created race: " + newRace + " for event " + eventId);
+            logger.info("Created race: " + createRace.get() + " for event " + eventId);
         } else {
-            logger.info("Failed to create race: " + newRace + " for event " + eventId);
+            logger.info("Failed to create race: " + createRace + " for event " + eventId);
         }
     }
 
@@ -194,6 +224,18 @@ public class SetupService {
             logger.info("Failed to create location: " + createLocation + " for event " + eventId);
         }
     }
+
+    public void createContact(Contacts contact, String eventId){
+        ContactsDTO newContact = new ContactsDTO(contact.getName(), contact.getEmail(), contact.getPhone());
+        var createContact = contactsService.add(newContact, eventId);
+        if(createContact.isPresent()){
+            logger.info("Created contact: " + createContact.get() + " for event " + eventId);
+        } else {
+            logger.info("Failed to create contact: " + createContact + " for event " + eventId);
+        }
+    }
+
+
 }
 
 
