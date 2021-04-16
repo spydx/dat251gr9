@@ -17,18 +17,25 @@ export const EventCard: React.FC<Props> = ({ event }) => {
         <Card.Link href={"/event/" + event.id}>
           <Card.Title>{event.name}</Card.Title>
         </Card.Link>
-        <Card.Subtitle>{event.organizer}</Card.Subtitle>
+        <Card.Subtitle>{event.location.place}</Card.Subtitle>
         <Card.Text as="div">
-          Event start: <span>{event.eventstart}</span>
-          <br />
-          Info: <span>{event.generalinfo}</span>
-          <br />
-          Distances:
-          <ul>
-            {event.races.map((race, key) => (
-              <li key={key}>{`${race.distance} km`}</li>
-            ))}
-          </ul>
+          <div>
+            Organizer: <span>{event.organizer?.organizerName || "undefined"}</span>
+          </div>
+          <div>
+            Event start: <span>{event.eventstart}</span>
+          </div>
+          <div>
+            Info: <span>{event.generalinfo}</span>
+          </div>
+          <div>
+            Distances:
+            <ul>
+              {event.races.map((race, key) => (
+                <li key={key}>{`${Math.round(race.distance)} km`}</li>
+              ))}
+            </ul>
+          </div>
         </Card.Text>
       </Card.Body>
     </Card>

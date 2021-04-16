@@ -10,7 +10,7 @@ export type RootState = {
 export type Event = {
   id: string;
   name: string;
-  organizer?: string;
+  organizer?: OrganizerProfile;
   eventstart: string;
   generalinfo: string;
   contacts: Contact[];
@@ -47,3 +47,8 @@ export type Location = {
   latitude: string;
   longitude: string;
 };
+
+export type OrganizerProfile = {
+  organizerName: string,
+  address: string,
+}
