@@ -8,11 +8,7 @@ type Props = {
 export const EventCard: React.FC<Props> = ({ event }) => {
   return (
     <Card>
-      <Card.Img
-        variant="top"
-        src="**missing**"
-        style={{ maxHeight: "200px" }}
-      />
+      <div className="card-img-top" style={{ backgroundColor: "#eee", height: "200px" }}></div>
       <Card.Body>
         <Card.Link href={"/event/" + event.id}>
           <Card.Title>{event.name}</Card.Title>
