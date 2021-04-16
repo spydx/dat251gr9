@@ -1,4 +1,4 @@
-import { Button, Form, Row } from "react-bootstrap";
+import { Button, Card, Form, Row } from "react-bootstrap";
 import MasterPage from "../MasterPage";
 import { ApiPath, doPost } from "../services/api";
 
@@ -17,10 +17,7 @@ export const SignIn: React.FunctionComponent = () => {
     event.preventDefault();
 
     const formData = event.currentTarget;
-    await performLogin(
-      formData["formEmail"].value,
-      formData["formPassword"].value
-    );
+    await performLogin(formData["formEmail"].value, formData["formPassword"].value);
     alert("signed in with token " + localStorage.getItem("token"));
   };
 
@@ -28,25 +25,31 @@ export const SignIn: React.FunctionComponent = () => {
     <MasterPage>
       <h2>Sign In</h2>
       <Row className="justify-content-center">
-        <Form noValidate={false} className="signInForm" onSubmit={handleSubmit}>
-          <Form.Group controlId="formEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control name="email" required type="email" placeholder="Enter email" />
-          </Form.Group>
+        <Card>
+          <Card.Body>
+            <Form noValidate={false} className="signInForm" onSubmit={handleSubmit}>
+              <Form.Group controlId="formEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" required type="email" placeholder="Enter email" />
+              </Form.Group>
 
-          <Form.Group controlId="formPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control name="password" required type="password" placeholder="Password" />
-          </Form.Group>
+              <Form.Group controlId="formPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name="password" required type="password" placeholder="Password" />
+              </Form.Group>
 
-          {/* Enhancement: add a "remember me" checkbox 
-          <Form.Group controlId="formCheckbox">
-            <Form.Check type="checkbox" label="Remember me" />
-          </Form.Group> */}
-          <Button variant="primary" type="submit">
-            Sign In
-          </Button>
-        </Form>
+              {/* Enhancement: add a "remember me" checkbox
+              <Form.Group controlId="formCheckbox">
+                <Form.Check type="checkbox" label="Remember me" />
+              </Form.Group> */}
+              <div className="text-right">
+                <Button variant="primary" type="submit">
+                  Sign In
+                </Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
       </Row>
     </MasterPage>
   );
