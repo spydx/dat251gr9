@@ -12,7 +12,7 @@ async function performLogin(email: string, password: string) {
 }
 
 // TODO: form validation / errors
-export const SignIn: React.FunctionComponent = () => {
+export const SignInPage: React.FunctionComponent = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
