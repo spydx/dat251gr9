@@ -1,4 +1,4 @@
-import { CardDeck, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { EventCard } from "./EventCard";
 import { Event } from "../types";
 import React from "react";

@@ -1,4 +1,4 @@
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Event } from "../types";
 
 type Props = {
