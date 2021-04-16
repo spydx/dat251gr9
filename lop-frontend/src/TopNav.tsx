@@ -1,13 +1,13 @@
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-declare module "loplogo.png";
+import logo from "./assets/loplogo.png";
 
 function TopNav() {
   return (
     <Navbar bg="light" expand="sm" sticky="top">
       <Navbar.Brand>
-        <img src="loplogo.png" width="70px" height="70px" alt="" />
+        <img src={logo} width="70px" height="70px" alt="" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
