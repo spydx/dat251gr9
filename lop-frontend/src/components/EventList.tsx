@@ -1,19 +1,22 @@
-
-import { Container } from 'react-bootstrap';
-import { EventCard }  from './EventCard';
+import { CardDeck, Col, Container, Row } from "react-bootstrap";
+import { EventCard } from "./EventCard";
 import { Event } from "../types";
+import React from "react";
 
-type EventListProps = {
-   id: number,
-   events: Event[]
-}
+type Props = {
+  events: Event[];
+};
 
-export const EventList = ({events}: EventListProps) => {
-      return (
-        <Container>
-          {events.map((event, i) => (
-            <EventCard key={i} id={i} event={event} />
-          ))}
-        </Container>
-      );    
-}
+export const EventList: React.FC<Props> = ({ events }) => {
+  const mkCol = (event: Event, i: number) => (
+    <Col key={i} xs={12} md={6} lg={4} xl={3} className="p-1">
+      <EventCard event={event} />
+    </Col>
+  );
+
+  return (
+    <Container>
+      <Row className="row-cols-auto">{events.map(mkCol)}</Row>
+    </Container>
+  );
+};

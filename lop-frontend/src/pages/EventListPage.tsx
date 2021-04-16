@@ -7,34 +7,28 @@ import useSWR from "swr";
 
 export const EventListPage: React.FunctionComponent = () => {
   const { data, error } = useSWR(ApiPath.Events, doGet);
-
-  if (error)
+  if (error) {
     return (
       <MasterPage>
+        <Container className="text-center">Unexpected error</Container>
+      </MasterPage>
+    );
+  }
+  if (!data) {
+    return (
+      <MasterPage>
+        <h2>Events</h2>
         <Container className="text-center">
-          <Container>Unexpected error</Container>
+          <LoadingSpinner />
+          <div>Loading events</div>
         </Container>
       </MasterPage>
     );
-
-  if (!data)
-    return (
-      <MasterPage>
-        <Container className="text-center">
-          <Container>
-            <LoadingSpinner />
-            Loading
-          </Container>
-        </Container>
-      </MasterPage>
-    );
-
+  }
   return (
     <MasterPage>
-      <Container className="text-center">
-        <h2>Events</h2>
-        <EventList id={1} events={data} />
-      </Container>
+      <h2>Events</h2>
+      <EventList events={data} />
     </MasterPage>
   );
 };

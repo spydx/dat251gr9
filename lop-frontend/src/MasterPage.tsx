@@ -1,5 +1,3 @@
-import NavBar from "./TopNav";
-import { Fragment } from "react";
 import { Container } from "react-bootstrap";
 import { BACKEND_ROOT } from "./services/api";
 import TopNav from "./TopNav";
