@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RaceService {
@@ -47,6 +46,37 @@ public class RaceService {
         return Optional.of(raceStorage.findByOrderByDistanceDesc());
     }
 
+
+    public Optional<List<Race>> getAllRacesSortedByClosestLocationAscending(double latitude, double longitude){
+        var races = raceStorage.findAll();
+        Collections.sort(races, new Comparator<Race>(){
+            @Override
+            public int compare(Race r1, Race r2){
+                if(r1.compareToDistToLoc(latitude, longitude, r2) < 0)return -1;
+                else if(r1.compareToDistToLoc(latitude, longitude, r2) > 0)return 1;
+                return 0;
+            }
+        });
+        return Optional.of(races);
+    }
+
+    public Optional<List<Race>> getAllRacesSortedByClosestLocationDescending(double latitude, double longitude){
+        var races = raceStorage.findAll();
+        Collections.sort(races, new Comparator<Race>(){
+            @Override
+            public int compare(Race r1, Race r2){
+                if(r1.compareToDistToLoc(latitude, longitude, r2) < 0)return 1;
+                else if(r1.compareToDistToLoc(latitude, longitude, r2) > 0)return -1;
+                return 0;
+            }
+        });
+        return Optional.of(races);
+    }
+
+
+
+
+
     public Optional<Race> getRace(String id) { return raceStorage.findById(id); }
 
     public Optional<List<Race>> getRacesFromEvent(String eventId) {
@@ -72,6 +102,7 @@ public class RaceService {
                     newRace.getMultiSport(),
                     newRace.getObstacleRun(),
                     newRace.getInfo());
+            race.setLocation(event.get().getLocation());
             race.setParticipants(newRace.getParticipants());
 
 

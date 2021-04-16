@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalTime;
 
 
@@ -30,6 +31,11 @@ public class Race {
     private String info;
     private int participants;
 
+    @ManyToOne
+    private Location location;
+
+
+
     public Race(Float distance, LocalTime startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                 Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
         this.distance = distance;
@@ -48,5 +54,11 @@ public class Race {
     public Race() {
 
     }
+
+
+    public double compareToDistToLoc(double latitude, double longitude, Race other){
+        return(this.location.compareTo(latitude, longitude, other.getLocation()));
+    }
+
 
 }

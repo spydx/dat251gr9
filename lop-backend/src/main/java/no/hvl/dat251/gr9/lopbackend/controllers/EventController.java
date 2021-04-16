@@ -107,23 +107,5 @@ public class EventController {
         return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/{id}/race/sortedParticipantsAsc")
-    public ResponseEntity<?> getAllRacesSortedByParticipantsAscending() {
-        var res = raceService.getAllRacesSortedByParticipantsAscending();
-        if(res.isPresent()) {
-            return new ResponseEntity<>(res.get(), HttpStatus.OK);
-        }
-        logger.error("No races found");
-        return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
-    }
 
-    @GetMapping(value = "/{id}/race/sortedDistanceAsc")
-    public ResponseEntity<?> getAllRacesSortedByDistanceAscending() {
-        var res = raceService.getAllRacesSortedByDistanceAscending();
-        if(res.isPresent()) {
-            return new ResponseEntity<>(res.get(), HttpStatus.OK);
-        }
-        logger.error("No races found");
-        return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
-    }
 }

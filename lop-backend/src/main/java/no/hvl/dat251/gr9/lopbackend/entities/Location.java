@@ -33,4 +33,16 @@ public class Location {
     public Location(){
 
     }
+
+    public double getDistanceBetweenLocations(double latitude, double longitude){
+        double latDiff = latitude - this.getLatitude();
+        double longDiff = longitude - this.getLongitude();
+        return Math.sqrt(Math.pow(latDiff, 2) + Math.pow(longDiff, 2));
+    }
+
+    public double compareTo(double latitude, double longitude, Location other){
+        double dist = this.getDistanceBetweenLocations(latitude, longitude);
+        double otherDist = other.getDistanceBetweenLocations(latitude, longitude);
+        return (dist - otherDist);
+    }
 }

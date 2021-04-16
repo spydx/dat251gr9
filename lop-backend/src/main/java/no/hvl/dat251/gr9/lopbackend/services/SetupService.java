@@ -188,6 +188,8 @@ public class SetupService {
         if(newEvent.isPresent()){
             logger.info("Created new event " + newEvent.get().getName());
 
+            createLocation(location, newEvent.get().getId());
+
             for(RaceDTO race: races){
                 createRace(race, newEvent.get().getId());
             }
@@ -199,7 +201,6 @@ public class SetupService {
 
              */
 
-            createLocation(location, newEvent.get().getId());
 
         }else{
             logger.info("Failed to create event ");
