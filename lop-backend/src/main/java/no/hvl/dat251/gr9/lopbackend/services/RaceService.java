@@ -73,10 +73,6 @@ public class RaceService {
         return Optional.of(races);
     }
 
-
-
-
-
     public Optional<Race> getRace(String id) { return raceStorage.findById(id); }
 
     public Optional<List<Race>> getRacesFromEvent(String eventId) {

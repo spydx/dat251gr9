@@ -34,10 +34,20 @@ public class Location {
 
     }
 
+    /*
+    Finds the distance in km between two points on earth using Haversine formula
+     */
     public double getDistanceBetweenLocations(double latitude, double longitude){
-        double latDiff = latitude - this.getLatitude();
-        double longDiff = longitude - this.getLongitude();
-        return Math.sqrt(Math.pow(latDiff, 2) + Math.pow(longDiff, 2));
+        double earthRadius = 6371.009; // radius median in km
+        double latDiff = Math.toRadians(latitude - this.getLatitude());
+        double longDiff = Math.toRadians(longitude - this.getLongitude());
+        double lat1Rad = Math.toRadians(this.latitude);
+        double lat2Rad = Math.toRadians(latitude);
+        double exp1 = Math.pow(Math.sin(latDiff/2), 2);
+        double exp2 = Math.pow(Math.sin(longDiff/2), 2);
+        double exp3 = Math.cos(lat1Rad)*Math.cos(lat2Rad)*exp2;
+        double exp4 = Math.sqrt(exp1 + exp3);
+        return (2 * earthRadius * Math.asin(exp4));
     }
 
     public double compareTo(double latitude, double longitude, Location other){

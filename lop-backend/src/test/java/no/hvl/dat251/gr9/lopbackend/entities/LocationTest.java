@@ -1,11 +1,11 @@
 package no.hvl.dat251.gr9.lopbackend.entities;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Location;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LocationTest {
+
     @Test
     public void locationGetSetTest(){
         var county = "Vestland";
@@ -26,5 +26,11 @@ public class LocationTest {
         assertEquals(place, location.getPlace());
         assertEquals(latitude, location.getLatitude());
         assertEquals(longitude, location.getLongitude());
+    }
+
+    @Test
+    void distanceBetweenTwoLocations(){
+        Location location = new Location("test", "test", "test", 36.12, -86.67);
+        assertEquals(2886.448520376829,location.getDistanceBetweenLocations(33.94, -118.40));
     }
 }

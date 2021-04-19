@@ -4,6 +4,7 @@ import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
+import no.hvl.dat251.gr9.lopbackend.geocoding.APIRequest;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
 import no.hvl.dat251.gr9.lopbackend.services.OrganizerService;
 import no.hvl.dat251.gr9.lopbackend.services.RaceService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("api/events")
@@ -100,6 +102,17 @@ public class EventController {
     @GetMapping(value = "/{id}/race")
     public ResponseEntity<?> getAllRaces() {
         var res = raceService.getAllRaces();
+        if(res.isPresent()) {
+            return new ResponseEntity<>(res.get(), HttpStatus.OK);
+        }
+        logger.error("No races found");
+        return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/{id}/race/sorted")
+    public ResponseEntity<?> getAllRacesSortedByClosestLocation(String location) throws ExecutionException, InterruptedException {
+        double[] latitudeAndLongitude = APIRequest.getLatitudeAndLongitude(location);
+        var res = raceService.getAllRacesSortedByClosestLocationAscending(latitudeAndLongitude[0], latitudeAndLongitude[1]);
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
         }
