@@ -126,7 +126,7 @@ public class SetupService {
         There seems to be something wrong with starttime/LocalTime for races
         Adding contacts to events is causing errors (i've ignored contacts for now as a solution)
         Updating event/race information will not currently update the information in the database.
-        This is because they are not created if they already exists. To fix this you can delete all the events/races
+        This is because events are not created if they already exist. To fix this you can delete all the events/races
         in the db and they will be updated the next time you run the application.
         We should implement a better way to do this, e.g. checking if the information has been updated and then
         updating the db.
@@ -140,32 +140,32 @@ public class SetupService {
         raceStorage.deleteAll();
         locationStorage.deleteAll();
         {
-            var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), eventContacts, null, organizerProfile);
-            var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 30), 500f, false,
+            var testEvent = new EventDTO("Test Marathon", LocalDate.of(2021, 4, 24), "info", new ArrayList<>(), null, null, organizerProfile);
+            var testMarathonRace = new RaceDTO(42.195f, LocalTime.of(15, 0), 500f, false,
                     false, false, false, false, false, "info");
-            var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(16, 30), 250f, false,
+            var testHalfMarathonRace = new RaceDTO(21.0975f, LocalTime.of(16, 0), 250f, false,
                     false, false, false, false, false, "info");
             var testLocation = new LocationDTO("Vestland", "Bergen", "Bergen", 60.396803, 5.323383);
             createEvent(testEvent, List.of(testMarathonRace, testHalfMarathonRace), testLocation);
         }
         {
-            var event = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), eventContacts, null, organizerProfile);
-            var race1 = new RaceDTO(1.0f, LocalTime.of(1, 50), 2.0f, false,
+            var event = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), null, null, organizerProfile);
+            var race1 = new RaceDTO(1.0f, LocalTime.of(1, 0), 2.0f, false,
                     true, false, true, false, true, "This race is a test race for event " + event.getName());
-            var race2 = new RaceDTO(100.0f, LocalTime.of(2, 50), 2.0f, false,
+            var race2 = new RaceDTO(100.0f, LocalTime.of(2, 0), 2.0f, false,
                     true, false, true, false, true, "This race is also a test race for event " + event.getName());
             var testLocation2 = new LocationDTO("Test county #2", "Test municipality #2", "Test place #2", 12.34, 56.789);
             createEvent(event, List.of(race1, race2), testLocation2);
         }
         {
             var location = new LocationDTO("Oslo", "Oslo", "Oslo", 59.911491, 10.757933);
-            var event = new EventDTO("Oslo 5k (Test)", LocalDate.of(2021, 5, 20), "Info om arrangementet", List.of(), eventContacts, null, organizerProfile);
-            var race = new RaceDTO(5f, LocalTime.of(12, 30), 0f, true, false, false, false, false, false, "5K for voksne");
+            var event = new EventDTO("Oslo 5k (Test)", LocalDate.of(2021, 5, 20), "Info om arrangementet", List.of(), null, null, organizerProfile);
+            var race = new RaceDTO(5f, LocalTime.of(12, 0), 0f, true, false, false, false, false, false, "5K for voksne");
             createEvent(event, List.of(race), location);
         }
         {
             var location = new LocationDTO("Trøndelag", "Trondheim", "Trondheim", 63.446827, 10.421906);
-            var event = new EventDTO("Trondheim 10k (Test)", LocalDate.of(2021, 5, 20), "10 km passer for deg som syns maratondistansene er for lang, mens 5 km blir litt for kort. Med litt treningsbakgrunn vil dette kunne bli en fantastisk løpsopplevelse i Trondheim by. Hvor raskt klarer du å løpe mila?", List.of(), eventContacts, null, organizerProfile);
+            var event = new EventDTO("Trondheim 10k (Test)", LocalDate.of(2021, 5, 20), "10 km passer for deg som syns maratondistansene er for lang, mens 5 km blir litt for kort. Med litt treningsbakgrunn vil dette kunne bli en fantastisk løpsopplevelse i Trondheim by. Hvor raskt klarer du å løpe mila?", List.of(), null, null, organizerProfile);
             var race1 = new RaceDTO(10f, LocalTime.of(11, 0), 50f, true, false, false, false, false, false, "10K for menn");
             var race2 = new RaceDTO(10f, LocalTime.of(13, 0), 50f, true, false, true, false, false, false, "10K for kvinner");
             createEvent(event, List.of(race1, race2), location);

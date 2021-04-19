@@ -28,11 +28,7 @@ public class RolesDAOIntegrationTest {
     @Autowired
     private RoleDAO roleDAO;
 
-    @BeforeEach
-    public void setup() {
-        setupService.init();
 
-    }
 
     @Test
     public void findUserRole() {
