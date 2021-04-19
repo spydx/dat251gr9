@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 @Import(IntegrationTestContextConfiguration.class)
 public class LocationDAOIntegrationTest {
+    /** number of locations persisted by {@link no.hvl.dat251.gr9.lopbackend.services.SetupService}  */
+    private static final int SAMPLE_LOCATIONS_COUNT = 4;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -27,7 +29,7 @@ public class LocationDAOIntegrationTest {
     @Autowired
     private LocationDAO locationStorage;
 
-    private int numberOfLocations = 0;
+    private int numberOfLocations = SAMPLE_LOCATIONS_COUNT;
     @BeforeEach
     void setUp(){
         var loc1 = new Location();
@@ -37,7 +39,7 @@ public class LocationDAOIntegrationTest {
         loc1.setLatitude(30.0);
         loc1.setLongitude(45.0);
         entityManager.persist(loc1);
-        numberOfLocations += 2;
+        numberOfLocations += 1;
 
         var loc2 = new Location();
         loc2.setCounty("county2");
@@ -46,8 +48,7 @@ public class LocationDAOIntegrationTest {
         loc2.setLatitude(50.5);
         loc2.setLongitude(60.6);
         entityManager.persist(loc2);
-        numberOfLocations += 2;
-
+        numberOfLocations += 1;
     }
 
     @Test
@@ -59,6 +60,7 @@ public class LocationDAOIntegrationTest {
         loc.setLatitude(20.0);
         loc.setLongitude(10.0);
         entityManager.persist(loc);
+        numberOfLocations += 1;
 
         var found = locationStorage.findById(loc.getId());
         assertEquals(loc.getLatitude(), found.get().getLatitude());
