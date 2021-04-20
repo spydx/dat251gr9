@@ -38,4 +38,6 @@ public class IntegrationTestContextConfiguration {
 
     @Bean
     public OrganizerService organizerService() {return new OrganizerService(); }
+
+
 }
