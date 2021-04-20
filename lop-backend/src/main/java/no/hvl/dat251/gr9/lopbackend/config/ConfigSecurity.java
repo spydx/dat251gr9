@@ -52,6 +52,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
     public PasswordEncoder scryptEncoder() {
         return new SCryptPasswordEncoder();
     }
+
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManager() throws Exception {

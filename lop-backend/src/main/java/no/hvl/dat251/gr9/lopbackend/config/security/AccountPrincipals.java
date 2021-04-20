@@ -1,7 +1,6 @@
 package no.hvl.dat251.gr9.lopbackend.config.security;
 
 import no.hvl.dat251.gr9.lopbackend.entities.Account;
-import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
