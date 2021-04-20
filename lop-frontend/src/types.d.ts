@@ -11,8 +11,8 @@ export type Event = {
   id: string;
   name: string;
   organizer?: OrganizerProfile;
-  eventstart: string;
-  generalinfo: string;
+  eventStart: string;
+  generalInfo: string;
   contacts: Contact[];
   races: Race[];
   location: Location;
@@ -28,15 +28,16 @@ export type Race = {
   id: string;
   distance: number;
   startlocation: string;
-  starttime?: string;
+  startTime?: string;
   info?: string;
   elevation?: number;
   vertical?: boolean;
   children?: boolean;
-  womenonly?: boolean;
+  womenOnly?: boolean;
   relay?: boolean;
-  multisport?: boolean;
-  obstaclerun?: boolean;
+  multiSport?: boolean;
+  obstacleRun?: boolean;
+  hillRun?: boolean;
 };
 
 export type Location = {

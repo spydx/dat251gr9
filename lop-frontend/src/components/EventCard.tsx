@@ -19,10 +19,10 @@ export const EventCard: React.FC<Props> = ({ event }) => {
             Organizer: <span>{event.organizer?.organizerName || "undefined"}</span>
           </div>
           <div>
-            Event start: <span>{event.eventstart}</span>
+            Event start: <span>{event.eventStart}</span>
           </div>
           <div>
-            Info: <span>{event.generalinfo}</span>
+            Info: <span>{event.generalInfo}</span>
           </div>
           <div>
             Distances:
