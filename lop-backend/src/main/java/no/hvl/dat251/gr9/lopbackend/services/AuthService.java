@@ -2,14 +2,17 @@ package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.config.security.AccountPrincipals;
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.OrganizerAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,9 @@ public class AuthService implements UserDetailsService {
 
     @Autowired
     private UserAccountDAO userAccountDAO;
+
+    @Autowired
+    private OrganizerAccountDAO organizerAccountDAO;
 
 
     public Optional<UserAccount> save(LoginDTO account) {
@@ -31,19 +37,35 @@ public class AuthService implements UserDetailsService {
         return Optional.of(res);
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username) {
-        var account = userAccountDAO.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        var userAccount = userAccountDAO.findByEmail(username);
+        var organizerAccount = organizerAccountDAO.findByEmail(username);
 
-        return AccountPrincipals.create(account);
+        if(userAccount.isPresent()){
+            return AccountPrincipals.create(userAccount.get());
+        }
+
+        if(organizerAccount.isPresent()){
+            return AccountPrincipals.create(organizerAccount.get());
+        }
+
+        throw new UsernameNotFoundException("User with username:"+ username+" not found");
     }
 
     public Optional<UserDetails> loadUserById(String id) {
-        var account = userAccountDAO.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        var userAccount = userAccountDAO.findById(id);
+        var organizerAccount = organizerAccountDAO.findById(id);
 
-        return Optional.ofNullable(AccountPrincipals.create(account));
+        if(userAccount.isPresent()){
+            return Optional.of(AccountPrincipals.create(userAccount.get()));
+        }
 
+        if(organizerAccount.isPresent()){
+            return Optional.of(AccountPrincipals.create(organizerAccount.get()));
+        }
+
+        throw new UsernameNotFoundException("User with id:"+ id+" not found");
     }
 
     public Optional<UserAccount> getAccountByEmail(String email) {

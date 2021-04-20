@@ -62,7 +62,8 @@ public class SetupService {
         if(roleStorage.findAll().size() == 0) {
             var user = roleStorage.save(new Roles(RoleEnum.USER));
             var admin = roleStorage.save(new Roles(RoleEnum.ADMIN));
-            logger.info("Created ROLES: {}, {}", user, admin);
+            var organizer = roleStorage.save(new Roles(RoleEnum.ORGANIZER));
+            logger.info("Created ROLES: {}, {}, {}", user, admin, organizer);
         }
 
         var exist = userService.getAccount(email);

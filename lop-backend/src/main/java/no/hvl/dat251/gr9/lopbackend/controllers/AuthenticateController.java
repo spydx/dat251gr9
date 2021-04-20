@@ -55,6 +55,7 @@ public class AuthenticateController {
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         String token = tokenProvider.generateToken(auth);
+
         var userexists = userService.getAccount(login.getEmail());
         var organizerexists = organizerService.getAccount(login.getEmail());
 
@@ -62,12 +63,12 @@ public class AuthenticateController {
             logger.info("This should not be possible. Please contact IT-support.");
 
         } else if(userexists.isPresent()) {
-            logger.info("Fant en bruker");
+
             var profileid = userexists.get().getProfile().getId();
             return ResponseEntity.ok(new JwtAuthenticationResponse(token, profileid));
 
         } else if(organizerexists.isPresent()) {
-            logger.info("Fant en organizer account");
+
             var orgprofileid = organizerexists.get().getProfile().getId();
             return ResponseEntity.ok(new JwtAuthenticationResponse(token, orgprofileid));
         }

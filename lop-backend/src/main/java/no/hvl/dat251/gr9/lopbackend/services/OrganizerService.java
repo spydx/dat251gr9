@@ -38,7 +38,7 @@ public class OrganizerService {
 
     public Optional<OrganizerAccount> add(OrganizerAccountDTO newAccount){
         var account = new OrganizerAccount(newAccount.getEmail());
-        var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
+        var role = roleStorage.findByRole(RoleEnum.ORGANIZER).orElseThrow(
                 () -> new InternalServerError("User Role not set")
         );
         account.setRoles(Collections.singleton(role));
