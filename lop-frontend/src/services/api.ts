@@ -7,7 +7,8 @@ export const ApiPath = {
   Event: (id: string) => "/events/" + id,
 };
 
-// Some error classes
+// Error handling
+// TODO(H-C-H): any cleaner/simpler way of adding errors in the API?
 
 export class ResponseError extends Error {
   public status: number;
@@ -24,11 +25,10 @@ export class NetworkError extends Error {
   }
 }
 
-//
-
+/** A fetch() wrapper that checks for errors. */
 function robustFetch(input: RequestInfo, init?: RequestInit) {
-  const handleNetworkError = (whatsThis: any) => {
-    console.log("got", whatsThis);
+  // A fetch() promise only rejects when a network error is encountered
+  const handleNetworkError = (_reason: any) => {
     return Promise.reject(new NetworkError());
   };
   const handleResponse = (response: Response) => {
