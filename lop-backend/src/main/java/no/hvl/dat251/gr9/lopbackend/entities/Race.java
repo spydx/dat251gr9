@@ -30,9 +30,11 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
     private int participants;
+/*
 
     @ManyToOne
     private Location location;
+*/
 
 
 
@@ -56,9 +58,9 @@ public class Race {
     }
 
 
-    public double compareToDistToLoc(double latitude, double longitude, Race other){
+   /* public double compareToDistToLoc(double latitude, double longitude, Race other){
         return(this.location.compareTo(latitude, longitude, other.getLocation()));
-    }
+    }*/
 
 
 }

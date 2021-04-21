@@ -1,6 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.controllers;
 
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
+import no.hvl.dat251.gr9.lopbackend.entities.Location;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
@@ -60,27 +61,38 @@ public class EventController {
     @PostMapping(value = "/")
     public ResponseEntity<?> createEvent(@NotNull @RequestHeader("Authorization") final String token,
                                          @RequestBody EventDTO newEvent) {
-        var accountid = jwtControl.parseHeader(token);
-        var organizer = organizerService.getAccountById(accountid.get());
-        if(accountid.isPresent() && organizer.isPresent()) {
-            EventDTO event = new EventDTO(
-                 newEvent.getName(),
-                 newEvent.getEventStart(),
-                 newEvent.getGeneralInfo(),
-                 new ArrayList<>(),
-                 organizer.get().getProfile().getContacts(),
-                 newEvent.getLocation(),
-                 organizer.get().getProfile()
-            );
+        var accountId = jwtControl.parseHeader(token);
+        if (accountId.isPresent()){
+            var organizer = organizerService.getAccountById(accountId.get());
+            if(organizer.isPresent()) {
+                var location = new Location(
+                        newEvent.getLocation().getCounty(),
+                        newEvent.getLocation().getMunicipality(),
+                        newEvent.getLocation().getPlace(),
+                        newEvent.getLocation().getLatitude(),
+                        newEvent.getLocation().getLongitude()
 
-            var res = eventService.add(event);
+                );
 
-            if(res.isPresent()) {
-                return new ResponseEntity<>(res.get(), HttpStatus.OK);
+                EventDTO event = new EventDTO(
+                        newEvent.getName(),
+                        newEvent.getEventStart(),
+                        newEvent.getGeneralInfo(),
+                        new ArrayList<>(),
+                        new ArrayList<>(organizer.get().getProfile().getContacts()),
+                        location,
+                        organizer.get().getProfile()
+                );
+
+                var res = eventService.add(event);
+
+                if(res.isPresent()) {
+                    return new ResponseEntity<>(res.get(), HttpStatus.OK);
+                }
             }
         }
-        logger.error("Could not create competition", newEvent);
-        return new ResponseEntity<>("Could not create new event", HttpStatus.BAD_REQUEST);
+        logger.error("Could not create new event. No organizer account.");
+        return new ResponseEntity<>("Could not create new event. No organizer account.", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/{id}/race")
@@ -109,16 +121,6 @@ public class EventController {
         return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/{id}/race/sorted")
-    public ResponseEntity<?> getAllRacesSortedByClosestLocation(String location) throws ExecutionException, InterruptedException {
-        double[] latitudeAndLongitude = APIRequest.getLatitudeAndLongitude(location);
-        var res = raceService.getAllRacesSortedByClosestLocationAscending(latitudeAndLongitude[0], latitudeAndLongitude[1]);
-        if(res.isPresent()) {
-            return new ResponseEntity<>(res.get(), HttpStatus.OK);
-        }
-        logger.error("No races found");
-        return new ResponseEntity<>("No races found", HttpStatus.NOT_FOUND);
-    }
 
 
 }

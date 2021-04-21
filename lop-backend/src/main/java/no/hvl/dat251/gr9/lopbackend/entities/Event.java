@@ -23,13 +23,13 @@ public class Event {
     @OneToMany
     private List<Race> races;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Contacts> contacts;
 
     @OneToOne
     private OrganizerProfile organizer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Location location;
 
 
@@ -43,7 +43,5 @@ public class Event {
         this.location = location;
     }
 
-    public Event() {
-
-    }
+    public Event() {}
 }

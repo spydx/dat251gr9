@@ -47,7 +47,7 @@ public class RaceService {
     }
 
 
-    public Optional<List<Race>> getAllRacesSortedByClosestLocationAscending(double latitude, double longitude){
+    /*public Optional<List<Race>> getAllRacesSortedByClosestLocationAscending(double latitude, double longitude){
         var races = raceStorage.findAll();
         Collections.sort(races, new Comparator<Race>(){
             @Override
@@ -71,7 +71,7 @@ public class RaceService {
             }
         });
         return Optional.of(races);
-    }
+    }*/
 
     public Optional<Race> getRace(String id) { return raceStorage.findById(id); }
 
@@ -98,7 +98,6 @@ public class RaceService {
                     newRace.getMultiSport(),
                     newRace.getObstacleRun(),
                     newRace.getInfo());
-            race.setLocation(event.get().getLocation());
             race.setParticipants(newRace.getParticipants());
 
 
