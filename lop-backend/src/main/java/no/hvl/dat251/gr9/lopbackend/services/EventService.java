@@ -1,15 +1,14 @@
 package no.hvl.dat251.gr9.lopbackend.services;
 
 import no.hvl.dat251.gr9.lopbackend.entities.Event;
-import no.hvl.dat251.gr9.lopbackend.entities.Race;
+import no.hvl.dat251.gr9.lopbackend.entities.Location;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
+import no.hvl.dat251.gr9.lopbackend.entities.dao.LocationDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,6 +17,9 @@ public class EventService {
 
     @Autowired
     private EventDAO eventStorage;
+
+    @Autowired
+    private LocationDAO locationDAO;
 
     private final Logger logger = LoggerFactory.getLogger(EventService.class);
 
@@ -77,35 +79,56 @@ public class EventService {
     }
 
 
-    public Optional<Event> add(EventDTO newComp) {
-        var competition = new Event(
-                newComp.getName(),
-                newComp.getEventStart(),
-                newComp.getGeneralInfo(),
-                newComp.getRaces(),
-                newComp.getContacts(),
-                newComp.getOrganizer(),
-                newComp.getLocation()
+    public Optional<Event> add(EventDTO newEvent) {
+
+        var location = new Location(
+                newEvent.getLocation().getCounty(),
+                newEvent.getLocation().getMunicipality(),
+                newEvent.getLocation().getPlace(),
+                newEvent.getLocation().getLatitude(),
+                newEvent.getLocation().getLongitude()
+
         );
-        var comp = eventStorage.save(competition);
+
+        var event = new Event(
+                newEvent.getName(),
+                newEvent.getEventStart(),
+                newEvent.getGeneralInfo(),
+                newEvent.getRaces(),
+                newEvent.getContacts(),
+                newEvent.getOrganizer(),
+                location
+        );
+        var comp = eventStorage.save(event);
         return Optional.of(comp);
 
     }
 
     public Optional<Event> updateEvent(String id, EventDTO updated) {
-        var competition = eventStorage.findById(id);
-        if(competition.isPresent()) {
-            competition.get().setName(updated.getName());
-            competition.get().setEventStart(updated.getEventStart());
-            competition.get().setGeneralInfo(updated.getGeneralInfo());
-            competition.get().setContacts(updated.getContacts());
-            competition.get().setRaces(updated.getRaces());
-            competition.get().setLocation(updated.getLocation());
-            competition.get().setOrganizer(updated.getOrganizer());
+        var event = eventStorage.findById(id);
+        if(event.isPresent()) {
 
-            return Optional.of(eventStorage.save(competition.get()));
+            locationDAO.deleteById(event.get().getLocation().getId());
+
+            var location = new Location(
+                    updated.getLocation().getCounty(),
+                    updated.getLocation().getMunicipality(),
+                    updated.getLocation().getPlace(),
+                    updated.getLocation().getLatitude(),
+                    updated.getLocation().getLongitude()
+            );
+
+            event.get().setName(updated.getName());
+            event.get().setEventStart(updated.getEventStart());
+            event.get().setGeneralInfo(updated.getGeneralInfo());
+            event.get().setContacts(updated.getContacts());
+            event.get().setRaces(updated.getRaces());
+            event.get().setLocation(location);
+            event.get().setOrganizer(updated.getOrganizer());
+
+            return Optional.of(eventStorage.save(event.get()));
         }
-        logger.error("Cant find competition for {}", updated);
+        logger.error("Cant find event for {}", updated);
 
         return Optional.empty();
     }

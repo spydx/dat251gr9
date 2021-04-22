@@ -6,7 +6,6 @@ import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.Event;
 import no.hvl.dat251.gr9.lopbackend.entities.Location;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import no.hvl.dat251.gr9.lopbackend.geocoding.APIRequest;
 import no.hvl.dat251.gr9.lopbackend.services.EventService;
@@ -72,22 +71,13 @@ public class EventController {
         if (accountId.isPresent()){
             var organizer = organizerService.getAccountById(accountId.get());
             if(organizer.isPresent()) {
-                var location = new Location(
-                        newEvent.getLocation().getCounty(),
-                        newEvent.getLocation().getMunicipality(),
-                        newEvent.getLocation().getPlace(),
-                        newEvent.getLocation().getLatitude(),
-                        newEvent.getLocation().getLongitude()
-
-                );
-
                 EventDTO event = new EventDTO(
                         newEvent.getName(),
                         newEvent.getEventStart(),
                         newEvent.getGeneralInfo(),
                         new ArrayList<>(),
                         new ArrayList<>(organizer.get().getProfile().getContacts()),
-                        location,
+                        newEvent.getLocation(),
                         organizer.get().getProfile()
                 );
 

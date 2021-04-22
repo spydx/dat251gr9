@@ -5,6 +5,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.Race;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RaceDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.RaceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RaceService {
@@ -78,13 +81,22 @@ public class RaceService {
 
             var r = raceStorage.save(race);
             Event ev = event.get();
+            var location = new LocationDTO(
+                    ev.getLocation().getCounty(),
+                    ev.getLocation().getMunicipality(),
+                    ev.getLocation().getPlace(),
+                    ev.getLocation().getLatitude(),
+                    ev.getLocation().getLongitude()
+
+            );
+
             EventDTO newEvent = new EventDTO(
                     ev.getName(),
                     ev.getEventStart(),
                     ev.getGeneralInfo(),
                     ev.getRaces(),
                     ev.getContacts(),
-                    ev.getLocation(),
+                    location,
                     ev.getOrganizer()
             );
             newEvent.getRaces().add(r);

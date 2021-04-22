@@ -1,5 +1,6 @@
 package no.hvl.dat251.gr9.lopbackend.integration.race;
 
+
 import no.hvl.dat251.gr9.lopbackend.entities.Race;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RaceDAO;
 import no.hvl.dat251.gr9.lopbackend.integration.IntegrationTestContextConfiguration;
@@ -45,6 +46,7 @@ public class RaceSearchTest {
         race1.setParticipants(2);
         race2.setParticipants(1);
         race3.setParticipants(3);
+
 
         entityManager.persist(race1);
         entityManager.persist(race2);

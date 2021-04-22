@@ -1,8 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dao;
 
-import no.hvl.dat251.gr9.lopbackend.entities.Location;
+
 import no.hvl.dat251.gr9.lopbackend.entities.Race;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

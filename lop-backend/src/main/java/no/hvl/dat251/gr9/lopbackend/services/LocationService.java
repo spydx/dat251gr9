@@ -49,27 +49,28 @@ public class LocationService {
     public Optional<Location> add(LocationDTO newLocation, String eventId){
         var event = eventStorage.findById(eventId);
         if(event.isPresent()){
-            var location = new Location(
+            var location = new LocationDTO(
                     newLocation.getCounty(),
                     newLocation.getMunicipality(),
                     newLocation.getPlace(),
                     newLocation.getLatitude(),
                     newLocation.getLongitude()
             );
-            var loc = locationStorage.save(location);
+
             Event ev = event.get();
+
             EventDTO updatedEvent = new EventDTO(
                     ev.getName(),
                     ev.getEventStart(),
                     ev.getGeneralInfo(),
                     ev.getRaces(),
                     ev.getContacts(),
-                    ev.getLocation(),
+                    location,
                     ev.getOrganizer()
             );
-            updatedEvent.setLocation(loc);
             eventService.updateEvent(eventId, updatedEvent);
-            return Optional.of(loc);
+            var updatedEv = eventService.getEvent(eventId);
+            return Optional.of(updatedEv.get().getLocation());
         }
         logger.error("Could not add location to event: {}", eventId);
         return Optional.empty();

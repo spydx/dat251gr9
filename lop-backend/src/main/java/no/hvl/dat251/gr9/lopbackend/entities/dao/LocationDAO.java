@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface LocationDAO extends JpaRepository<Location, String> {
     public Location save(Location location);
+    public void deleteById(String id);
     public List<Location> findAll();
     Optional<Location> findById(String id);
     Optional<Location> findByLatitudeAndLongitude(double latitude, double longitude);

@@ -12,10 +12,10 @@ public class EventDTO {
     private String generalInfo;
     private List<Race> races;
     private List<Contacts> contacts;
-    private Location location;
+    private LocationDTO location;
     private OrganizerProfile organizer;
 
-    public EventDTO(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, Location location, OrganizerProfile organizer) {
+    public EventDTO(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, LocationDTO location, OrganizerProfile organizer) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;

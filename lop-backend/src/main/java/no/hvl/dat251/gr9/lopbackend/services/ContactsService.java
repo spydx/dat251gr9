@@ -6,6 +6,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.dao.ContactsDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.EventDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.ContactsDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.EventDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.LocationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,22 @@ public class ContactsService {
 
             var c = contactsStorage.save(contact);
             Event ev = event.get();
+            var location = new LocationDTO(
+                    ev.getLocation().getCounty(),
+                    ev.getLocation().getMunicipality(),
+                    ev.getLocation().getPlace(),
+                    ev.getLocation().getLatitude(),
+                    ev.getLocation().getLongitude()
+
+            );
+
             EventDTO updatedEvent = new EventDTO(
                     ev.getName(),
                     ev.getEventStart(),
                     ev.getGeneralInfo(),
                     ev.getRaces(),
                     ev.getContacts(),
-                    ev.getLocation(),
+                    location,
                     ev.getOrganizer()
             );
             updatedEvent.getContacts().add(c);

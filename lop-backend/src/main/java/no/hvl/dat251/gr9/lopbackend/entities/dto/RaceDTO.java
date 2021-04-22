@@ -1,7 +1,6 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 import lombok.Data;
-import no.hvl.dat251.gr9.lopbackend.entities.Location;
 
 
 import java.time.LocalTime;
@@ -19,7 +18,6 @@ public class RaceDTO {
     private Boolean obstacleRun;
     private String info;
     private int participants;
-    private Location location;
 
     public RaceDTO(Float distance, LocalTime startTime, Float elevation, Boolean hillRun, Boolean children, Boolean womenOnly,
                    Boolean relay, Boolean multiSport, Boolean obstacleRun, String info) {
