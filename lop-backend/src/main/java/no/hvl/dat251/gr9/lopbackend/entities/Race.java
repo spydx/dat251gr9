@@ -20,7 +20,7 @@ public class Race {
     private String id;
 
     private Float distance; //in Km
-    private LocalTime startTime; // in year, month, day, hours (0-23), minutes
+    private LocalTime startTime;
     private Float elevation; //in meters
     private Boolean hillRun;
     private Boolean children;
@@ -30,11 +30,6 @@ public class Race {
     private Boolean obstacleRun;
     private String info;
     private int participants;
-/*
-
-    @ManyToOne
-    private Location location;
-*/
 
 
 
@@ -56,11 +51,6 @@ public class Race {
     public Race() {
 
     }
-
-
-   /* public double compareToDistToLoc(double latitude, double longitude, Race other){
-        return(this.location.compareTo(latitude, longitude, other.getLocation()));
-    }*/
 
 
 }

@@ -16,8 +16,16 @@ public interface RaceDAO extends JpaRepository<Race, String> {
     List<Race> findAll();
     List<Race> findByOrderByParticipantsAsc();
     List<Race> findByOrderByDistanceAsc();
+    List<Race> findByOrderByElevationAsc();
     List<Race> findByOrderByParticipantsDesc();
     List<Race> findByOrderByDistanceDesc();
+    List<Race> findByOrderByElevationDesc();
+    List<Race> findByHillRunIsTrue();
+    List<Race> findByChildrenIsTrue();
+    List<Race> findByWomenOnlyIsTrue();
+    List<Race> findByRelayIsTrue();
+    List<Race> findByMultiSportIsTrue();
+    List<Race> findByObstacleRunIsTrue();
 
 
 }

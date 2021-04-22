@@ -151,7 +151,7 @@ public class SetupService {
         }
         {
             var event = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>(), null, organizerProfile);
-            var race1 = new RaceDTO(1.0f, LocalTime.of(1, 0), 2.0f, false,
+            var race1 = new RaceDTO(1.0f, LocalTime.of(1, 0), 2.0f, true,
                     true, false, true, false, true, "This race is a test race for event " + event.getName());
             var race2 = new RaceDTO(100.0f, LocalTime.of(2, 0), 2.0f, false,
                     true, false, true, false, true, "This race is also a test race for event " + event.getName());

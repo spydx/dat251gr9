@@ -47,31 +47,6 @@ public class RaceService {
     }
 
 
-    /*public Optional<List<Race>> getAllRacesSortedByClosestLocationAscending(double latitude, double longitude){
-        var races = raceStorage.findAll();
-        Collections.sort(races, new Comparator<Race>(){
-            @Override
-            public int compare(Race r1, Race r2){
-                if(r1.compareToDistToLoc(latitude, longitude, r2) < 0)return -1;
-                else if(r1.compareToDistToLoc(latitude, longitude, r2) > 0)return 1;
-                return 0;
-            }
-        });
-        return Optional.of(races);
-    }
-
-    public Optional<List<Race>> getAllRacesSortedByClosestLocationDescending(double latitude, double longitude){
-        var races = raceStorage.findAll();
-        Collections.sort(races, new Comparator<Race>(){
-            @Override
-            public int compare(Race r1, Race r2){
-                if(r1.compareToDistToLoc(latitude, longitude, r2) < 0)return 1;
-                else if(r1.compareToDistToLoc(latitude, longitude, r2) > 0)return -1;
-                return 0;
-            }
-        });
-        return Optional.of(races);
-    }*/
 
     public Optional<Race> getRace(String id) { return raceStorage.findById(id); }
 
@@ -118,5 +93,57 @@ public class RaceService {
         }
         logger.error("Could not add the race to the event: ", eventId);
         return Optional.empty();
+    }
+
+    public List<Race> filterOutRaces(List<Race> races, List<Race> otherRaces){
+        List<Race> newList = new ArrayList<>();
+        for(Race race : otherRaces){
+            if(races.contains(race)){
+                newList.add(race);
+            }
+        }
+        return newList;
+    }
+
+    public Optional<List<Race>> getHillRunRaces(List<Race> races){
+        return Optional.of(filterOutRaces(races, raceStorage.findByHillRunIsTrue()));
+    }
+
+    public Optional<List<Race>> getChildrenRaces(List<Race> races) {
+        return Optional.of(filterOutRaces(races, raceStorage.findByChildrenIsTrue()));
+    }
+
+    public Optional<List<Race>> getWomenOnlyRaces(List<Race> races) {
+        return Optional.of(filterOutRaces(races, raceStorage.findByWomenOnlyIsTrue()));
+    }
+
+    public Optional<List<Race>> getRelayRaces(List<Race> races) {
+        return Optional.of(filterOutRaces(races, raceStorage.findByRelayIsTrue()));
+    }
+
+    public Optional<List<Race>> getMultiSportRaces(List<Race> races) {
+        return Optional.of(filterOutRaces(races, raceStorage.findByMultiSportIsTrue()));
+    }
+
+    public Optional<List<Race>> getObstacleRunRaces(List<Race> races) {
+        return Optional.of(filterOutRaces(races, raceStorage.findByObstacleRunIsTrue()));
+    }
+
+    public Optional<List<Race>> sortBy(List<Race> races, String sort) {
+        switch (sort){
+            case "DISTANCE_DESC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByDistanceDesc()));
+            case "DISTANCE_ASC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByDistanceAsc()));
+            case "ELEVATION_DESC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByElevationDesc()));
+            case "ELEVATION_ASC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByElevationAsc()));
+            case "PARTICIPANTS_DESC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByParticipantsDesc()));
+            case "PARTICIPANTS_ASC":
+                return Optional.of(filterOutRaces(races, raceStorage.findByOrderByParticipantsAsc()));
+        }
+        return Optional.of(races);
     }
 }

@@ -13,5 +13,7 @@ public interface EventDAO extends JpaRepository<Event, String> {
     Optional<Event> findById(String id);
     Optional<Event> findEventByName(String name);
     public List<Event> findAll();
-
+    List<Event> findByNameContains(String term);
+    List<Event> findByOrderByEventStartDesc();
+    List<Event> findByOrderByEventStartAsc();
 }

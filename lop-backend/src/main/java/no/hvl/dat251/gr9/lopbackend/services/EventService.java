@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -27,6 +26,56 @@ public class EventService {
     }
 
     public Optional<Event> getEvent(String id) { return eventStorage.findById(id); }
+
+    public Optional<List<Event>> getEventsByTerm(String term){
+        return Optional.of(eventStorage.findByNameContains(term));
+    }
+
+    public Optional<List<Event>> getEventsSortedByClosestLocationAscending(List<Event> events, double latitude, double longitude){
+        Collections.sort(events, new Comparator<Event>(){
+            @Override
+            public int compare(Event e1, Event e2){
+                if(e1.compareToDistToLoc(latitude, longitude, e2) < 0)return -1;
+                else if(e1.compareToDistToLoc(latitude, longitude, e2) > 0)return 1;
+                return 0;
+            }
+        });
+        return Optional.of(events);
+    }
+
+    public List<Event> getAllEventsSortedByClosestLocationDescending(double latitude, double longitude){
+        var events = eventStorage.findAll();
+        Collections.sort(events, new Comparator<Event>(){
+            @Override
+            public int compare(Event e1, Event r2){
+                if(e1.compareToDistToLoc(latitude, longitude, r2) < 0)return 1;
+                else if(e1.compareToDistToLoc(latitude, longitude, r2) > 0)return -1;
+                return 0;
+            }
+        });
+        return events;
+    }
+
+    public Optional<List<Event>> sortBy (List<Event> events, String sort){
+        switch (sort){
+            case "EVENT_START_DESC":
+                return Optional.of(filterOutEvents(events, eventStorage.findByOrderByEventStartDesc()));
+            case "EVENT_START_ASC":
+                return Optional.of(filterOutEvents(events, eventStorage.findByOrderByEventStartAsc()));
+        }
+        return Optional.of(events);
+    }
+
+    public List<Event> filterOutEvents(List<Event> events, List<Event> sortedEvents){
+        List<Event> newList = new ArrayList<>();
+        for(Event event : sortedEvents){
+            if(events.contains(event)){
+                newList.add(event);
+            }
+        }
+        return newList;
+    }
+
 
     public Optional<Event> add(EventDTO newComp) {
         var competition = new Event(

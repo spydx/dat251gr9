@@ -44,4 +44,8 @@ public class Event {
     }
 
     public Event() {}
+
+    public double compareToDistToLoc(double latitude, double longitude, Event other){
+        return(this.location.compareTo(latitude, longitude, other.getLocation()));
+    }
 }
