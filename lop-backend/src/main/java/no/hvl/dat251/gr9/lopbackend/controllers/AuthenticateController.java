@@ -96,7 +96,7 @@ public class AuthenticateController {
     }
 
     @PostMapping(value = "/validateToken")
-    public ResponseEntity<?> validateToken(@Valid @RequestBody String token) {
+    public ResponseEntity<?> validateToken(final String token) {
         if(tokenProvider.validateToken(token)) {
             return new ResponseEntity<>(new TokenValidationResponse(token, true, tokenProvider.tokenExpirationDate(token)), HttpStatus.OK);
         }

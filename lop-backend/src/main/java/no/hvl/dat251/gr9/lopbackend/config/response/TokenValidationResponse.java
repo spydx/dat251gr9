@@ -1,7 +1,11 @@
 package no.hvl.dat251.gr9.lopbackend.config.response;
 
+import lombok.Data;
+
 import java.util.Date;
 
+
+@Data
 public class TokenValidationResponse {
     private String token;
     private boolean valid;
@@ -12,14 +16,4 @@ public class TokenValidationResponse {
         this.valid = valid;
         this.tokenExpirationDate = tokenExpirationDate;
     }
-
-    public void setToken(String token) { this.token = token;}
-    public void setValid(boolean valid) { this.valid = valid;}
-    public void setTokenExpirationDate(Date tokenExpirationDate) {
-        this.tokenExpirationDate = tokenExpirationDate;
-    }
-
-    public String getToken() { return token; }
-    public boolean getValid() { return valid; }
-    public Date getTokenExpirationDate() { return tokenExpirationDate; }
 }
