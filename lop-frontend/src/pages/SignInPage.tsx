@@ -1,16 +1,21 @@
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import MasterPage from "./MasterPage";
-import { ApiPath, doPost, NetworkError, ResponseError } from "../services/api";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { authenticate } from "../api/methods";
 
 /** sends the login request and saves the token */
 async function performLogin(email: string, password: string) {
-  const { token } = await doPost(ApiPath.Login, {
+  const result = await authenticate({
     email: email,
     password: password,
   });
-  localStorage.setItem("token", token);
+  if (!result) {
+    return false;
+  }
+  localStorage.setItem("token", result.token);
+  localStorage.setItem("userId", result.userId);
+  return true;
 }
 
 export const SignInPage: React.FunctionComponent = () => {
@@ -21,21 +26,10 @@ export const SignInPage: React.FunctionComponent = () => {
     event.preventDefault();
 
     const formData = event.currentTarget;
-    try {
-      await performLogin(formData["formEmail"].value, formData["formPassword"].value);
-      history.push('/'); // TODO: for now, we just always redirect to home
-    } catch (e) {
-      if (e instanceof ResponseError) {
-        if (e.status === 401) {
-          setErrorMessage("Invalid username or password");
-        } else {
-          setErrorMessage("Unknown error: " + e.status);
-        }
-      } else if (e instanceof NetworkError) {
-        setErrorMessage("Unable to connect to server");
-      } else {
-        throw e;
-      }
+    if (await performLogin(formData["formEmail"].value, formData["formPassword"].value)) {
+      history.push("/"); // TODO: for now, we just always redirect to home
+    } else {
+      setErrorMessage("Invalid username or password");
     }
   };
 

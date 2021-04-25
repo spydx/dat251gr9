@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { EventCard } from "./EventCard";
-import { Event } from "../types";
+import { Event } from "../api/types";
 import React from "react";
 
 type Props = {

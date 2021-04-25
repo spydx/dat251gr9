@@ -1,4 +1,4 @@
-import * as api from "../services/api";
+import * as api from "../api/base";
 // This test will fail on GitActions.. 
 /*
 test('Accessing api then get some data', async () => {

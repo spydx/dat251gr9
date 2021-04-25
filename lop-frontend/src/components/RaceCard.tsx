@@ -1,5 +1,5 @@
 import { Card, Button,ListGroup } from "react-bootstrap";
-import {Race} from "../types";
+import {Race} from "../api/types";
 import * as React from "react";
 
 

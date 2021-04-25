@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import { Event } from "../types";
+import { Event } from "../api/types";
 
 type Props = {
   event: Event;

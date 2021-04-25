@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { EventCard } from "../components/EventCard";
 import event from "./testData/testEvent1.json";
-import { Event } from "../types";
+import { Event } from "../api/types";
 
 const eventCard = <EventCard event={event} />;
 

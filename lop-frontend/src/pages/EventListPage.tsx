@@ -2,11 +2,11 @@ import { Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
 import MasterPage from "./MasterPage";
-import { doGet, ApiPath } from "../services/api";
 import useSWR from "swr";
+import { getAllEvents } from "../api/methods";
 
 export const EventListPage: React.FunctionComponent = () => {
-  const { data, error } = useSWR(ApiPath.Events, doGet);
+  const { data, error } = useSWR('api: getAllEvents', getAllEvents);
   if (error) {
     return (
       <MasterPage>

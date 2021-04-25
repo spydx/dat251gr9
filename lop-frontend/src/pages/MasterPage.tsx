@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { BACKEND_ROOT } from "../services/api";
+import { BACKEND_ROOT } from "../api/base";
 import TopNav from "../components/TopNav";
 
 // at the time of writing we assume that every page will have header and footer

@@ -1,5 +1,5 @@
 import { EventList } from "../components/EventList";
-import { Event } from "../types";
+import { Event } from "../api/types";
 import event1 from "./testData/testEvent1.json";
 import event2 from "./testData/testEvent2.json";
 import { render } from "@testing-library/react";

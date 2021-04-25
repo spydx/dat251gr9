@@ -1,18 +1,17 @@
 import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "../components/Spinner";
-import { Container,Jumbotron,Col,Row } from "react-bootstrap";
+import { Col, Container, Jumbotron, Row } from "react-bootstrap";
 import MasterPage from "./MasterPage";
 import useSWR from "swr";
-import {RaceCard} from "../components/RaceCard";
-import { doGet, ApiPath } from "../services/api";
-import {Race} from "../types";
+import { RaceCard } from "../components/RaceCard";
+import { Race } from "../api/types";
+import { getEvent } from "../api/methods";
 
 type EventPageParams = { id: string };
 
-
 export const EventPage: React.FunctionComponent = () => {
   let { id } = useParams<EventPageParams>();
-  const {data,error} = useSWR(ApiPath.Event(id),doGet);
+  const { data, error } = useSWR("API: getEvent", () => getEvent(id));
   if (error) {
     return (
       <MasterPage>
@@ -33,13 +32,15 @@ export const EventPage: React.FunctionComponent = () => {
   }
   return (
     <MasterPage>
-      <Jumbotron fluid >
-      <h1 className = "text-center">{`${data.name}`}</h1>
-      <p className = "text-center">{`${data.generalInfo}`}</p>
+      <Jumbotron fluid>
+        <h1 className="text-center">{`${data.name}`}</h1>
+        <p className="text-center">{`${data.generalInfo}`}</p>
       </Jumbotron>
       <Row>
-        {data.races.map((races : Race) => (
-          <Col key = {races.id}><RaceCard race = {races}/> </Col>
+        {data.races.map((races: Race) => (
+          <Col key={races.id}>
+            <RaceCard race={races} />{" "}
+          </Col>
         ))}
       </Row>
     </MasterPage>
