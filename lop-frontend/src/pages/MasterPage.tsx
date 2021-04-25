@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
-import { BACKEND_ROOT } from "./services/api";
-import TopNav from "./TopNav";
+import { BACKEND_ROOT } from "../services/api";
+import TopNav from "../components/TopNav";
 
 // at the time of writing we assume that every page will have header and footer
 const MasterPage = (props: any) => (

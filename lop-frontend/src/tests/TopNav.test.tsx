@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import TopNav from "../TopNav";
+import TopNav from "../components/TopNav";
 import { MemoryRouter } from "react-router-dom";
 
 test("Navbar Sign In", () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import MasterPage from "../MasterPage";
+import MasterPage from "./MasterPage";
 
 export const SignUpPage: React.FunctionComponent = () => {
   return (

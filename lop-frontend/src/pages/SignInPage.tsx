@@ -1,5 +1,5 @@
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
-import MasterPage from "../MasterPage";
+import MasterPage from "./MasterPage";
 import { ApiPath, doPost, NetworkError, ResponseError } from "../services/api";
 import React, { useState } from "react";
 import { useHistory } from "react-router";

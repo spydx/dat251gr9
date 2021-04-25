@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
-import MasterPage from "../MasterPage";
+import MasterPage from "./MasterPage";
 import { doGet, ApiPath } from "../services/api";
 import useSWR from "swr";
 

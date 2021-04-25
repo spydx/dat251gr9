@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "../components/Spinner";
 import { Container,Jumbotron,Col,Row } from "react-bootstrap";
-import MasterPage from "../MasterPage";
+import MasterPage from "./MasterPage";
 import useSWR from "swr";
 import {RaceCard} from "../components/RaceCard";
 import { doGet, ApiPath } from "../services/api";

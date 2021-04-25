@@ -1,4 +1,4 @@
-import MasterPage from "../MasterPage";
+import MasterPage from "./MasterPage";
 
 export const HomePage: React.FunctionComponent = () => (
   <MasterPage>

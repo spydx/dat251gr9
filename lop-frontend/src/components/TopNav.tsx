@@ -1,7 +1,7 @@
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import logo from "./assets/loplogo.png";
+import logo from "../assets/loplogo.png";
 
 function TopNav() {
   return (
