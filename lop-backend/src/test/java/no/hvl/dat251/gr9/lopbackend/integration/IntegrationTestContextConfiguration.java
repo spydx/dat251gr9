@@ -1,6 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration;
 
 
+import no.hvl.dat251.gr9.lopbackend.entities.OrganizerProfile;
 import no.hvl.dat251.gr9.lopbackend.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,4 +32,12 @@ public class IntegrationTestContextConfiguration {
 
     @Bean
     public ContactsService contactsService() { return new ContactsService(); }
+
+    @Bean
+    public LocationService locationService() {return new LocationService();}
+
+    @Bean
+    public OrganizerService organizerService() {return new OrganizerService(); }
+
+
 }
