@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
-import { Event } from "../api/types";
+import { Link } from "react-router-dom";
+import { Event } from "../api";
 
 type Props = {
   event: Event;
@@ -10,7 +11,7 @@ export const EventCard: React.FC<Props> = ({ event }) => {
     <Card>
       <div className="card-img-top" style={{ backgroundColor: "#eee", height: "200px" }}></div>
       <Card.Body>
-        <Card.Link href={"/event/" + event.id}>
+        <Card.Link as={Link} to={"/event/" + event.id}>
           <Card.Title>{event.name}</Card.Title>
         </Card.Link>
         <Card.Subtitle>{event.location.place}</Card.Subtitle>
