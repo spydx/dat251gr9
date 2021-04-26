@@ -12,14 +12,14 @@ import axios from "axios";
 import { BACKEND_ROOT } from "./base";
 import {
   AuthenticateCredentials,
+  AuthenticateResult,
   CreateEventFields,
   CreateRaceFields,
   CreateUserFields,
   Event,
   EventSearchParams,
   Race,
-  RaceSearchParams,
-  ValidateTokenResult,
+  RaceSearchParams
 } from "./types";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,6 @@ function resque<T>(status: number, getDefault: () => T): (error: any) => Promise
 ////////////////////////////////////////////////////////////////////////////////
 // authentication
 
-export type AuthenticateResult = { token: string; userId: string } | null;
-
 // an object on success and null if unsuccessful
 export function authenticate(credentials: AuthenticateCredentials): Promise<AuthenticateResult> {
   /* back end returns
@@ -82,16 +80,22 @@ export function createUser(fields: CreateUserFields): Promise<boolean> {
     .catch(resque(HttpStatus.BAD_REQUEST, () => false));
 }
 
-export function validateToken(token: string): Promise<ValidateTokenResult> {
+export function validateToken(token: string): Promise<boolean> {
   /* back end returns
    * - Ok<ValidateTokenResult> (success or failure)
    */
 
+  type ValidateTokenResult = {
+    token: string; // junk
+    valid: boolean;
+    tokenExpirationDate: string; // junk
+  };
+
   return backend
-    .post("/auth/validateToken", null, {
+    .post<ValidateTokenResult>("/auth/validateToken", null, {
       params: { token },
     })
-    .then((response) => response.data);
+    .then((response) => response.data.valid);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +135,7 @@ export function getAllRaces(eventId: string): Promise<Race | null> {
 export function createEvent(fields: CreateEventFields): Promise<boolean> {
   /* back end returns
    * - OK<Event>
-   * - BAD_REQUEST (failure)
+   * - BAD_REQUEST (unauthorized OR not an organizer)
    */
 
   const token = localStorage.getItem("token");
@@ -148,7 +152,7 @@ export function createEvent(fields: CreateEventFields): Promise<boolean> {
 export function createRace(eventId: string, fields: CreateRaceFields): Promise<boolean> {
   /* back end returns
    * - OK<Race>
-   * - BAD_REQUEST (failure)
+   * - BAD_REQUEST (unauthorized OR not an organizer)
    */
 
   const token = localStorage.getItem("token");

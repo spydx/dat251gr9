@@ -3,6 +3,8 @@ export type AuthenticateCredentials = {
   password: string;
 };
 
+export type AuthenticateResult = { token: string; userId: string } | null;
+
 export type CreateUserFields = {
   address: string;
   birthdate: string;
@@ -11,12 +13,6 @@ export type CreateUserFields = {
   firstname: string;
   lastname: string;
   password: string;
-};
-
-export type ValidateTokenResult = {
-  token: string;
-  valid: boolean;
-  tokenExpirationDate: string;
 };
 
 export type OrganizerProfile = {
