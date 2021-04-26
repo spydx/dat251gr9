@@ -1,8 +1,9 @@
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import MasterPage from "./MasterPage";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useAuth } from "../auth";
+import { Link } from "react-router-dom";
 
 export const SignInPage: React.FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,9 +16,11 @@ export const SignInPage: React.FunctionComponent = () => {
     history.replace(from);
   }
 
-  if (auth.isSignedIn()) {
-    redirectToDestination();
-  }
+  useEffect(() => {
+    if (auth.isSignedIn()) {
+      redirectToDestination();
+    }
+  });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,6 +67,10 @@ export const SignInPage: React.FunctionComponent = () => {
                   <Button variant="primary" type="submit">
                     Sign In
                   </Button>
+                </div>
+
+                <div className="pt-3">
+                  Need an account? <Link to="/signUp">Sign up</Link>.
                 </div>
               </Form>
             </Card.Body>

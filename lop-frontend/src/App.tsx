@@ -9,10 +9,13 @@ import {
   SignUpPage,
 } from "./pages";
 import { ProvideAuth, useAuth } from "./auth";
+import { useEffect } from "react";
 
 const SignOut: React.FunctionComponent = () => {
   const auth = useAuth();
-  auth.signOut();
+  useEffect(() => {
+    auth.signOut();
+  })
   return <Redirect to="/" />;
 };
 

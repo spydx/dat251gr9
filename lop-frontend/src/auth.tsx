@@ -1,3 +1,5 @@
+// based on https://usehooks.com/useAuth/
+
 import { createContext, useContext } from "react";
 import { authenticate } from "./api/methods";
 import { useLocalStorage } from "./useLocalStorage";
