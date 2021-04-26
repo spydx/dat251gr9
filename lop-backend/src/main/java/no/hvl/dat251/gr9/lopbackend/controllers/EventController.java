@@ -55,7 +55,7 @@ public class EventController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getEvent(@PathVariable("id") final String id) {
+    public ResponseEntity<?> getEvent(@PathVariable("id") String id) {
         var res = eventService.getEvent(id);
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
@@ -65,7 +65,7 @@ public class EventController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createEvent(@NotNull @RequestHeader("Authorization") final String token,
+    public ResponseEntity<?> createEvent(@NotNull @RequestHeader("Authorization") String token,
                                          @RequestBody EventDTO newEvent) {
         var accountId = jwtControl.parseHeader(token);
         if (accountId.isPresent()){
@@ -93,8 +93,8 @@ public class EventController {
     }
 
     @PostMapping(value = "/{id}/race")
-    public ResponseEntity<?> createRace(@NotNull @RequestHeader("Authorization") final String token,
-                                        @RequestBody RaceDTO newRace, String eventId) {
+    public ResponseEntity<?> createRace(@NotNull @RequestHeader("Authorization") String token,
+                                        @RequestBody RaceDTO newRace, @PathVariable("id") String eventId) {
         var accountid = jwtControl.parseHeader(token);
 
         if(accountid.isPresent() && organizerService.getAccountById(accountid.get()).isPresent()) {
@@ -109,7 +109,7 @@ public class EventController {
     }
 
     @GetMapping(value = "/{id}/race")
-    public ResponseEntity<?> getAllRaces() {
+    public ResponseEntity<?> getAllRaces(@PathVariable("id") String eventId) {
         var res = raceService.getAllRaces();
         if(res.isPresent()) {
             return new ResponseEntity<>(res.get(), HttpStatus.OK);
