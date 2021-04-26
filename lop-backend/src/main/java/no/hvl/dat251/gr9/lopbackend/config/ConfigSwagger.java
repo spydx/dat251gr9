@@ -36,8 +36,7 @@ public class ConfigSwagger {
                 .apis(RequestHandlerSelectors.basePackage("no.hvl.dat251.gr9.lopbackend"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo())
-                .useDefaultResponseMessages(true);
+                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
