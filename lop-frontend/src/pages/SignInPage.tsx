@@ -10,13 +10,22 @@ export const SignInPage: React.FunctionComponent = () => {
   const location = useLocation<any>();
   const auth = useAuth();
 
+  function redirectToDestination() {
+    const { from } = location.state || { from: { pathname: "/" } };
+    history.replace(from);
+  }
+
+  if (auth.isSignedIn()) {
+    redirectToDestination();
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = event.currentTarget;
-    if (await auth.signIn(formData["formEmail"].value, formData["formPassword"].value)) {
-      const { from } = location.state || { from: { pathname: "/" } };
-      history.replace(from);
+    const success = await auth.signIn(formData["formEmail"].value, formData["formPassword"].value);
+    if (success) {
+      redirectToDestination();
     } else {
       setErrorMessage("Invalid username or password");
     }

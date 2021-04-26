@@ -1,5 +1,13 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import { EventListPage, EventPage, HomePage, NotFoundPage, ProfilePage, SignInPage, SignUpPage } from "./pages";
+import {
+  EventListPage,
+  EventPage,
+  HomePage,
+  NotFoundPage,
+  ProfilePage,
+  SignInPage,
+  SignUpPage,
+} from "./pages";
 import { ProvideAuth, useAuth } from "./auth";
 
 const SignOut: React.FunctionComponent = () => {
@@ -27,11 +35,6 @@ function PrivateRoute({ component: Component, ...rest }: any) {
 const App: React.FunctionComponent = () => {
   return (
     <ProvideAuth>
-      {
-        // todo(H-C-H) 404
-        // todo(H-C-H) signedOutOnly
-        // todo(H-C-H) signedInOnly
-      }
       <Switch>
         <Route exact path="/signIn" component={SignInPage} />
         <Route exact path="/signUp" component={SignUpPage} />
