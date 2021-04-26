@@ -1,9 +1,12 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/loplogo.png";
+import { useAuth } from "../auth";
 
 function TopNav() {
+  const auth = useAuth();
+
   return (
     <Navbar bg="light" expand="sm" sticky="top">
       <Navbar.Brand>
@@ -20,12 +23,25 @@ function TopNav() {
           </Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link as={Link} to="/signIn">
-            Sign In
-          </Nav.Link>
-          <Nav.Link as={Link} to="/signUp">
-            Sign Up
-          </Nav.Link>
+          {auth.isSignedIn() ? (
+            <>
+              <Nav.Link as={Link} to="/profile">
+                Profile
+              </Nav.Link>
+              <Nav.Link as={Link} to="/signOut">
+                Sign Out
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+              <Nav.Link as={Link} to="/signIn">
+                Sign In
+              </Nav.Link>
+              <Nav.Link as={Link} to="/signUp">
+                Sign Up
+              </Nav.Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

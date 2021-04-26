@@ -1,39 +1,28 @@
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import MasterPage from "./MasterPage";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
-import { authenticate } from "../api/methods";
-
-/** sends the login request and saves the token */
-async function performLogin(email: string, password: string) {
-  const result = await authenticate({
-    email: email,
-    password: password,
-  });
-  if (!result) {
-    return false;
-  }
-  localStorage.setItem("token", result.token);
-  localStorage.setItem("userId", result.userId);
-  return true;
-}
+import { useHistory, useLocation } from "react-router";
+import { useAuth } from "../auth";
 
 export const SignInPage: React.FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
+  const location = useLocation<any>();
+  const auth = useAuth();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = event.currentTarget;
-    if (await performLogin(formData["formEmail"].value, formData["formPassword"].value)) {
-      history.push("/"); // TODO: for now, we just always redirect to home
+    if (await auth.signIn(formData["formEmail"].value, formData["formPassword"].value)) {
+      const { from } = location.state || { from: { pathname: "/" } };
+      history.replace(from);
     } else {
       setErrorMessage("Invalid username or password");
     }
   };
 
-  let errorBanner = errorMessage ? (
+  const errorBanner = errorMessage ? (
     <Alert variant="danger" dismissible onClose={() => setErrorMessage("")}>
       {errorMessage}
     </Alert>
