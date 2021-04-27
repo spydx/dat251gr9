@@ -2,7 +2,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import {
   EventListPage,
   EventPage,
-  HomePage,
   NotFoundPage,
   ProfilePage,
   SignInPage,
@@ -45,7 +44,7 @@ const App: React.FunctionComponent = () => {
         <PrivateRoute exact path="/profile" component={ProfilePage} />
         <Route exact path="/event/:id" component={EventPage} />
         <Route exact path="/events/" component={EventListPage} />
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={EventListPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ProvideAuth>

@@ -187,7 +187,7 @@ export function getRacesBySearch(params: RaceSearchParams): Promise<Race[]> {
 
 export function getEventsBySearch(params: EventSearchParams): Promise<Event[]> {
   /* back end returns
-   * - OK<Race[]>
+   * - OK<Event[]>
    * - NOT_FOUND (means [])
    */
 
