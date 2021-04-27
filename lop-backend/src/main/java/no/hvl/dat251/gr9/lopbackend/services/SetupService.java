@@ -123,7 +123,6 @@ public class SetupService {
 
         //----------------------------------------------------------------------------------
               /*
-        There seems to be something wrong with starttime/LocalTime for races
         Adding contacts to events is causing errors (i've ignored contacts for now as a solution)
         Updating event/race information will not currently update the information in the database.
         This is because events are not created if they already exist. To fix this you can delete all the events/races
@@ -153,7 +152,7 @@ public class SetupService {
             var event = new EventDTO("Test event number 2", LocalDate.of(2021, 8, 2), "this is a test event", new ArrayList<>(), new ArrayList<>(), testLocation2, organizerProfile);
             var race1 = new RaceDTO(1.0f, LocalTime.of(1, 0), 2.0f, false,
                     true, false, true, false, true, "This race is a test race for event " + event.getName());
-            var race2 = new RaceDTO(100.0f, LocalTime.of(2, 0), 2.0f, false,
+            var race2 = new RaceDTO(100.0f, LocalTime.of(23, 59), 2.0f, false,
                     true, false, true, false, true, "This race is also a test race for event " + event.getName());
             createEvent(event, List.of(race1, race2));
         }
@@ -166,7 +165,7 @@ public class SetupService {
         {
             var location = new LocationDTO("Trøndelag", "Trondheim", "Trondheim", 63.446827, 10.421906);
             var race1 = new RaceDTO(10f, LocalTime.of(11, 0), 50f, true, false, false, false, false, false, "10K for menn");
-            var race2 = new RaceDTO(10f, LocalTime.of(13, 0), 50f, true, false, true, false, false, false, "10K for kvinner");
+            var race2 = new RaceDTO(10f, LocalTime.of(13, 30), 50f, true, false, true, false, false, false, "10K for kvinner");
             var event = new EventDTO("Trondheim 10k (Test)", LocalDate.of(2021, 5, 20), "10 km passer for deg som syns maratondistansene er for lang, mens 5 km blir litt for kort. Med litt treningsbakgrunn vil dette kunne bli en fantastisk løpsopplevelse i Trondheim by. Hvor raskt klarer du å løpe mila?", List.of(), new ArrayList<>(), location, organizerProfile);
             createEvent(event, List.of(race1, race2));
         }
