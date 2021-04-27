@@ -109,12 +109,12 @@ When done manually, there is a videos/screenshots created in the [folder](/e2e/)
 Manually you can do the same integration tests, this is useful when writing tests.
 
 ```sh
-$ docker-compose -d up 
-$ yarn -cwd lop-frontend start
-$ cd e2e/
-$ yarn install
-$ export "CYPRESS_baseUrl=http://localhost:3000/"
-$ /e2e/.nodes_modules/.bin/cypress open
+/ $ docker-compose up -d
+/ $ yarn --cwd lop-frontend start
+/ $ cd e2e/
+/e2e/ $ yarn install # <- this has to be done the fist time
+/e2e/ $ export "CYPRESS_baseUrl=http://localhost:3000/"
+/e2e/ $ ./nodes_modules/.bin/cypress open
 ```
 
 ### Creating issues list for Sprint log

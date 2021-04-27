@@ -1,8 +1,8 @@
 {
    "id": "ce420a76-7573-4dc4-bf9c-b573cd0c8271",
    "name": "Knarvik Mila",
-   "eventstart": "13. Mai 2021",
-   "generalinfo": "Klar for ein klassikar! Distansene blir arrangert for 39. gong i 2021 Er du klar for halvmila? Løp for å leve i samarbeid med Kreftforeningen.",
+   "eventStart": "13. Mai 2021",
+   "generalInfo": "Klar for ein klassikar! Distansene blir arrangert for 39. gong i 2021 Er du klar for halvmila? Løp for å leve i samarbeid med Kreftforeningen.",
    "contacts": [
       {
          "name": "Tom Jensen",
@@ -17,34 +17,34 @@
    ],
    "races": [
          {
-            "id": 1123,
+            "id": "1123",
             "distance": 10.00,
             "startlocation": "Ikea Åsane",
-            "starttime": "1200Z UTC 01.01.2022",
+            "startTime": "1200Z UTC 01.01.2022",
             "vertical": false,
             "children": false,
-            "womenonly": false,
+            "womenOnly": false,
             "relay": false,
-            "multisport": false,
-            "obstaclerun": false,
+            "multiSport": false,
+            "obstacleRun": false,
             "info": ""
          },
          {
-            "id": 1123,
+            "id": "1123",
             "distance": 5.00,
             "startlocation": "Ikea Åsane",
-            "startime": "1300Z UTC 01.01.2022",
+            "starTime": "1300Z UTC 01.01.2022",
             "vertical": false,
             "children": true,
-            "womenonly": false,
+            "womenOnly": false,
             "relay": false,
-            "multisport": false,
-            "obstaclerun": false,
+            "multiSport": false,
+            "obstacleRun": false,
             "info": ""
          }
    ],
    "location": {
-      "id": 1,
+      "id": "1",
       "county": "Hordaland",
       "municipality": "Bergen",
       "place": "Ikea Åsane",

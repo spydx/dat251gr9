@@ -16,7 +16,7 @@ services:
          context: lop-frontend
          dockerfile: Dockerfile
          args:
-            REACT_APP_BACKEND_ENDPOINT: http://react-auth-backend:8080/api
+            REACT_APP_BACKEND_ENDPOINT: http://lop-api:8080/api
       ports:
          - 80:80
       depends_on:

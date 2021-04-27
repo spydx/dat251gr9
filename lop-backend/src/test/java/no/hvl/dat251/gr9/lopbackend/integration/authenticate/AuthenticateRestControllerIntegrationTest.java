@@ -1,7 +1,7 @@
 package no.hvl.dat251.gr9.lopbackend.integration.authenticate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.SignUpFormDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -85,7 +85,7 @@ class AuthenticateRestControllerIntegrationTest {
 
     @Test
     void givenNonExistingUser_whenRegister_thenStatus201OK() throws Exception {
-        UserAccountDTO newAccount = new UserAccountDTO(
+        SignUpFormDTO newAccount = new SignUpFormDTO(
                 "test",
                 "test",
                 null,
@@ -108,7 +108,7 @@ class AuthenticateRestControllerIntegrationTest {
 
     @Test
     void givenExistingUser_whenRegister_thenStatus400BadRequest() throws Exception {
-        UserAccountDTO newAccount = new UserAccountDTO(
+        SignUpFormDTO newAccount = new SignUpFormDTO(
                 "test",
                 "test",
                  null,
