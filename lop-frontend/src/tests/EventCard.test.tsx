@@ -3,9 +3,13 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { EventCard } from "../components/EventCard";
 import event from "./testData/testEvent1.json";
-import { Event } from "../api/types";
+import { MemoryRouter } from "react-router-dom";
 
-const eventCard = <EventCard event={event} />;
+const eventCard = (
+  <MemoryRouter>
+    <EventCard event={event} />
+  </MemoryRouter>
+);
 
 // test('A Race event More info', () => {
 //    const { getByText } = render(eventCard);
