@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.Collections;
 
-// URL -----> http://localhost:8080/swagger-ui.html
+// URL -----> http://localhost:8080/swagger-ui/
 
 @Configuration
 public class ConfigSwagger {
