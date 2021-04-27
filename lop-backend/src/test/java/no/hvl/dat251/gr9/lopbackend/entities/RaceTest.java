@@ -3,8 +3,10 @@ package no.hvl.dat251.gr9.lopbackend.entities;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RaceTest {
 
@@ -48,4 +50,6 @@ public class RaceTest {
         assertEquals(info, race.getInfo());
 
     }
+
+
 }

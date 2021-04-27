@@ -5,8 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity
@@ -25,20 +23,29 @@ public class Event {
     @OneToMany
     private List<Race> races;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Contacts> contacts;
 
     @OneToOne
     private OrganizerProfile organizer;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Location location;
 
-    public Event(String name, LocalDate eventStart, String generalInfo) {
+
+    public Event(String name, LocalDate eventStart, String generalInfo, List<Race> races, List<Contacts> contacts, OrganizerProfile organizer, Location location) {
         this.name = name;
         this.eventStart = eventStart;
         this.generalInfo = generalInfo;
+        this.races = races;
+        this.contacts = contacts;
+        this.organizer = organizer;
+        this.location = location;
     }
 
-    public Event() {
+    public Event() {}
 
+    public double compareToDistToLoc(double latitude, double longitude, Event other){
+        return(this.location.compareTo(latitude, longitude, other.getLocation()));
     }
 }

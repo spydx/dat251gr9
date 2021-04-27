@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -36,6 +37,20 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public Date tokenExpirationDate(String token) {
+        try {
+            Claims claim = Jwts.parser()
+                    .setSigningKey(jwtSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claim.getExpiration();
+        } catch (SignatureException e) {
+            logger.info("Signature exception: " + e);
+        } catch (JsonParseException e) {
+            logger.info("JSON parse exception: " + e);
+        }
+        return null;
+    }
 
     public String getUserIdFromJwt(String token) {
         Claims claims = Jwts.parser()

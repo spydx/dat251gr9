@@ -47,8 +47,8 @@ public class ContactsDAOIntegrationTest {
             contact.setPhone(Integer.toString((int)Math.random()*1000000));
             entityManager.persist(contact);
         }
-        // +5 is due to injecting 5 contacts in setupservice
-        numberOfContacts = emails.length+5;
+        // +3 is due to injecting 3 contacts in setupservice
+        numberOfContacts = emails.length+3;
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ContactsDAOIntegrationTest {
     }
 
     @Test
-    void findAllAccounts(){
+    void findAllContacts(){
         var res = contactsStorage.findAll();
 
         assertEquals(numberOfContacts, res.size());

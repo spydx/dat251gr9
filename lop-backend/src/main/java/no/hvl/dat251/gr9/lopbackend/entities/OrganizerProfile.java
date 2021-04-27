@@ -24,13 +24,21 @@ public class OrganizerProfile implements Serializable{
     private String Address;
 
     @JsonIgnore
-    @OneToMany
-    private List<Contacts> contact;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Contacts> contacts;
 
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     private OrganizerAccount account;
 
-
+    @Override
+    public String toString() {
+        return "OrganizerProfile{" +
+                "id='" + id + '\'' +
+                ", organizerName='" + organizerName + '\'' +
+                ", Address='" + Address + '\'' +
+                ", contacts=" + contacts +
+                '}';
+    }
 }

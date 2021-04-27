@@ -32,13 +32,19 @@ public class OrganizerAccount implements Account{
     @OneToOne(cascade = CascadeType.ALL)
     private OrganizerProfile profile;
 
-    public OrganizerAccount(String id, @Email String email, String password, Set<Roles> roles, OrganizerProfile profile) {
-        this.id = id;
+    public OrganizerAccount(String email) {
         this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.profile = profile;
     }
 
     public OrganizerAccount() {}
+
+    @Override
+    public String toString() {
+        return "OrganizerAccount{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", profile=" + profile +
+                '}';
+    }
 }

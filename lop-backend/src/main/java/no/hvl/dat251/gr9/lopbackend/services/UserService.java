@@ -23,7 +23,7 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private UserAccountDAO accountStorage;
+    private UserAccountDAO userAccountStorage;
 
     @Autowired
     private UserProfileDAO profileStorage;
@@ -37,7 +37,7 @@ public class UserService {
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public Optional<UserAccount> getAccount(String email) {
-        return accountStorage.findByEmail(email);
+        return userAccountStorage.findByEmail(email);
     }
 
     public Optional<UserAccount> add(UserAccountDTO newaccount) {
@@ -55,7 +55,7 @@ public class UserService {
         profile.setCity(newaccount.getCity());
 
         account.setProfile(profile);
-        var acc = accountStorage.save(account);
+        var acc = userAccountStorage.save(account);
         var pro = acc.getProfile();
         pro.setAccount(acc);
         profileStorage.save(pro);
@@ -69,7 +69,7 @@ public class UserService {
             var account = profile.get().getAccount();
             if(account.getEmail().equals(updated.getEmail())) {
                 account.setPassword(passwordEncoder.encode(updated.getPassword()));
-                return Optional.of(accountStorage.save(account));
+                return Optional.of(userAccountStorage.save(account));
             }
             logger.error("Cant find profile for {}", updated );
         }
