@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -76,7 +77,19 @@ public class AuthenticateController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody UserAccountDTO newUser) {
+    public ResponseEntity<?> createUser(@NotNull @Valid @RequestBody UserAccountDTO newUser, BindingResult bindingResult) {
+        //if validation fails print all error messages.
+        if(bindingResult.hasErrors()){
+
+            var errors = bindingResult.getAllErrors();
+            var errorMessage = "";
+            for (var err: errors){
+                errorMessage += err.getDefaultMessage() + ", ";
+            }
+            errorMessage = errorMessage.replaceAll(", $", "");
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        }
+
         var exist = userService.getAccount(newUser.getEmail());
 
         if(exist.isPresent()) {
