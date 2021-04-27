@@ -4,11 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// TODO: do we need this?
+import { store } from './state/store';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
