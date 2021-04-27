@@ -1,13 +1,12 @@
 package no.hvl.dat251.gr9.lopbackend.entities.dto;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
@@ -18,7 +17,9 @@ public class SignUpFormDTO {
     @NotBlank(message = "Cannot be blank")
     private final String lastname;
 
+    @NotNull(message="Must not be null")
     @Past(message="Must be a past date") // :P
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate birthdate;
     @NotBlank(message = "Cannot be blank")
     private final String address;

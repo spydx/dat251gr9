@@ -17,6 +17,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -86,11 +88,11 @@ class AuthenticateRestControllerIntegrationTest {
     @Test
     void givenNonExistingUser_whenRegister_thenStatus201OK() throws Exception {
         SignUpFormDTO newAccount = new SignUpFormDTO(
-                "test",
-                "test",
-                null,
-                null,
-                null,
+                "FirstName",
+                "LastName",
+                LocalDate.now().minusDays(1),
+                "Address",
+                "City",
                 "test@test.no",
                 "testtest123");
 
@@ -126,7 +128,7 @@ class AuthenticateRestControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonBrokenUser))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest()); // TODO: it's bad, but for the wrong reasons!
     }
 
 }
