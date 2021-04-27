@@ -33,16 +33,20 @@ export const SignUpPage: React.FunctionComponent = () => {
       password: formData["formPassword"].value,
     };
 
-    const signUpSuccess = await api.createUser(fields);
-    if (signUpSuccess) {
+    const result = await api.createUser(fields);
+    if (result === "SUCCESS") {
       // The API doesn't return a token on success, so we must log in with a separate request.
       const signInSuccess = await auth.signIn(fields.email, fields.password);
       if (!signInSuccess) {
         // We assume this never happens
       }
       history.replace("/");
-    } else {
-      setErrorMessage("Unable to create account");
+    } else if (result.error === "FORM_VALIDATION_ERROR") {
+      const nFieldErrors = Object.keys(result.fieldsErrors).length;
+      const nGlobalErrors = result.globalErrors.length;
+      setErrorMessage(`${nFieldErrors} field errors and ${nGlobalErrors} global errors`);
+    } else if (result.error === "UNKNOWN_ERROR") {
+      setErrorMessage(result.message);
     }
   };
 

@@ -8,7 +8,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserProfileDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.UserAccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.CreateUserAccountDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class UserService {
         return userAccountStorage.findByEmail(email);
     }
 
-    public Optional<UserAccount> add(UserAccountDTO newaccount) {
+    public Optional<UserAccount> add(CreateUserAccountDTO newaccount) {
         var account = new UserAccount(newaccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
                 () -> new InternalServerError("User Role not set")

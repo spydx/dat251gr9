@@ -3,7 +3,6 @@ package no.hvl.dat251.gr9.lopbackend.services;
 import no.hvl.dat251.gr9.lopbackend.entities.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.*;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.*;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +67,7 @@ public class SetupService {
 
         var exist = userService.getAccount(email);
         if(exist.isEmpty()) {
-            var newAdmin = new UserAccountDTO(
+            var newAdmin = new CreateUserAccountDTO(
                     "Lop",
                     "Admin",
                     null,

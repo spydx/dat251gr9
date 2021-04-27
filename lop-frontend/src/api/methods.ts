@@ -19,7 +19,7 @@ import {
   Event,
   EventSearchParams,
   Race,
-  RaceSearchParams
+  RaceSearchParams,
 } from "./types";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,17 +67,35 @@ export function authenticate(credentials: AuthenticateCredentials): Promise<Auth
     .catch(resque(HttpStatus.UNAUTHORIZED, () => null));
 }
 
+type FormValidationError = {
+  error: "FORM_VALIDATION_ERROR";
+  fieldsErrors: { [field: string]: [string] };
+  globalErrors: [string];
+};
+
+type UnknownError = {
+  error: "UNKNOWN_ERROR";
+  message: string;
+};
+type CreateUserError = FormValidationError | UnknownError;
+
 // true if successful and false if unsuccessful
-export function createUser(fields: CreateUserFields): Promise<boolean> {
+export function createUser(fields: CreateUserFields): Promise<"SUCCESS" | CreateUserError> {
   /* back end returns
-   * - BAD_REQUEST (username already registered)
+   * - BAD_REQUEST (form validation error or unknown error)
    * - CREATED<junk> (success)
    */
 
   return backend
     .post("/auth/register", fields, {})
-    .then((_response) => true)
-    .catch(resque(HttpStatus.BAD_REQUEST, () => false));
+    .then((_response) => "SUCCESS")
+    .catch((error) => {
+      if (error.response && error.response.status === HttpStatus.BAD_REQUEST) {
+        return error.response.data;
+      } else {
+        return Promise.reject(error);
+      }
+    });
 }
 
 export function validateToken(token: string): Promise<boolean> {

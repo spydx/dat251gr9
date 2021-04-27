@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
-public class UserAccountDTO {
+public class CreateUserAccountDTO {
 
     private String firstname;
     private String lastname;
@@ -27,13 +27,13 @@ public class UserAccountDTO {
     private String password;
 
 
-    public UserAccountDTO(String firstname,
-                          String lastname,
-                          LocalDate birthdate,
-                          String address,
-                          String city,
-                          String email,
-                          String password) {
+    public CreateUserAccountDTO(String firstname,
+                                String lastname,
+                                LocalDate birthdate,
+                                String address,
+                                String city,
+                                String email,
+                                String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
