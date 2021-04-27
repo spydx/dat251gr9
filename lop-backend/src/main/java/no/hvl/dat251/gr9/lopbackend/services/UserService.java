@@ -8,7 +8,7 @@ import no.hvl.dat251.gr9.lopbackend.entities.RoleEnum;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.RoleDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserProfileDAO;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CreateUserAccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.SignUpFormDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.PasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class UserService {
         return userAccountStorage.findByEmail(email);
     }
 
-    public Optional<UserAccount> add(CreateUserAccountDTO newaccount) {
+    public Optional<UserAccount> add(SignUpFormDTO newaccount) {
         var account = new UserAccount(newaccount.getEmail());
         var role = roleStorage.findByRole(RoleEnum.USER).orElseThrow(
                 () -> new InternalServerError("User Role not set")

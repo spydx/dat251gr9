@@ -3,10 +3,11 @@ package no.hvl.dat251.gr9.lopbackend.controllers;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import no.hvl.dat251.gr9.lopbackend.config.response.TokenValidationResponse;
+import no.hvl.dat251.gr9.lopbackend.config.security.APIResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtAuthenticationResponse;
 import no.hvl.dat251.gr9.lopbackend.config.security.JwtTokenProvider;
 import no.hvl.dat251.gr9.lopbackend.entities.UserAccount;
-import no.hvl.dat251.gr9.lopbackend.entities.dto.CreateUserAccountDTO;
+import no.hvl.dat251.gr9.lopbackend.entities.dto.SignUpFormDTO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import no.hvl.dat251.gr9.lopbackend.services.OrganizerService;
 import no.hvl.dat251.gr9.lopbackend.services.UserService;
@@ -20,8 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -79,59 +82,54 @@ public class AuthenticateController {
         return ResponseEntity.ok("failed to find user profile");
     }
 
+    @Data
+    @RequiredArgsConstructor
+    public static class FormValidationError {
+        final String type = "FormValidationError";
+        final Map<String, List<String>> fieldErrors;
+        final Collection<String> globalErrors;
+    }
+
     @PostMapping(value = "/register")
     public ResponseEntity<?> createUser(
-            @NotNull @Valid @RequestBody CreateUserAccountDTO newUser,
+            @NotNull @Valid @RequestBody SignUpFormDTO userForm,
             BindingResult bindingResult
     ) {
-        @Data
-        @RequiredArgsConstructor
-        class FormValidationError {
-            final String error = "FORM_VALIDATION_ERROR";
-            final Map<String, List<String>> fieldsErrors;
-            final Collection<String> globalErrors;
-        }
-
-        @Data
-        @RequiredArgsConstructor
-        class UnknownError {
-            final String error = "UNKNOWN_ERROR";
-            final String message;
+        // TODO: race condition
+        String email = userForm.getEmail();
+        boolean alreadyRegistered = userService.getAccount(email).isPresent();
+        if (alreadyRegistered) {
+            bindingResult.rejectValue("email", "error.user", "An account already exists for this email.");
         }
 
         if (bindingResult.hasErrors()) {
-            var fieldErrors = new HashMap<String, List<String>>();
-            for (var e : bindingResult.getFieldErrors()) {
-                fieldErrors.computeIfAbsent(e.getField(), s -> new ArrayList<>()).add(e.getDefaultMessage());
-            }
-
-            var globalErrors = new ArrayList<String>();
-            for (ObjectError e : bindingResult.getGlobalErrors()) {
-                globalErrors.add(e.getDefaultMessage());
-            }
-
-            FormValidationError formError = new FormValidationError(fieldErrors, globalErrors);
+            FormValidationError formError = makeFormValidationError(bindingResult);
             return ResponseEntity.badRequest().body(formError);
         }
 
-        boolean alreadyRegistered = userService.getAccount(newUser.getEmail()).isPresent();
-        if (alreadyRegistered) {
-            FormValidationError formError = new FormValidationError(Map.of(), List.of("Email Address already in use"));
-            return ResponseEntity.badRequest().body(formError);
-        }
-
-        var maybeNewAccount = userService.add(newUser);
-        if (maybeNewAccount.isEmpty()) {
-            return ResponseEntity.badRequest().body(new UnknownError("Could not create account")); // TODO: why does this happen?
-        }
-
-        UserAccount newAccount = maybeNewAccount.get();
+        UserAccount newAccount = userService.add(userForm).orElseThrow(); // TODO: UserService::add never returns an empty optional
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/api/users/{email}")
                 .buildAndExpand(newAccount.getProfile().getId())
                 .toUri();
-        return ResponseEntity.created(location).body("Registered");
+        return ResponseEntity.created(location).build();
+    }
+
+    private FormValidationError makeFormValidationError(BindingResult result) {
+        var fieldErrors = new HashMap<String, List<String>>();
+        for (var fieldError : result.getFieldErrors()) {
+            fieldErrors
+                    .computeIfAbsent(fieldError.getField(), k -> new ArrayList<>())
+                    .add(fieldError.getDefaultMessage());
+        }
+
+        var globalErrors = new ArrayList<String>();
+        for (var objectError : result.getGlobalErrors()) {
+            globalErrors.add(objectError.getDefaultMessage());
+        }
+
+        return new FormValidationError(fieldErrors, globalErrors);
     }
 
     @PostMapping(value = "/validateToken")

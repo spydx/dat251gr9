@@ -107,3 +107,9 @@ export type RaceSearchParams = {
   obstacleRun?: boolean;
   sort?: SortBy;
 };
+
+export type FormValidationError = {
+  type: "FormValidationError";
+  fieldErrors: { [field: string]: [string] };
+  globalErrors: [string];
+};

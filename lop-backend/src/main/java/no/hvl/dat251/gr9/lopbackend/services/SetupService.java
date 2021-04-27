@@ -67,7 +67,7 @@ public class SetupService {
 
         var exist = userService.getAccount(email);
         if(exist.isEmpty()) {
-            var newAdmin = new CreateUserAccountDTO(
+            var newAdmin = new SignUpFormDTO(
                     "Lop",
                     "Admin",
                     null,
