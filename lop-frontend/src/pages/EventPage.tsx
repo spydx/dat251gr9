@@ -14,7 +14,7 @@ export const EventPage: React.FunctionComponent = () => {
   let { id } = useParams<EventPageParams>();
 
   const { data, error } = useSWR(`API: getEvent(${id})`, () => getEvent(id));
-  
+
   if (error) {
     return (
       <MasterPage>
