@@ -9,10 +9,9 @@ import java.util.concurrent.ExecutionException;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
-import org.aspectj.bridge.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class APIRequest {
 
