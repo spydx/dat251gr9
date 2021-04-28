@@ -2,11 +2,11 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import {
   EventListPage,
   EventPage,
-  HomePage,
   NotFoundPage,
   ProfilePage,
   SignInPage,
   SignUpPage,
+  SearchPage,
 } from "./pages";
 import { ProvideAuth, useAuth } from "./auth";
 import { useEffect } from "react";
@@ -39,13 +39,14 @@ const App: React.FunctionComponent = () => {
   return (
     <ProvideAuth>
       <Switch>
+        <Route exact path="/search" component={SearchPage} />
         <Route exact path="/signIn" component={SignInPage} />
         <Route exact path="/signUp" component={SignUpPage} />
         <PrivateRoute exact path="/signOut" component={SignOut} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
         <Route exact path="/event/:id" component={EventPage} />
         <Route exact path="/events/" component={EventListPage} />
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={EventListPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ProvideAuth>
