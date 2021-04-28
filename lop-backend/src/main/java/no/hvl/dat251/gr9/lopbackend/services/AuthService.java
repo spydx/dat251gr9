@@ -6,13 +6,11 @@ import no.hvl.dat251.gr9.lopbackend.entities.dao.OrganizerAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dao.UserAccountDAO;
 import no.hvl.dat251.gr9.lopbackend.entities.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +48,7 @@ public class AuthService implements UserDetailsService {
             return AccountPrincipals.create(organizerAccount.get());
         }
 
-        throw new UsernameNotFoundException("User with username:"+ username+" not found");
+        throw new UsernameNotFoundException("Bad credentials");
     }
 
     public Optional<UserDetails> loadUserById(String id) {
