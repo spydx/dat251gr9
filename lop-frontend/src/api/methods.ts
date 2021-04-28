@@ -191,8 +191,10 @@ export function getEventsBySearch(params: EventSearchParams): Promise<Event[]> {
    * - NOT_FOUND (means [])
    */
 
+  var search = "term=" + params;
   return backend
-    .get("/events/search", { params })
-    .then((response) => response.data)
-    .catch(resque(HttpStatus.NOT_FOUND, () => []));
-}
+      .get("/events/search?"+search)
+      .then((response) => response.data)
+      .catch(resque(HttpStatus.NOT_FOUND, () => []));
+  
+  }

@@ -6,6 +6,7 @@ import {
   ProfilePage,
   SignInPage,
   SignUpPage,
+  SearchPage,
 } from "./pages";
 import { ProvideAuth, useAuth } from "./auth";
 import { useEffect } from "react";
@@ -38,6 +39,7 @@ const App: React.FunctionComponent = () => {
   return (
     <ProvideAuth>
       <Switch>
+        <Route exact path="/search" component={SearchPage} />
         <Route exact path="/signIn" component={SignInPage} />
         <Route exact path="/signUp" component={SignUpPage} />
         <PrivateRoute exact path="/signOut" component={SignOut} />
