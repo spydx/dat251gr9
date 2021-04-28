@@ -123,7 +123,7 @@ export function getEvent(eventId: string): Promise<Event | null> {
 // succeeds with a list of events
 export function getAllEvents(): Promise<Event[]> {
   /* back end returns
-   * - OK<Race>
+   * - OK<Event>
    * - NOT_FOUND (can't actually happen)
    */
 
