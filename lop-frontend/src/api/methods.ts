@@ -196,5 +196,4 @@ export function getEventsBySearch(params: EventSearchParams): Promise<Event[]> {
       .get("/events/search?"+search)
       .then((response) => response.data)
       .catch(resque(HttpStatus.NOT_FOUND, () => []));
-  
   }
