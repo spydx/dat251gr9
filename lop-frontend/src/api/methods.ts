@@ -123,7 +123,7 @@ export function getEvent(eventId: string): Promise<Event | null> {
 // succeeds with a list of events
 export function getAllEvents(): Promise<Event[]> {
   /* back end returns
-   * - OK<Race>
+   * - OK<Event>
    * - NOT_FOUND (can't actually happen)
    */
 
@@ -187,12 +187,14 @@ export function getRacesBySearch(params: RaceSearchParams): Promise<Race[]> {
 
 export function getEventsBySearch(params: EventSearchParams): Promise<Event[]> {
   /* back end returns
-   * - OK<Race[]>
+   * - OK<Event[]>
    * - NOT_FOUND (means [])
    */
 
+  var search = "term=" + params;
   return backend
-    .get("/events/search", { params })
-    .then((response) => response.data)
-    .catch(resque(HttpStatus.NOT_FOUND, () => []));
-}
+      .get("/events/search?"+search)
+      .then((response) => response.data)
+      .catch(resque(HttpStatus.NOT_FOUND, () => []));
+  
+  }

@@ -7,11 +7,14 @@ import { RaceCard } from "../components/RaceCard";
 import { Race } from "../api/types";
 import { getEvent } from "../api/methods";
 
+
 type EventPageParams = { id: string };
 
 export const EventPage: React.FunctionComponent = () => {
   let { id } = useParams<EventPageParams>();
+
   const { data, error } = useSWR(`API: getEvent(${id})`, () => getEvent(id));
+
   if (error) {
     return (
       <MasterPage>
@@ -19,6 +22,7 @@ export const EventPage: React.FunctionComponent = () => {
       </MasterPage>
     );
   }
+
   if (!data) {
     return (
       <MasterPage>
@@ -30,6 +34,7 @@ export const EventPage: React.FunctionComponent = () => {
       </MasterPage>
     );
   }
+
   return (
     <MasterPage>
       <Jumbotron fluid>

@@ -16,10 +16,10 @@ function TopNav() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/">
-            Home
-          </Nav.Link>
-          <Nav.Link as={Link} to="/events">
             Events
+          </Nav.Link>
+          <Nav.Link as={Link} to="/search">
+            Search
           </Nav.Link>
         </Nav>
         <Nav>
