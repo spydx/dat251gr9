@@ -1,11 +1,10 @@
-import { Container } from "react-bootstrap";
 import { EventList } from "../components/EventList";
 import { LoadingSpinner } from "../components/Spinner";
 import MasterPage from "./MasterPage";
 import useSWR from "swr";
 import React from "react";
 import { getEventsBySearch } from "../api/methods";
-import { Navbar, Form, FormControl, Button } from "react-bootstrap";
+import { Container, Navbar, Form, FormControl, Button } from "react-bootstrap";
 import { useLocation } from "react-router";
 
 
